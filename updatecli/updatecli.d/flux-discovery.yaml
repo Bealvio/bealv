@@ -1,0 +1,32 @@
+name: 'Flux Autodiscovery'
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+autodiscovery:
+  groupby: individual
+  scmid: default
+  actionid: default
+  crawlers:
+    flux:
+      digest: true
+      helmrelease: true
+      versionfilter:
+        kind: latest
+      ignore:
+        - path: gitops/apps/arc/*
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update helm charts.'
+      draft: false

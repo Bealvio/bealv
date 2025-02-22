@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tvshows
+  annotations:
+    nfs.io/storage-path: '/prod-k8s/media/tvshows'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hdda
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: animes
+  annotations:
+    nfs.io/storage-path: '/prod-k8s/media/animes'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hdda
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: movies
+  annotations:
+    nfs.io/storage-path: '/prod-k8s/media/movies'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hdda
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: transcode
+  annotations:
+    nfs.io/storage-path: '/prod-k8s/media/transcode'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hddb
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cache
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
