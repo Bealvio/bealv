@@ -1,0 +1,8 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: jellyfin
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
