@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfs-hddb
+  namespace: nfs-hddb
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: nfs-subdir-external-provisioner
+      version: '4.0.*'
+      sourceRef:
+        kind: HelmRepository
+        name: nfs-subdir-external-provisioner
+        namespace: nfs-hddb
+      interval: 12h
+  values:
+    nfs:
+      mountOptions:
+        - hard
+        - noatime
+        - timeo=600
+        - retry=5
+        - actimeo=3
+        - nodiratime
+        - intr
+      path: /bealv/hddb
+      reclaimPolicy: Retain
+      server: 10.250.0.2
+      volumeName: nfs-subdir-external-provisioner-root
+    rbac:
+      create: true
+    replicaCount: 1
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+    storageClass:
+      accessModes: ReadWriteOnce
+      allowVolumeExpansion: true
+      archiveOnDelete: true
+      create: true
+      defaultClass: false
+      name: hddb
+      onDelete: null
+      pathPattern: ${.PVC.annotations.nfs.io/storage-path}
+      reclaimPolicy: Delete
