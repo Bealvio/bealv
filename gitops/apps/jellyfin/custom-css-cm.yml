@@ -1,0 +1,347 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jellyfin-css
+data:
+  custom.css: |-
+    /* Define Custom Variables */
+    :root {
+      --primary-color: linear-gradient(to right, rgba(255, 0, 153, 0.4), rgba(73, 0, 179, 0.4));
+      --secondary-color: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+      --header-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(67, 67, 67, 0.0));
+      --selected-color: linear-gradient(to right, #e52d27, #b31217); /* Keeping this color as-is */
+      --hover-color: linear-gradient(to right, #e52d27, #b31217); /* Keeping this color as-is */
+      --default-text-color: #ffffff;
+      --secondary-text-color: #dc143c;
+    }
+    
+    
+    /* Apply Selected Color to Swiper Theme */
+    :root {
+        --swiper-theme-color: var(--selected-color);
+    }
+    
+    /* Background Styling */
+    .backgroundContainer.withBackdrop, 
+    .backdropContainer, 
+    .backgroundContainer {
+        background: var(--primary-color);
+    }
+    .backdropImage {
+        filter: blur(0px) saturate(105%) contrast(115%) brightness(20%);
+    }
+    
+    /* Header Styling */
+    .skinHeader.semiTransparent,
+    .skinHeader {
+        background: var(--header-color);
+    }
+    .headerTabs.sectionTabs {
+        text-size-adjust: 110%;
+        font-size: 110%;
+    }
+    .pageTitle {
+        margin-top: auto; 
+        margin-bottom: auto;
+    }
+    .emby-tab-button {
+        padding: 1.75em 1.7em;
+    }
+    
+    /* Icon Background Styling */
+    .defaultCardBackground,
+    .defaultCardBackground0,
+    .defaultCardBackground1,
+    .defaultCardBackground2,
+    .defaultCardBackground3,
+    .defaultCardBackground4,
+    .defaultCardBackground5,
+    div.details-additionalContent-withbackdrop .cardContent-shadow, 
+    div.details-additionalContent-withbackdrop .defaultCardBackground0,
+    .listItemIcon:not(.listItemIcon-transparent) {
+        background-color: rgba(0,0,0,0) !important;
+    }
+    
+    /* Menu and Text Color Styling */
+    .skinHeader,
+    html, 
+    .emby-tab-button,
+    .paper-icon-button-light:hover:not(:disabled),
+    .button-submit:focus,
+    .checkboxListLabel, 
+    .inputLabel, 
+    .inputLabelUnfocused, 
+    .paperListLabel, 
+    .textareaLabelUnfocused,
+    .cardText-secondary, 
+    .fieldDescription, 
+    .guide-programNameCaret, 
+    .listItem,
+    .secondary, 
+    .nowPlayingBarSecondaryText, 
+    .programSecondaryTitle, 
+    .secondaryText,
+    div[data-role="controlgroup"] a.ui-btn-active {
+        color: var(--default-text-color) !important;
+    }
+    
+    .button-link, 
+    .emby-tab-button-active, 
+    .emby-tab-button.show-focus:focus, 
+    .emby-tab-button:hover,
+    .mdl-slider,
+    .inputLabelFocused, 
+    .selectLabelFocused, 
+    .textareaLabelFocused,
+    .textActionButton:hover,
+    .textareaLabelfocused {
+        color: var(--secondary-text-color) !important;
+    }
+    
+    .textActionButton:hover {
+        text-decoration: none;
+    }
+    
+    /* Input and Checkbox Styling */
+    .emby-input:focus, 
+    .emby-textarea:focus,
+    .emby-checkbox:checked + span + .checkboxOutline,
+    .emby-checkbox:focus:not(:checked) + span + .checkboxOutline {
+        border-color: var(--selected-color);
+    }
+    
+    /* Background Hover and Selection Styling */
+    .actionSheetMenuItem:hover,
+    .raised.emby-button:hover, 
+    .navMenuOption-selected,
+    .paper-icon-button-light:hover:not(:disabled),
+    .button-submit:focus,
+    .countIndicator, 
+    .fullSyncIndicator, 
+    .playedIndicator,
+    .emby-checkbox:checked + span + .checkboxOutline, 
+    .itemProgressBarForeground,
+    div[data-role="controlgroup"] a.ui-btn-active {
+        background: var(--selected-color) !important;
+    }
+    
+    .navMenuOption.emby-button:hover, 
+    .navMenuOption:hover {
+        transform: scale(1.1);
+        background: rgba(0,0,0,0);
+    }
+    
+    /* Main Content Styling */
+    .mainDrawer, 
+    .emby-input, 
+    .emby-textarea, 
+    .emby-select, 
+    .navMenuOption-selected, 
+    .paperList, 
+    .detailRibbon,
+    .collapseContent, 
+    .formDialogFooter:not(formDialogFooter-clear), 
+    .formDialogHeader:not(formDialogHeader-clear), 
+    .paperList, 
+    .visualCardBox,
+    .fab, 
+    .raised,
+    .cardBox, 
+    .cardBox-bottompadded,
+    .dialog, 
+    .nowPlayingContextMenu, 
+    .nowPlayingPlaylist {
+        background: var(--secondary-color);
+    }
+    
+    /* Responsive Styles */
+    @media all and (min-width: 50em) {
+        /* Disable carousel for libraries */
+        .homePage .emby-scroller {
+            margin-right: 0;
+        }
+        .homePage .emby-scrollbuttons {
+            display: none;
+        }
+        .homePage .itemsContainer {
+            flex-wrap: wrap;
+        }
+    }
+    
+    /* Rounded Corners and Square Hover Buttons */
+    .cardContent-button,
+    .cardContent-shadow,
+    .itemDetailImage,
+    .cardOverlayButton-hover,
+    .cardOverlayContainer,
+    .cardImageContainer,
+    .cardPadder,
+    .listItemImage,
+    .listItemImageButton,
+    .listItemButton,
+    .headerButton,
+    .paper-icon-button-light,
+    .innerCardFooter,
+    .blurhash-canvas,
+    .actionSheetMenuItem:hover,
+    .dialog,
+    .fab, 
+    .raised,
+    .cardBox, 
+    .cardBox-bottompadded,
+    .paperList {
+        border-radius: 10px !important;
+    }
+    
+    .itemProgressBarForeground {
+        box-shadow: 0 0 5px 1px var(--selected-color);
+    }
+    
+    .dialog,
+    .cardBox, 
+    .cardBox-bottompadded
+    .skinHeader {
+        box-shadow: 0 0 5px 1px black;
+    }
+    
+    .itemsContainer.scrollSlider.focuscontainer-x.animatedScrollX {
+        padding-left: 10px;
+    }
+    
+    .cardText {
+        padding:.3em 0.5em;
+    }
+    
+    /* Custom Styles from https://github.com/CTalvio/Monochromic */
+    /* ... (The rest of your custom styles from the provided CSS) */
+    
+    /* Improve image aspect ratio behavior, set border-radius to zero for square tiles */
+    @media all and (min-width: 131.25em) {
+        #castContent .card.overflowPortraitCard {
+            width: 6.3vw !important; 
+            font-size: 90% !important;
+        }
+    }
+
+    /* Narrow the login form */
+    #loginPage .readOnlyContent,
+    #loginPage form {
+      max-width: 22em;
+    }
+    
+    /* Hide "please login" text, margin is to prevent login form moving too far up */
+    #loginPage h1 {
+      display: none;
+    }
+    #loginPage .padded-left.padded-right.padded-bottom-page {
+      margin-top: 50px;
+    }
+    
+    /* Hide "manual" and "forgot" buttons */
+    #loginPage .raised.cancel.block.btnManual.emby-button {
+      display: none;
+    }
+    #loginPage .raised.cancel.block.btnForgotPassword.emby-button {
+      display: none;
+    }
+
+    /* fixed height for the bottom row */
+    :root {
+      --element-fixed-top: 95px;
+    }
+    
+    /* Now playing bar in the footer */
+    .nowPlayingBar {
+           width: 650px;
+           z-index: 10;
+           position: fixed;
+           top: 300px;
+           height: 120px;
+          border-style: solid;
+          border-color: white;
+          background-color: black;
+          margin-left: 50%;
+    }
+    
+    /* Only child of nowPlayingBar */
+    .nowPlayingBarTop {
+         height: 5px !important;
+         max-width: 500px
+         top: 10px;
+    }
+    
+    /* Song progress seekbar */
+    .nowPlayingBarPositionContainer {
+         position: relative;
+         top: 1.0em !important;
+    }
+    
+    /* Container that holds album thumbnail, artist and album name */
+    .nowPlayingBarInfoContainer {
+         position: fixed !important;
+         left: 12px;
+         top: 34px;
+         height: 60px;
+         width: 1100px;
+    }
+    
+    /* Holds the next, previous track, play/pause, next and time elements */
+    .nowPlayingBarCenter {
+         position: relative !important;
+         left: 32px;
+         top: var(--element-fixed-top);
+         min-width: 500px;
+    }
+    
+    /* Hold mute, volume slider container, repeat, favorite and remote control buttons */
+    .nowPlayingBarRight {
+         width: 402px !important;
+         left: -60px;
+    }
+    
+    /* Mute button */
+    .muteButton {
+        position: relative;
+        top: var(--element-fixed-top);
+    }
+    
+    /* Volume slider */
+    .nowPlayingBarVolumeSliderContainer {
+         position: relative;
+         left: -4px;
+         top: var(--element-fixed-top);
+    }
+    
+    /* Toggle repeat */
+    .toggleRepeatButton {
+         position: relative !important;
+         left: -20px;
+         top: var(--element-fixed-top);
+    }
+    
+    /* Favorite */
+    .nowPlayingBarUserDataButtons {
+         position: relative;
+         left: -4px;
+         top: var(--element-fixed-top);
+    }
+    
+    /* Remote control */
+    .remoteControlButton {
+         left: -110px;
+         top: var(--element-fixed-top);
+    }
+
+    /* Size episode preview images in a more compact way */
+    .listItemImage.listItemImage-large.itemAction.lazy {
+      height: 110px;
+    }
+    .listItem-content {
+      height: 115px;
+    }
+    .secondary.listItem-overview.listItemBodyText {
+      height: 61px;
+      margin: 0;
+    }
+
+    /* ... (The rest of your custom styles) */
