@@ -1,0 +1,4 @@
+namespace: nfs-hddb
+resources:
+  - helmrelease.yaml
+  - namespace.yaml

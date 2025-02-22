@@ -1,0 +1,34 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: bealvio
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: contact.bealv@gmail.com
+    privateKeySecretRef:
+      name: bealvio
+    solvers:
+      - dns01:
+          cloudflare:
+            email: contact.bealv@gmail.com
+            apiTokenSecretRef:
+              name: cert-manager-cloudflare
+              key: api-token
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: cert-manager-cloudflare
+spec:
+  refreshInterval: '1h'
+  secretStoreRef:
+    name: vault-backend
+    kind: ClusterSecretStore
+  target:
+    name: cert-manager-cloudflare
+  data:
+    - secretKey: api-token
+      remoteRef:
+        key: secrets-bealv/cloudflare/api
+        property: api-token

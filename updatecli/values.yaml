@@ -1,0 +1,5 @@
+github:
+  user: 'GitHub Actions Bot'
+  email: 'bots@bealv.io'
+  username: 'update-chan'
+  token: 'UPDATECLI_GITHUB_TOKEN'

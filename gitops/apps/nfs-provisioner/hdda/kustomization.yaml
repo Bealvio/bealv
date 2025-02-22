@@ -1,0 +1,4 @@
+namespace: nfs-hdda
+resources:
+  - helmrelease.yaml
+  - namespace.yaml
