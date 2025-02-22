@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jellyfin
+  labels: &default
+    app: jellyfin
+    role: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      securityContext:
+        fsGroup: 1000
+      terminationGracePeriodSeconds: 10
+      automountServiceAccountToken: false
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:10.10.1
+          ports:
+            - containerPort: 8096
+              name: jellyfin
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: jellyfin
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: jellyfin
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - |
+                    sed -i 's/enableBackdrops:function(){return P}/enableBackdrops:function(){return _}/g' /usr/share/jellyfin/web/main.jellyfin.bundle.js
+                    sed -i 's/enableThemeSongs:function(){return w}/enableThemeSongs:function(){return _}/g' /usr/share/jellyfin/web/main.jellyfin.bundle.js
+                    sed -i 's/this.get("libraryPageSize",!1),10);return 0===t?0:t||100}/this.get("libraryPageSize",!1),10);return 0===t?0:t||0}/g' /usr/share/jellyfin/web/main.jellyfin.bundle.js
+          env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: 'Europe/Paris'
+            - name: DOCKER_MODS
+              value: 'linuxserver/mods:jellyfin-opencl-intel'
+          volumeMounts:
+            - name: configjson
+              mountPath: /usr/share/jellyfin/web/config.json
+              subPath: config.json
+            - name: customcss
+              mountPath: /usr/share/jellyfin/web/custom.css
+              subPath: custom.css
+      volumes:
+        - name: configjson
+          configMap:
+            name: jellyfin
+            items:
+              - key: config.json
+                path: config.json
+        - name: customcss
+          configMap:
+            name: jellyfin-css
+            items:
+              - key: custom.css
+                path: custom.css
