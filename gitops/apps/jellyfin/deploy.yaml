@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  labels: &default
+    app: jellyfin
+    role: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      securityContext:
+        fsGroup: 1000
+      terminationGracePeriodSeconds: 10
+      automountServiceAccountToken: false
+      containers:
+        - name: jellyfin
+          image: jellyfin/jellyfin:10.10.1
+          ports:
+            - containerPort: 8096
+              name: jellyfin
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: jellyfin
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: jellyfin
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - |
+                    sed -i 's/enableBackdrops:function(){return P}/enableBackdrops:function(){return _}/g' /jellyfin/jellyfin-web/main.jellyfin.bundle.js
+                    sed -i 's/enableThemeSongs:function(){return w}/enableThemeSongs:function(){return _}/g' /jellyfin/jellyfin-web/main.jellyfin.bundle.js
+                    sed -i 's/this.get("libraryPageSize",!1),10);return 0===t?0:t||100}/this.get("libraryPageSize",!1),10);return 0===t?0:t||0}/g' /jellyfin/jellyfin-web/main.jellyfin.bundle.js
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: cache
+              mountPath: /cache
+            - name: tvshows
+              mountPath: /tvshows
+            - name: animes
+              mountPath: /animes
+            - name: movies
+              mountPath: /movies
+            - name: transcode
+              mountPath: /transcode
+            - name: configjson
+              mountPath: /jellyfin/jellyfin-web/config.json
+              subPath: config.json
+            - name: customcss
+              mountPath: /jellyfin/jellyfin-web/custom.css
+              subPath: custom.css
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: tvshows
+          persistentVolumeClaim:
+            claimName: tvshows
+        - name: animes
+          persistentVolumeClaim:
+            claimName: animes
+        - name: movies
+          persistentVolumeClaim:
+            claimName: movies
+        - name: transcode
+          persistentVolumeClaim:
+            claimName: transcode
+        - name: cache
+          persistentVolumeClaim:
+            claimName: cache
+        - name: configjson
+          configMap:
+            name: jellyfin
+            items:
+              - key: config.json
+                path: config.json
+        - name: customcss
+          configMap:
+            name: jellyfin-css
+            items:
+              - key: custom.css
+                path: custom.css

@@ -1,0 +1,35 @@
+name: 'Kubernetes Workload OCI Update'
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+autodiscovery:
+  groupby: individual
+  scmid: default
+  actionid: default
+  crawlers:
+    kubernetes:
+      rootdir: 'gitops/apps/'
+      ignore:
+        - path: 'gitops/apps/monitoring/upstream/*/*/*'
+        - path: 'gitops/apps/monitoring/upstream/*/*'
+        - path: 'gitops/apps/monitoring/upstream/*'
+      digest: false
+      versionfilter:
+        kind: semver
+        pattern: '*'
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update kubernetes workload OCIs.'
+      draft: false

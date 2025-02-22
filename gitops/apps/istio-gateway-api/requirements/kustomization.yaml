@@ -1,0 +1,6 @@
+resources:
+  - helmrepo.yaml
+  - istiobase.yaml
+  - istiocni.yaml
+  - istiod.yaml
+  - istioztunnel.yaml

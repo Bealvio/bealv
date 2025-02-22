@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns-cloudflare
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns-cloudflare
+  template:
+    metadata:
+      labels:
+        app: external-dns-cloudflare
+    spec:
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: registry.k8s.io/external-dns/external-dns:v0.15.1
+          args:
+            # Add desired Gateway API Route sources.
+            - --source=gateway-httproute
+            - --source=gateway-grpcroute
+            - --source=gateway-tlsroute
+            - --source=gateway-tcproute
+            - --source=gateway-udproute
+            - --domain-filter=bealv.io
+            - --provider=cloudflare
+            - --cloudflare-dns-records-per-page=5000
+            - --txt-owner-id=bealv
+          env:
+            - name: CF_API_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: external-dns-cloudflare
+                  key: email
+            - name: CF_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: external-dns-cloudflare
+                  key: api-key
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: external-dns-cloudflare
+spec:
+  refreshInterval: '1h'
+  secretStoreRef:
+    name: vault-backend
+    kind: ClusterSecretStore
+  target:
+    name: external-dns-cloudflare
+  data:
+    - secretKey: email
+      remoteRef:
+        key: secrets-bealv/cloudflare/api
+        property: email
+    - secretKey: api-key
+      remoteRef:
+        key: secrets-bealv/cloudflare/api
+        property: api-key
