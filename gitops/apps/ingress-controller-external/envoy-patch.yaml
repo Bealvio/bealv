@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: envoy
+  namespace: projectcontour
+spec:
+  template:
+    spec:
+      containers:
+        - name: envoy
+          ports:
+            - containerPort: 8080
+              name: http
+              hostPort: null
+              protocol: TCP
+            - containerPort: 8443
+              name: https
+              hostPort: null
+              protocol: TCP
+            - containerPort: 8002
+              hostPort: null
+              name: metrics
+              protocol: TCP
