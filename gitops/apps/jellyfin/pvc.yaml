@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: config
 spec:
+  storageClassName: disk
   accessModes:
     - ReadWriteOnce
   resources:
@@ -70,6 +71,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: cache
 spec:
+  storageClassName: disk-hdd
   accessModes:
     - ReadWriteOnce
   resources:

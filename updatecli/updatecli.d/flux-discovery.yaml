@@ -20,8 +20,8 @@ autodiscovery:
       helmrelease: true
       versionfilter:
         kind: latest
-      ignore:
-        - path: gitops/apps/arc/*
+        # ignore:
+        #   - path: gitops/apps/arc/*
 actions:
   default:
     kind: 'github/pullrequest'

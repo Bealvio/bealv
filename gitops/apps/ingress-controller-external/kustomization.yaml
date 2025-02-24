@@ -1,0 +1,6 @@
+namespace: ingress-contour-external
+resources:
+  - upstream/
+patches:
+  - path: envoy-patch.yaml
+  - path: contour-patch.yaml

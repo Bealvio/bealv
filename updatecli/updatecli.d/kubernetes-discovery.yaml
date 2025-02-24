@@ -21,6 +21,7 @@ autodiscovery:
         - path: 'gitops/apps/monitoring/upstream/*/*/*'
         - path: 'gitops/apps/monitoring/upstream/*/*'
         - path: 'gitops/apps/monitoring/upstream/*'
+        - path: 'gitops/apps/ingress-controller-external/upstream/*'
       digest: false
       versionfilter:
         kind: semver

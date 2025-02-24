@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contour
+  namespace: projectcontour
+spec:
+  template:
+    spec:
+      containers:
+        - args:
+            - serve
+            - --incluster
+            - --xds-address=0.0.0.0
+            - --xds-port=8001
+            - --contour-cafile=/certs/ca.crt
+            - --contour-cert-file=/certs/tls.crt
+            - --contour-key-file=/certs/tls.key
+            - --config-path=/config/contour.yaml
+            - --ingress-class-name=external
+          name: contour

@@ -1,3 +1,0 @@
-namespace: istio-system
-resources:
-  - public-gateway.yaml

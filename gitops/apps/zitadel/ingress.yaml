@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zitadel
+  annotations:
+    cert-manager.io/cluster-issuer: bealvio
+  labels:
+    probe: enabled
+spec:
+  ingressClassName: external
+  rules:
+    - host: 'zitadel.bealv.io'
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zitadel
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - 'zitadel.bealv.io'
+      secretName: zitadel-tls

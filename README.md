@@ -46,19 +46,29 @@ spec:
 ### To expose externally
 
 ```yaml
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: test
+  annotations:
+    cert-manager.io/cluster-issuer: bealvio
+  labels:
+    probe: enabled
 spec:
-  parentRefs:
-    - name: public
-      namespace: istio-system
-      sectionName: https
-  hostnames:
-    - test.bealv.io
+  ingressClassName: external
   rules:
-    - backendRefs:
-        - name: test
-          port: 8096
+    - host: 'test.bealv.io'
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: test
+                port:
+                  number: 9001
+  tls:
+    - hosts:
+        - 'test.bealv.io'
+      secretName: test-tls
 ```

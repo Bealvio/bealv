@@ -19,11 +19,11 @@ spec:
           image: registry.k8s.io/external-dns/external-dns:v0.15.1
           args:
             # Add desired Gateway API Route sources.
-            - --source=gateway-httproute
-            - --source=gateway-grpcroute
-            - --source=gateway-tlsroute
-            - --source=gateway-tcproute
-            - --source=gateway-udproute
+            - --source=ingress
+            - --source=service
+            - --source=contour-httpproxy
+            - --interval=30s
+            - --policy=upsert-only
             - --domain-filter=bealv.io
             - --provider=cloudflare
             - --cloudflare-dns-records-per-page=5000
