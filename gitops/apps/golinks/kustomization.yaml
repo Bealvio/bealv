@@ -1,0 +1,6 @@
+namespace: golinks
+resources:
+  - deploy.yaml
+  - pvc.yaml
+  - namespace.yaml
+  - service.yaml

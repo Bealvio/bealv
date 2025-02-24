@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golinks
+  labels:
+    app: golinks
+spec:
+  selector:
+    matchLabels:
+      app: golinks
+  template:
+    metadata:
+      labels:
+        app: golinks
+    spec:
+      securityContext:
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+      containers:
+        - image: ghcr.io/tailscale/golink:main
+          name: golink
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+          volumeMounts:
+            - mountPath: '/home/nonroot'
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: golinks
