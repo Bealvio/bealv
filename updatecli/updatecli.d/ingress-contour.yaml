@@ -1,0 +1,63 @@
+name: ingress-contour Update
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+sources:
+  default:
+    name: Get value from json
+    scmid: 'default'
+    kind: json
+    spec:
+      file: npins/sources.json
+      key: pins.contour.version
+  contour:
+    kind: githubrelease
+    spec:
+      owner: 'projectcontour'
+      repository: 'contour'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: semver
+        pattern: '*'
+conditions:
+  default:
+    name: Check if version is the same
+    sourceid: 'default'
+    scmid: 'default'
+    kind: shell
+    spec:
+      environments:
+        - name: PATH
+      command: test "{{ source `contour` }}" !=
+targets:
+  default:
+    name: contour npins update {{ source `contour` }}
+    kind: shell
+    scmid: 'default'
+    disablesourceinput: true
+    spec:
+      environments:
+        - name: PATH
+        - name: NIX_PATH
+      command: |
+        set -e
+        nix run nixpkgs#npins -- add --name contour github projectcontour contour --at {{ source `contour` }}
+        nix-shell shell.nix --run "buildIngressContour"
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update ingress-contour npins.'
+      draft: false
+      title: 'UPDATECLI: Update ingress-contour'

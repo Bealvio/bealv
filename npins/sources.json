@@ -1,5 +1,35 @@
 {
   "pins": {
+    "cloudnative-pg": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "cloudnative-pg",
+        "repo": "cloudnative-pg"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "version": "v1.25.0",
+      "revision": "bad5a251642655399eca392abf5d981668fbd8cc",
+      "url": "https://api.github.com/repos/cloudnative-pg/cloudnative-pg/tarball/v1.25.0",
+      "hash": "1i4f93968x06xp2kxjmkzq1siby0w5sk18f3f0gr3kcid600wkx5"
+    },
+    "contour": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "projectcontour",
+        "repo": "contour"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "version": "v1.30.2",
+      "revision": "4ae34186f5230dbd27f6fc3df44dbfe09298c11e",
+      "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.30.2",
+      "hash": "0z0s50laxckaap6kdhb7faisrjl17dzjfqbcvdybch3vffwwmmms"
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-24.11",
