@@ -104,18 +104,4 @@ spec:
           secretKeyRef:
             name: zitadel-secrets
             key: password
-      - name: ZITADEL_DEFAULTINSTANCE_SMTPCONFIGURATION_SMTP_HOST
-        value: 'smtp.gmail.com:587'
-      - name: ZITADEL_DEFAULTINSTANCE_SMTPCONFIGURATION_TLS
-        value: 'true'
-      - name: ZITADEL_DEFAULTINSTANCE_SMTPCONFIGURATION_SMTP_USER
-        valueFrom:
-          secretKeyRef:
-            name: zitadel-secrets
-            key: smtpUser
-      - name: ZITADEL_DEFAULTINSTANCE_SMTPCONFIGURATION_SMTP_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: zitadel-secrets
-            key: smtpPassword
     extraManifests: []
