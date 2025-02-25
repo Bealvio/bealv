@@ -1,0 +1,21 @@
+apiVersion: idp.zitadel.didactiklabs.io/v1alpha1
+kind: InstanceGithub
+metadata:
+  name: didactiklabs
+spec:
+  forProvider:
+    clientId: Ov23liotAs4lNi5vu6HB
+    clientSecretSecretRef:
+      name: zitadel-github
+      namespace: crossplane-system
+      key: secretid
+    isAutoCreation: true
+    isAutoUpdate: true
+    isCreationAllowed: true
+    isLinkingAllowed: false
+    scopes:
+      - openid
+      - profile
+      - email
+  providerConfigRef:
+    name: default
