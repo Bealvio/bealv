@@ -1,0 +1,5 @@
+namespace: crossplane-system
+resources:
+  - namespace.yaml
+  - helmrepo.yaml
+  - helmrelease.yaml
