@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-zitadel
 spec:
-  package: banhcanh/provider-zitadel:v0.1.1
+  package: banhcanh/provider-zitadel:v0.2.0

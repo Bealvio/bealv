@@ -1,0 +1,7 @@
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: Org
+metadata:
+  name: bealv
+spec:
+  forProvider:
+    name: Bealv

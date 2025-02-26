@@ -39,8 +39,8 @@ spec:
     env:
       - name: ZITADEL_FIRSTINSTANCE_INSTANCENAME
         value: Bealv
-      - name: ZITADEL_FIRSTINSTANCE_ORG_NAME
-        value: Bealv
+      - name: ZITADEL_FIRSTINSTANCE_ORG_NAME # we create the main org via Crossplane
+        value: Zitadel
       - name: ZITADEL_TLS_ENABLED
         value: 'false'
       - name: ZITADEL_EXTERNALDOMAIN

@@ -1,0 +1,13 @@
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: Project
+metadata:
+  name: administration
+spec:
+  forProvider:
+    hasProjectCheck: true
+    name: administration
+    orgIdRef:
+      name: bealv
+    privateLabelingSetting: PRIVATE_LABELING_SETTING_ENFORCE_PROJECT_RESOURCE_OWNER_POLICY
+    projectRoleAssertion: true
+    projectRoleCheck: true

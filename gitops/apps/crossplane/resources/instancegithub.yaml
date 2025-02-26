@@ -1,9 +1,10 @@
 apiVersion: idp.zitadel.didactiklabs.io/v1alpha1
-kind: InstanceGithub
+kind: OrgGithub
 metadata:
-  name: didactiklabs
+  name: bealv
 spec:
   forProvider:
+    name: bealv
     clientId: Ov23liotAs4lNi5vu6HB
     clientSecretSecretRef:
       name: zitadel-github
@@ -13,6 +14,8 @@ spec:
     isAutoUpdate: true
     isCreationAllowed: true
     isLinkingAllowed: false
+    orgIdRef:
+      name: bealv
     scopes:
       - openid
       - profile
