@@ -3,4 +3,17 @@ kind: Provider
 metadata:
   name: provider-zitadel
 spec:
-  package: banhcanh/provider-zitadel:v0.2.0
+  package: banhcanh/provider-zitadel:v0.3.0
+---
+apiVersion: zitadel.didactiklabs.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: zitadel-crossplane
+      namespace: crossplane-system
+      key: credentials
+---
