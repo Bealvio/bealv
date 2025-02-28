@@ -9,7 +9,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: backups.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -450,7 +450,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: clusterimagecatalogs.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -531,7 +531,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: clusters.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -3470,6 +3470,12 @@ spec:
                           default: true
                           description: Enabled is true if this plugin will be used
                           type: boolean
+                        isWALArchiver:
+                          default: false
+                          description: |-
+                            Only one plugin can be declared as WALArchiver.
+                            Cannot be active if ".spec.backup.barmanObjectStore" configuration is present.
+                          type: boolean
                         name:
                           description: Name is the plugin name
                           type: string
@@ -4495,6 +4501,12 @@ spec:
                     enabled:
                       default: true
                       description: Enabled is true if this plugin will be used
+                      type: boolean
+                    isWALArchiver:
+                      default: false
+                      description: |-
+                        Only one plugin can be declared as WALArchiver.
+                        Cannot be active if ".spec.backup.barmanObjectStore" configuration is present.
                       type: boolean
                     name:
                       description: Name is the plugin name
@@ -6946,7 +6958,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: databases.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -7208,7 +7220,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: imagecatalogs.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -7288,7 +7300,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: poolers.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -16066,6 +16078,7 @@ spec:
                 enum:
                 - rw
                 - ro
+                - r
                 type: string
             required:
             - cluster
@@ -16146,7 +16159,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: publications.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -16341,7 +16354,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: scheduledbackups.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -16532,7 +16545,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.5
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: subscriptions.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -17555,14 +17568,14 @@ spec:
         - /manager
         env:
         - name: OPERATOR_IMAGE_NAME
-          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.0
+          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.1
         - name: OPERATOR_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
         - name: MONITORING_QUERIES_CONFIGMAP
           value: cnpg-default-monitoring
-        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.0
+        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.1
         livenessProbe:
           httpGet:
             path: /readyz
@@ -17598,6 +17611,13 @@ spec:
           runAsUser: 10001
           seccompProfile:
             type: RuntimeDefault
+        startupProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /readyz
+            port: 9443
+            scheme: HTTPS
+          periodSeconds: 5
         volumeMounts:
         - mountPath: /controller
           name: scratch-data
