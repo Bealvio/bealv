@@ -1,0 +1,33 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kube-state-metrics-crd-reader
+rules:
+  - apiGroups: ['apiextensions.k8s.io']
+    resources: ['customresourcedefinitions']
+    verbs: ['list', 'get', 'watch']
+  - apiGroups: ['source.toolkit.fluxcd.io']
+    resources: ['gitrepositories', 'helmrepositories', 'helmcharts', 'buckets', 'ocirepositories']
+    verbs: ['list', 'watch', 'get']
+  - apiGroups: ['notification.toolkit.fluxcd.io']
+    resources: ['alerts', 'providers', 'receivers']
+    verbs: ['list', 'watch', 'get']
+  - apiGroups: ['helm.toolkit.fluxcd.io']
+    resources: ['helmreleases']
+    verbs: ['list', 'watch', 'get']
+  - apiGroups: ['kustomize.toolkit.fluxcd.io']
+    resources: ['kustomizations']
+    verbs: ['list', 'watch', 'get']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kube-state-metrics-crd-reader-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kube-state-metrics-crd-reader
+subjects:
+  - kind: ServiceAccount
+    name: kube-state-metrics
+    namespace: monitoring

@@ -1,0 +1,9 @@
+resources:
+  - helmcontroller.yaml
+  - kustomizecontroller.yaml
+  - notificationcontroller.yaml
+  - sourcecontroller.yaml
+  - ingress-contour.yaml
+  - cert-manager.yaml
+  - velero.yaml
+  - servicemonitors-rbacs.yaml

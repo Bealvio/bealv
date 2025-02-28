@@ -1,0 +1,9 @@
+- op: replace
+  path: /spec/selector
+  value:
+    app: grafana
+- op: replace
+  path: /spec/ports/0/targetPort
+  value: grafana-http
+
+

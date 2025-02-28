@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- custom-dashboards
+- grafana-operator/overlays/cluster_scoped
+- kube-prometheus
+- kubeprom-dashboards.yaml
+- kube-component-svc.yaml
+- kubeprom-datasource.yaml
+- kubeprom-grafana.yaml
+patches:
+  - path: kubeprom-grafana-netpol-patch.yaml
+    target:
+      kind: NetworkPolicy
+      name: grafana
+  - path: kubeprom-grafana-prom-netpol-patch.yaml
+    target:
+      kind: NetworkPolicy
+      name: prometheus-k8s
+  - path: kubeprom-service-patch.yaml
+    target:
+      kind: Service
+      name: grafana

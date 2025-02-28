@@ -1,0 +1,92 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: node-exporter
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  grafanaCom:
+    id: 1860
+    revision: 37
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cluster-overview
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  grafanaCom:
+    id: 21410
+    revision: 3
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: flux-cluster
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/cluster.json
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: contour
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  grafanaCom:
+    id: 21396
+    revision: 2
+  datasources:
+    - datasourceName: prometheus
+      inputName: 'DS_DEVELOPERS'
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cert-manager
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  grafanaCom:
+    id: 20842
+    revision: 3
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: coredns
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  url: https://raw.githubusercontent.com/monitoring-mixins/website/refs/heads/master/assets/coredns/dashboards/coredns.json
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: blackbox-exporter
+spec:
+  folder: administration
+  instanceSelector:
+    matchLabels:
+      dashboards: 'grafana'
+  grafanaCom:
+    id: 13659
+    revision: 1
+  datasources:
+    - datasourceName: prometheus
+      inputName: 'DS_PROMETHEUS'

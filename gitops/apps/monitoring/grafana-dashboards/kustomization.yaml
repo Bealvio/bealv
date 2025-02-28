@@ -1,0 +1,3 @@
+resources:
+  - administration-dashboards.yaml
+  - istio-gateway-dashboard.yaml

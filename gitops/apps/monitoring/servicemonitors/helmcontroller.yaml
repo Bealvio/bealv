@@ -1,0 +1,35 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: helmcontroller
+spec:
+  endpoints:
+    - interval: 15s
+      port: http-prom
+      scrapeTimeout: 10s
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - flux-system
+  selector:
+    matchLabels:
+      app: helm-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: helm-controller
+  name: helmcontroller-service
+  namespace: flux-system
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: http-prom
+      port: 8080
+      targetPort: http-prom
+  selector:
+    app: helm-controller

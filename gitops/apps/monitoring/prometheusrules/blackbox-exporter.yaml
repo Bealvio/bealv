@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: blackbox-exporter
+  namespace: monitoring
+spec:
+  groups:
+    - name: apiserver-month-certificate-expiry
+      rules:
+        - alert: KubeAPIServerMonthCertExpiry
+          expr: |
+            probe_ssl_earliest_cert_expiry{instance="https://kubernetes.default.svc/readyz"} - time() < 2628000
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: 'The certificate for the Kube API server is about to expire in less than 30 days.'
+            description: 'The certificate for the Kubernetes API server (https://kubernetes.default.svc/readyz) is expiring within the next 30 days.'
+    - name: apiserver-week-certificate-expiry
+      rules:
+        - alert: KubeAPIServerWeekCertExpiry
+          expr: |
+            probe_ssl_earliest_cert_expiry{instance="https://kubernetes.default.svc/readyz"} - time() < 604800
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: 'The certificate for the Kube API server is about to expire in less than 7 days.'
+            description: 'The certificate for the Kubernetes API server (https://kubernetes.default.svc/readyz) is expiring within the next 7 days.'

@@ -1,0 +1,80 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: main
+spec:
+  inhibitRules:
+    - sourceMatch:
+        - matchType: '='
+          name: 'severity'
+          value: 'critical'
+      targetMatch:
+        - matchType: '=~'
+          name: 'severity'
+          value: 'warning|info|none'
+      equal:
+        - namespace
+        - alertname
+        - name
+    - sourceMatch:
+        - matchType: '='
+          name: 'severity'
+          value: 'warning'
+      targetMatch:
+        - matchType: '=~'
+          name: 'severity'
+          value: 'info|none'
+      equal:
+        - namespace
+        - alertname
+        - name
+    - sourceMatch:
+        - matchType: '='
+          name: 'alertname'
+          value: 'InfoInhibitor'
+      targetMatch:
+        - matchType: '='
+          name: 'severity'
+          value: 'info'
+      equal:
+        - namespace
+  route:
+    repeatInterval: 12h
+    receiver: discord
+    groupBy:
+      - alertname
+      - namespace
+      - exported_namespace
+      - name
+    routes:
+      - matchers:
+          - matchType: '=~'
+            name: 'alertname'
+            value: 'InfoInhibitor|Watchdog|KubeCPUOvercommit|KubeMemoryOvercommit|CDIDefaultStorageClassDegraded|KubeVirtNoAvailableNodesToRunVMs|LowKVMNodesCount|KubeVirtDeprecatedAPIRequested'
+        receiver: 'null'
+  receivers:
+    - name: 'null'
+    - name: discord
+      discordConfigs:
+        - sendResolved: true
+          apiURL:
+            name: grafana-secrets
+            key: discordwebhookurl
+          title: |-
+            **[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}**
+          message: |-
+            {{ range .Alerts }}
+            ---
+            **🚨 Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity | toUpper }}`{{ end }}
+
+            **📄 Description:**
+            ```
+            {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{ else }}N/A{{ end }}
+            ```
+
+            **🔍 Details:**
+            {{ range .Labels.SortedPairs }}
+            **{{ .Name }}**: `{{ .Value }}`
+            {{ end }}
+            ---
+            {{ end }}

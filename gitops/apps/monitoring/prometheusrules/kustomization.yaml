@@ -1,0 +1,7 @@
+resources:
+  - fluxcd.yaml
+  - cert-manager.yaml
+  - ingress-contour.yaml
+  - coredns.yaml
+  - velero.yaml
+  - blackbox-exporter.yaml

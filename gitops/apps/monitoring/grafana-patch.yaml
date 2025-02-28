@@ -1,0 +1,52 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    dashboards: 'grafana'
+spec:
+  version: 11.5.1
+  config:
+    server:
+      root_url: https://grafana.didactik.labs
+    log:
+      mode: 'console'
+    auth:
+      disable_login_form: 'true'
+    security:
+      admin_user: admin
+      admin_password: admin
+    auth.generic_oauth:
+      enabled: 'true'
+      name: 'Authentik SSO'
+      allow_sign_up: 'true'
+      client_id: ${AUTH_CLIENT_ID}
+      client_secret: ${AUTH_CLIENT_SECRET}
+      scopes: 'openid email profile offline_access roles'
+      email_attribute_path: email
+      login_attribute_path: username
+      name_attribute_path: full_name
+      groups_attribute_path: groups
+      auth_url: 'https://zitadel.bealv.io/oauth/v2/authorize'
+      token_url: 'https://zitadel.bealv.io/oauth/v2/token'
+      api_url: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+      role_attribute_path: "role_attribute_path = contains('user-roles[*]', 'admins') && 'Admin' || 'Viewer'"
+      role_attribute_strict: 'true'
+      allow_assign_grafana_admin: 'true'
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: grafana
+              env:
+                - name: AUTH_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-oidc
+                      key: attribute.client_id
+                - name: AUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-oidc
+                      key: attribute.client_secret

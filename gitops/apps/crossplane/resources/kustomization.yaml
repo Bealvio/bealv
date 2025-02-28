@@ -1,6 +1,6 @@
 namespace: crossplane-system
 resources:
   - instancegithub.yaml
-  # - applications.yaml
+  - applications.yaml
   - org.yaml
   - project.yaml
