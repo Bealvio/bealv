@@ -1,0 +1,25 @@
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: Action
+metadata:
+  name: mapgithuboauth
+spec:
+  forProvider:
+    allowedToFail: true
+    name: mapGitHubOAuth
+    orgIdRef:
+      name: bealv
+    script: |
+      /**
+       * Set first and lastname of a user on just in time provisioning for github.
+       * Useful if you like to fill the first and lastname with the name stored on github, so the user doesn't have to fill himself.
+       *
+       * Flow: External Authentication, Trigger: Post Authentication
+       *
+       * @param ctx
+       * @param api
+       */
+      function mapGitHubOAuth(ctx, api) {
+        api.setFirstName(ctx.v1.providerInfo.name);
+        api.setLastName(ctx.v1.providerInfo.name);
+      }
+    timeout: 10s
