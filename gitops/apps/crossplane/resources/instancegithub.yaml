@@ -1,5 +1,5 @@
 apiVersion: idp.zitadel.didactiklabs.io/v1alpha1
-kind: OrgGithub
+kind: InstanceGithub
 metadata:
   name: bealv
 spec:
@@ -14,8 +14,6 @@ spec:
     isAutoUpdate: true
     isCreationAllowed: true
     isLinkingAllowed: false
-    orgIdRef:
-      name: bealv
     scopes:
       - openid
       - profile
