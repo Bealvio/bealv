@@ -23,3 +23,37 @@ spec:
         api.setLastName(ctx.v1.providerInfo.name);
       }
     timeout: 10s
+---
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: Action
+metadata:
+  name: groupsclaim
+spec:
+  forProvider:
+    allowedToFail: true
+    name: groupsClaim
+    orgIdRef:
+      name: bealv
+    script: |
+      /**
+       * Sets the roles as an additional claim in the token with "groups" as the key
+       *
+       * The role claims of the token will look like this:
+       * "groups": ["monitoring_admin", "monitoring_editor"]
+       *
+       * Flow: Complement token, Triggers: Pre Userinfo creation, Pre access token creation
+       */
+      function groupsClaim(ctx, api) {
+        if (ctx.v1.user.grants === undefined || ctx.v1.user.grants.count == 0) {
+          return;
+        }
+        let grants = [];
+        ctx.v1.user.grants.grants.forEach((claim) => {
+          claim.roles.forEach((role) => {
+            grants.push(role);
+          });
+        });
+        api.v1.claims.setClaim("groups", grants);
+      }
+    timeout: 10s
+---
