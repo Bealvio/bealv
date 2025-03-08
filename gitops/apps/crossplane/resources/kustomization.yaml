@@ -4,3 +4,4 @@ resources:
   - applications.yaml
   - org.yaml
   - project.yaml
+  - roles.yaml
