@@ -4,11 +4,11 @@ metadata:
   name: k8s
 spec:
   replicas: 1
-  retentionSize: 80GiB
+  retentionSize: 10GiB
   storage:
     volumeClaimTemplate:
       spec:
-        storageClassName: 'topolvm-hdd'
+        storageClassName: 'disk-hdd'
         resources:
           requests:
-            storage: 100Gi
+            storage: 20Gi
