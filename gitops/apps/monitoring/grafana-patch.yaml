@@ -30,7 +30,7 @@ spec:
       auth_url: 'https://zitadel.bealv.io/oauth/v2/authorize'
       token_url: 'https://zitadel.bealv.io/oauth/v2/token'
       api_url: 'https://zitadel.bealv.io/oidc/v1/userinfo'
-      role_attribute_path: "role_attribute_path = contains('user-roles[*]', 'admins') && 'Admin' || 'Viewer'"
+      role_attribute_path: "contains(keys('urn:zitadel:iam:org:project:roles')[?starts_with(@, 'bealv-')], 'bealv-admin') && 'Admin' || 'Viewer'"
       role_attribute_strict: 'true'
       allow_assign_grafana_admin: 'true'
   deployment:

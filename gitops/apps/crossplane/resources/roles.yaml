@@ -11,18 +11,19 @@ spec:
     projectIdRef:
       name: administration
     roleKey: bealv-admin
+
+# apiVersion: project.zitadel.didactiklabs.io/v1alpha1
+# kind: Grant
+# metadata:
+#   name: bealv-admin
+# spec:
+#   forProvider:
+#     grantedOrgIdRef:
+#       name: bealv
+#     orgIdRef:
+#       name: bealv
+#     projectIdRef:
+#       name: administration
+#     roleKeys:
+#       - bealv-admin
 ---
-apiVersion: project.zitadel.didactiklabs.io/v1alpha1
-kind: Grant
-metadata:
-  name: bealv-admin
-spec:
-  forProvider:
-    grantedOrgIdRef:
-      name: bealv
-    orgIdRef:
-      name: bealv
-    projectIdRef:
-      name: administration
-    roleKeys:
-      - bealv-admin
