@@ -1,0 +1,5 @@
+namespace: velero-ui
+resources:
+  - helmrepo.yaml
+  - helmrelease.yaml
+  - namespace.yaml

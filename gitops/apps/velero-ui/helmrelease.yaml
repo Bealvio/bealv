@@ -1,0 +1,88 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: velero-ui
+  namespace: velero-ui
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: velero-ui
+      version: 0.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: velero-ui
+  values:
+    replicaCount: 1
+    image:
+      repository: otwld/velero-ui
+      pullPolicy: IfNotPresent
+    configuration:
+      logLevel: 'debug'
+      general:
+        secretPassPhrase:
+          useSecret: true
+          key: 'pass_phrase'
+          existingSecret: 'velero-ui-secrets'
+        veleroNamespace: 'velero'
+    rbac:
+      create: true
+      clusterAdministrator: false
+    service:
+      type: ClusterIP
+      port: 3000
+    ingress:
+      # -- Enable ingress controller resource
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: bealv
+        projectcontour.io/websocket-routes: /socket.io
+      hosts:
+        - host: velero.bealv.lan
+          paths:
+            - path: /
+              pathType: Prefix
+            - path: /socket.io
+              pathType: Prefix
+      tls:
+        - secretName: velero-ui-tls
+          hosts:
+            - velero.bealv.lan
+    resources:
+      requests: {}
+      limits: {}
+    env:
+      - name: BASIC_AUTH_ENABLED
+        value: 'true'
+      - name: BASIC_AUTH_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: velero-ui-secrets
+            key: username
+      - name: BASIC_AUTH_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: velero-ui-secrets
+            key: password
+      - name: OAUTH_AUTH_ENABLED
+        value: 'true'
+      - name: OAUTH_NAME
+        value: 'Zitadel'
+      - name: OAUTH_REDIRECT_URI
+        value: 'https://velero.bealv.lan/login'
+      - name: OAUTH_AUTHORIZATION_URL
+        value: 'https://zitadel.bealv.io/oauth/v2/authorize'
+      - name: OAUTH_USER_INFO_URL
+        value: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+      - name: OAUTH_TOKEN_URL
+        value: 'https://zitadel.bealv.io/oauth/v2/token'
+      - name: OAUTH_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: velero-ui-oidc
+            key: attribute.client_id
+      - name: OAUTH_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: velero-ui-oidc
+            key: attribute.client_secret
