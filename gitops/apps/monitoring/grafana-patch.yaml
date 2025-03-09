@@ -5,7 +5,7 @@ metadata:
   labels:
     dashboards: 'grafana'
 spec:
-  version: 11.5.1
+  version: 11.5.2
   config:
     server:
       root_url: https://grafana.bealv.lan
