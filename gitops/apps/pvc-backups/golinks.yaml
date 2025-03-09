@@ -11,5 +11,10 @@ spec:
       - golinks
     includedResources:
       - pvc
-    snapshotMoveData: true
+      - pods
+    snapshotMoveData: false
     ttl: 160h0m0s
+    resourcePolicy:
+      apiGroup: v1
+      kind: ConfigMap
+      name: velero-volume-policies

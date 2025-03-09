@@ -11,5 +11,10 @@ spec:
       - zitadel
     includedResources:
       - pvc
-    snapshotMoveData: true
-    ttl: 160h0m0s
+      - pods
+    snapshotMoveData: false
+    ttl: 160h00s
+    resourcePolicy:
+      apiGroup: v1
+      kind: ConfigMap
+      name: velero-volume-policies
