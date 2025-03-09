@@ -5,6 +5,7 @@ metadata:
   labels: &default
     app: jellyfin
     role: web
+    backup: 'true'
 spec:
   replicas: 1
   strategy:
@@ -14,6 +15,8 @@ spec:
   template:
     metadata:
       labels: *default
+      annotations:
+        backup.velero.io/backup-volumes: config
     spec:
       securityContext:
         fsGroup: 1000
@@ -21,6 +24,13 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: jellyfin
+          resources:
+            requests:
+              memory: 2000Mi
+              cpu: 500m
+            limits:
+              memory: 2000Mi
+              cpu: 500m
           image: jellyfin/jellyfin:10.10.6
           ports:
             - containerPort: 8096

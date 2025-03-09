@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 1m
   path: ./gitops/apps/monitoring/upstream/kube-prometheus/crds
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: infra
@@ -19,7 +19,7 @@ metadata:
 spec:
   interval: 1m
   path: ./gitops/apps/monitoring
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: infra

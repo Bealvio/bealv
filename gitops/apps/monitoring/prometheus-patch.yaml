@@ -3,6 +3,8 @@ kind: Prometheus
 metadata:
   name: k8s
 spec:
+  externalLabels:
+    cluster: bealv
   replicas: 1
   retentionSize: 10GiB
   resources:
