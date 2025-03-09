@@ -7,7 +7,7 @@ spec:
   interval: 60s
   module: http_2xx_didactiklabs
   prober:
-    url: blackbox-exporter.monitoring.svc.cluster.local:19115
+    url: blackbox-exporter.monitoring.svc:19115
   targets:
     ingress:
       namespaceSelector:

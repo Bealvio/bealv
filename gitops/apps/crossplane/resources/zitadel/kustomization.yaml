@@ -1,0 +1,9 @@
+namespace: crossplane-system
+resources:
+  - instancegithub.yaml
+  - administration-app.yaml
+  - public-app.yaml
+  - org.yaml
+  - project.yaml
+  - roles.yaml
+  - actions.yaml

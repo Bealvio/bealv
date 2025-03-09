@@ -19,6 +19,9 @@ spec:
        * @param api
        */
       function mapGitHubOAuth(ctx, api) {
+        if (ctx.v1.externalUser.externalIdpId != "310301624205574694") {
+          return
+        }
         api.setFirstName(ctx.v1.providerInfo.name);
         api.setLastName(ctx.v1.providerInfo.name);
       }
@@ -54,6 +57,67 @@ spec:
           });
         });
         api.v1.claims.setClaim("groups", grants);
+      }
+    timeout: 10s
+---
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: Action
+metadata:
+  name: addadmingrant
+spec:
+  forProvider:
+    allowedToFail: true
+    name: addAdminGrant
+    orgIdRef:
+      name: bealv
+    script: |
+      /**
+       * Add a usergrant to a new created/registered user
+       *
+       * Flow: Internal Authentication or External Authentication, Trigger: Post creation
+       *
+       * @param ctx
+       * @param api
+       */
+      function addAdminGrant(ctx, api) {
+        if (ctx.v1.externalUser.externalIdpId != "310301624205574694") {
+          return
+        }
+        api.userGrants.push({
+            projectID: '310301928460386854',
+            roles: ['bealv-admin']
+        });
+        api.userGrants.push({
+            projectID: '310416503256121894',
+            roles: ['public-admin']
+        });
+      }
+    timeout: 10s
+---
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: Action
+metadata:
+  name: addpublicgrant
+spec:
+  forProvider:
+    allowedToFail: true
+    name: addPublicGrant
+    orgIdRef:
+      name: bealv
+    script: |
+      /**
+       * Add a usergrant to a new created/registered user
+       *
+       * Flow: Internal Authentication or External Authentication, Trigger: Post creation
+       *
+       * @param ctx
+       * @param api
+       */
+      function addPublicGrant(ctx, api) {
+        api.userGrants.push({
+            projectID: '310416503256121894',
+            roles: ['public-user']
+        });
       }
     timeout: 10s
 ---

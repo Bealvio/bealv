@@ -37,9 +37,9 @@ data:
       ],
       "menuLinks": [
           {
-              "name": "Request on Ombi",
+              "name": "Request on Jellyseerr",
               "icon": "cloud_download",
-              "url": "https://ombi.bealv.io/"
+              "url": "https://jellyseerr.bealv.io/"
           },
           {
               "name": "Download Jellyfin Client",

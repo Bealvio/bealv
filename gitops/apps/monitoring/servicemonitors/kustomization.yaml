@@ -4,6 +4,7 @@ resources:
   - notificationcontroller.yaml
   - sourcecontroller.yaml
   - ingress-contour.yaml
+  - ingress-contour-external.yaml
   - cert-manager.yaml
   - velero.yaml
   - servicemonitors-rbacs.yaml

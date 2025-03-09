@@ -1,4 +1,4 @@
-name: ingress-contour Update
+name: grafana Oci App update
 scms:
   default:
     kind: 'github'
@@ -12,22 +12,24 @@ scms:
       branch: 'main'
 sources:
   default:
-    name: Get value from json
     scmid: 'default'
-    kind: json
+    name: get grafana image tag
+    kind: yaml
     spec:
-      file: npins/sources.json
-      key: pins.contour.version
-  contour:
+      file: 'gitops/apps/monitoring/grafana-patch.yaml'
+      key: '$.spec.version'
+  grafana:
     kind: githubrelease
     spec:
-      owner: 'projectcontour'
-      repository: 'contour'
+      owner: 'grafana'
+      repository: 'grafana'
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
       versionfilter:
         kind: semver
         pattern: '*'
+    transformers:
+      - trimprefix: 'v'
 conditions:
   default:
     name: Check if version is the same
@@ -37,27 +39,23 @@ conditions:
     spec:
       environments:
         - name: PATH
-      command: test "{{ source `contour` }}" !=
+      command: test "{{ source `grafana` }}" !=
 targets:
   default:
-    name: contour npins update {{ source `contour` }}
-    kind: shell
     scmid: 'default'
+    name: update grafana image tag
+    kind: yaml
     disablesourceinput: true
     spec:
-      environments:
-        - name: PATH
-        - name: NIX_PATH
-      command: |
-        set -e
-        nix run nixpkgs#npins -- add --name contour github projectcontour contour --at {{ source `contour` }}
-        nix-shell shell.nix --run "buildIngressContour"
+      file: 'gitops/apps/monitoring/grafana-patch.yaml'
+      key: '$.spec.version'
+      value: '{{ source `grafana` }}'
 actions:
   default:
     kind: 'github/pullrequest'
     scmid: 'default'
     spec:
       automerge: false
-      description: 'Update ingress-contour npins.'
+      description: 'Update helm charts.'
       draft: false
-      title: 'UPDATECLI: Update ingress-contour'
+    title: 'UPDATECLI: grafana Oci App update'

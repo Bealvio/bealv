@@ -58,8 +58,6 @@ spec:
               mountPath: /animes
             - name: movies
               mountPath: /movies
-            - name: transcode
-              mountPath: /transcode
             - name: configjson
               mountPath: /jellyfin/jellyfin-web/config.json
               subPath: config.json
@@ -79,9 +77,6 @@ spec:
         - name: movies
           persistentVolumeClaim:
             claimName: movies
-        - name: transcode
-          persistentVolumeClaim:
-            claimName: transcode
         - name: cache
           persistentVolumeClaim:
             claimName: cache

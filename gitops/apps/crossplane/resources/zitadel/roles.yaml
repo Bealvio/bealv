@@ -1,0 +1,41 @@
+apiVersion: project.zitadel.didactiklabs.io/v1alpha1
+kind: Role
+metadata:
+  name: bealv-admin
+spec:
+  forProvider:
+    displayName: bealv-admin
+    group: bealv-admin
+    orgIdRef:
+      name: bealv
+    projectIdRef:
+      name: administration
+    roleKey: bealv-admin
+---
+apiVersion: project.zitadel.didactiklabs.io/v1alpha1
+kind: Role
+metadata:
+  name: public-admin
+spec:
+  forProvider:
+    displayName: public-admin
+    group: public-admin
+    orgIdRef:
+      name: bealv
+    projectIdRef:
+      name: public
+    roleKey: public-admin
+---
+apiVersion: project.zitadel.didactiklabs.io/v1alpha1
+kind: Role
+metadata:
+  name: public-user
+spec:
+  forProvider:
+    displayName: public-user
+    group: public-user
+    orgIdRef:
+      name: bealv
+    projectIdRef:
+      name: public
+    roleKey: public-user

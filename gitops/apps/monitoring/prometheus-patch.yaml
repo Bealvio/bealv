@@ -5,6 +5,13 @@ metadata:
 spec:
   replicas: 1
   retentionSize: 10GiB
+  resources:
+    requests:
+      cpu: 1
+      memory: 700Mi
+    limits:
+      cpu: 1
+      memory: 700Mi
   storage:
     volumeClaimTemplate:
       spec:

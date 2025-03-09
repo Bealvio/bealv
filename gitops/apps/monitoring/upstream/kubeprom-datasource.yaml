@@ -33,7 +33,7 @@ spec:
     url: 'http://alertmanager-main.monitoring.svc:9093'
     jsonData:
       implementation: prometheus
-      'tlsSkipVerify': true
-      'timeInterval': '5s'
+      tlsSkipVerify: true
+      timeInterval: '5s'
     isDefault: true
 

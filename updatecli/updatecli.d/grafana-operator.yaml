@@ -1,4 +1,4 @@
-name: ingress-contour Update
+name: grafana-operator Update
 scms:
   default:
     kind: 'github'
@@ -17,12 +17,12 @@ sources:
     kind: json
     spec:
       file: npins/sources.json
-      key: pins.contour.version
-  contour:
+      key: pins.grafana-operator.version
+  grafana-operator:
     kind: githubrelease
     spec:
-      owner: 'projectcontour'
-      repository: 'contour'
+      owner: 'grafana'
+      repository: 'grafana-operator'
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
       username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
       versionfilter:
@@ -37,10 +37,10 @@ conditions:
     spec:
       environments:
         - name: PATH
-      command: test "{{ source `contour` }}" !=
+      command: test "{{ source `grafana-operator` }}" !=
 targets:
   default:
-    name: contour npins update {{ source `contour` }}
+    name: grafana-operator npins update {{ source `grafana-operator` }}
     kind: shell
     scmid: 'default'
     disablesourceinput: true
@@ -50,14 +50,24 @@ targets:
         - name: NIX_PATH
       command: |
         set -e
-        nix run nixpkgs#npins -- add --name contour github projectcontour contour --at {{ source `contour` }}
-        nix-shell shell.nix --run "buildIngressContour"
+        nix run nixpkgs#npins -- add --name grafana-operator github grafana-operator grafana-operator --at {{ source `grafana-operator` }}
+        nix-shell shell.nix --run "buildKubeProm"
+  image:
+    scmid: 'default'
+    name: update grafana image tag to {{ source `grafana-operator` }}
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      engine: yamlpath
+      file: 'gitops/apps/monitoring/kustomization.yaml'
+      key: '$.images[?(@.name == "ghcr.io/grafana/grafana-operator")].newTag'
+      value: '{{ source `grafana-operator` }}'
 actions:
   default:
     kind: 'github/pullrequest'
     scmid: 'default'
     spec:
       automerge: false
-      description: 'Update ingress-contour npins.'
+      description: 'Update grafana-operator npins.'
       draft: false
-      title: 'UPDATECLI: Update ingress-contour'
+      title: 'UPDATECLI: Update grafana-operator'

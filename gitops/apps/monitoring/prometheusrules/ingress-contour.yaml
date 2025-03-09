@@ -9,43 +9,53 @@ spec:
       rules:
         - alert: ContourIngressUnavailable
           expr: |
-            sum(rate(envoy_cluster_upstream_rq_xx{envoy_cluster_name=~".*contour.*", code="503"}[5m])) > 0
+            sum by (envoy_cluster_name) (
+              rate(envoy_cluster_upstream_rq_xx{envoy_cluster_name=~".*contour.*", code="503"}[5m])
+            ) > 0
           for: 5m
           labels:
             severity: warning
           annotations:
             summary: 'Contour ingress is unavailable ({{ $labels.envoy_cluster_name }})'
-            description: 'Contour ingress is experiencing 503 errors for the last 5 minutes.'
+            description: 'Contour ingress ({{ $labels.envoy_cluster_name }}) is experiencing 503 errors for the last 5 minutes.'
         - alert: ContourIngressErrorRateHigh
           expr: |
-            sum(rate(envoy_cluster_upstream_rq_xx{envoy_cluster_name=~".*", code=~"5.."}[5m]))
+            sum by (envoy_cluster_name) (
+              rate(envoy_cluster_upstream_rq_xx{envoy_cluster_name=~".*contour.*", code=~"5.."}[5m])
+            )
             /
-            sum(rate(envoy_cluster_upstream_rq_total{envoy_cluster_name=~".*"}[5m])) > 0.05
+            sum by (envoy_cluster_name) (
+              rate(envoy_cluster_upstream_rq_total{envoy_cluster_name=~".*contour.*"}[5m])
+            ) > 0.05
           for: 10m
           labels:
             severity: critical
           annotations:
             summary: 'High error rate for Contour ingress ({{ $labels.envoy_cluster_name }})'
             description: |
-              Contour ingress has a high error rate (5xx responses) for the last 10 minutes.
+              Contour ingress ({{ $labels.envoy_cluster_name }}) has a high error rate (5xx responses) for the last 10 minutes.
               Current error rate: {{ $value | printf "%.2f" }}.
         - alert: ContourIngressLatencyHigh
           expr: |
-            histogram_quantile(0.90, sum(rate(envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name=~".*"}[5m])) by (le, envoy_cluster_name)) > 1000
+            histogram_quantile(0.90, sum by (le, envoy_cluster_name) (
+              rate(envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name=~".*contour.*"}[5m])
+            )) > 1000
           for: 5m
           labels:
             severity: info
           annotations:
             summary: 'High latency detected for Contour ingress ({{ $labels.envoy_cluster_name }})'
             description: |
-              Contour ingress is experiencing high latency (90th percentile > 1000ms) over the last 5 minutes.
+              Contour ingress ({{ $labels.envoy_cluster_name }}) is experiencing high latency (90th percentile > 1000ms) over the last 5 minutes.
         - alert: ContourIngressLatencyVeryHigh
           expr: |
-            histogram_quantile(0.50, sum(rate(envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name=~".*"}[5m])) by (le, envoy_cluster_name)) > 1000
+            histogram_quantile(0.50, sum by (le, envoy_cluster_name) (
+              rate(envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name=~".*contour.*"}[5m])
+            )) > 1000
           for: 5m
           labels:
             severity: critical
           annotations:
             summary: 'High latency detected for Contour ingress ({{ $labels.envoy_cluster_name }})'
             description: |
-              Contour ingress is experiencing high latency (50th percentile > 1000ms) over the last 5 minutes.
+              Contour ingress ({{ $labels.envoy_cluster_name }}) is experiencing high latency (50th percentile > 1000ms) over the last 5 minutes.

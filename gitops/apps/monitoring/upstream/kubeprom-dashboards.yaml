@@ -161,6 +161,54 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
+  name: grafanadashboard-from-configmap-grafana-dashboard-k8s-resources-windows-cluster
+spec:
+  folder: Kube-Prometheus
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  resyncPeriod: 1m
+  configMapRef:
+    name: grafana-dashboard-k8s-resources-windows-cluster
+    key: k8s-resources-windows-cluster.json
+---
+
+
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: grafanadashboard-from-configmap-grafana-dashboard-k8s-resources-windows-namespace
+spec:
+  folder: Kube-Prometheus
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  resyncPeriod: 1m
+  configMapRef:
+    name: grafana-dashboard-k8s-resources-windows-namespace
+    key: k8s-resources-windows-namespace.json
+---
+
+
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: grafanadashboard-from-configmap-grafana-dashboard-k8s-resources-windows-pod
+spec:
+  folder: Kube-Prometheus
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  resyncPeriod: 1m
+  configMapRef:
+    name: grafana-dashboard-k8s-resources-windows-pod
+    key: k8s-resources-windows-pod.json
+---
+
+
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
   name: grafanadashboard-from-configmap-grafana-dashboard-k8s-resources-workload
 spec:
   folder: Kube-Prometheus
@@ -187,6 +235,38 @@ spec:
   configMapRef:
     name: grafana-dashboard-k8s-resources-workloads-namespace
     key: k8s-resources-workloads-namespace.json
+---
+
+
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: grafanadashboard-from-configmap-grafana-dashboard-k8s-windows-cluster-rsrc-use
+spec:
+  folder: Kube-Prometheus
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  resyncPeriod: 1m
+  configMapRef:
+    name: grafana-dashboard-k8s-windows-cluster-rsrc-use
+    key: k8s-windows-cluster-rsrc-use.json
+---
+
+
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: grafanadashboard-from-configmap-grafana-dashboard-k8s-windows-node-rsrc-use
+spec:
+  folder: Kube-Prometheus
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  resyncPeriod: 1m
+  configMapRef:
+    name: grafana-dashboard-k8s-windows-node-rsrc-use
+    key: k8s-windows-node-rsrc-use.json
 ---
 
 

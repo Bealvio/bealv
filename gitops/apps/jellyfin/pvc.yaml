@@ -55,20 +55,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: transcode
-  annotations:
-    nfs.io/storage-path: '/prod-k8s/media/transcode'
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: hddb
-  resources:
-    requests:
-      storage: 1000Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: cache
 spec:
   storageClassName: disk-hdd

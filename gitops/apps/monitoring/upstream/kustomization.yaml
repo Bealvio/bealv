@@ -17,6 +17,10 @@ patches:
     target:
       kind: NetworkPolicy
       name: prometheus-k8s
+  - path: kubeprom-grafana-alertmanager-netpol-patch.yaml
+    target:
+      kind: NetworkPolicy
+      name: alertmanager-main
   - path: kubeprom-service-patch.yaml
     target:
       kind: Service

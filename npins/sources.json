@@ -30,11 +30,50 @@
       "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.30.2",
       "hash": "0z0s50laxckaap6kdhb7faisrjl17dzjfqbcvdybch3vffwwmmms"
     },
+    "grafana-operator": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "grafana",
+        "repo": "grafana-operator"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "version": "v5.16.0",
+      "revision": "cef6a54a689a865aacd280a345dd4920344a3074",
+      "url": "https://api.github.com/repos/grafana/grafana-operator/tarball/v5.16.0",
+      "hash": "0zsn00w5igf9z7yyv77krixb8akcgv8p36s4d1xyrd5i2k225ga5"
+    },
+    "kube-prometheus": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "prometheus-operator",
+        "repo": "kube-prometheus"
+      },
+      "branch": "main",
+      "revision": "baf3c7a71ec9f889644231f677f8708791d38293",
+      "url": "https://github.com/prometheus-operator/kube-prometheus/archive/baf3c7a71ec9f889644231f677f8708791d38293.tar.gz",
+      "hash": "0l7c0ifmywcmvxm1dmkb5jrj0j93llh83n80nxnr2x2a10cm7bss"
+    },
+    "kubevirt-monitoring": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "kubevirt",
+        "repo": "monitoring"
+      },
+      "branch": "main",
+      "revision": "234f65f076465b7f96edd23a028fd943000a3493",
+      "url": "https://github.com/kubevirt/monitoring/archive/234f65f076465b7f96edd23a028fd943000a3493.tar.gz",
+      "hash": "02gjb8a0lwv6kwa95wvg05038vw26hfmzngv8d06nsq73ldh1cf7"
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-24.11",
-      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.712909.1dab772dd4a6/nixexprs.tar.xz",
-      "hash": "0315192iph30ziqlf68vx86qxh9ibcyfz65acnvdqjiarky7mcd4"
+      "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.715401.20755fa05115/nixexprs.tar.xz",
+      "hash": "1bl0r0axzk3swpa2cph7zgsh576xvr179slga38ww0x562hln7gf"
     }
   },
   "version": 3

@@ -38,6 +38,26 @@ spec:
           value: 'info'
       equal:
         - namespace
+    - sourceMatch:
+        - matchType: '='
+          name: 'alertname'
+          value: 'CPUThrottlingHigh'
+      targetMatch:
+        - matchType: '=~'
+          name: 'alertname'
+          value: '.*'
+      equal:
+        - namespace
+    - sourceMatch:
+        - matchType: '='
+          name: 'namespace'
+          value: 'monitoring'
+      targetMatch:
+        - matchType: '=~'
+          name: 'alertname'
+          value: '.*'
+      equal:
+        - namespace
   route:
     repeatInterval: 12h
     receiver: discord
