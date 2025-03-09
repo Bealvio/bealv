@@ -1,0 +1,15 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: golinks-data
+  namespace: velero
+spec:
+  schedule: 0 12 * * *
+  template:
+    defaultVolumesToFsBackup: true
+    includedNamespaces:
+      - golinks
+    includedResources:
+      - pvc
+    snapshotMoveData: true
+    ttl: 160h0m0s
