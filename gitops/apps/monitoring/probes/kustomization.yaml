@@ -1,4 +1,0 @@
-resources:
-  - kube-apiserver.yaml
-  - ingress.yaml
-  - ingress-rbacs.yaml

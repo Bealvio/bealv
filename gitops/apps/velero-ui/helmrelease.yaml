@@ -27,7 +27,7 @@ spec:
         veleroNamespace: 'velero'
     rbac:
       create: true
-      clusterAdministrator: true
+      clusterAdministrator: false
     service:
       type: ClusterIP
       port: 3000

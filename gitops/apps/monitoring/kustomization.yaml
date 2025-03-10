@@ -1,47 +1,11 @@
 resources:
-  - upstream/
-  - grafana-alerts/
-  - grafana-dashboards/
   - servicemonitors/
-  - prometheusrules/
-  - probes/
-  - kubestatemetrics-cm.yaml
-  - kubestatemetrics-rbacs.yaml
-  - grafana-folder.yaml
-  - grafana-contactpoints.yaml
-  - grafana-notificationpolicies.yaml
+  - grafana.yaml
   - grafana-ing.yaml
-  - grafana-netpol.yaml
   - alertmanager-config.yaml
   - secrets.yaml
-images:
-  - name: ghcr.io/grafana/grafana-operator
-    newTag: 'v5.16.0'
-patches:
-  - path: blackbox-exporter-patch.yaml
-    target:
-      kind: Deployment
-      name: blackbox-exporter
-  - path: kubestatemetrics-patch.yaml
-    target:
-      kind: Deployment
-      name: kube-state-metrics
-  - path: grafana-patch.yaml
-    target:
-      kind: Grafana
-      name: grafana
-  - path: prometheus-patch.yaml
-    target:
-      kind: Prometheus
-      name: k8s
-  - path: alertmanager-patch.yaml
-    target:
-      kind: Alertmanager
-      name: main
-  - path: blackbox-exporter-cm-patch.yaml
-    target:
-      kind: ConfigMap
-      name: blackbox-exporter-configuration
+  - grafana-prom-netpol.yaml
+  - grafana-netpol.yaml
 transformers:
   - |-
     apiVersion: builtin

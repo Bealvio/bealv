@@ -66,11 +66,12 @@ spec:
       - namespace
       - exported_namespace
       - name
+      - cluster
     routes:
       - matchers:
           - matchType: '=~'
             name: 'alertname'
-            value: 'InfoInhibitor|Watchdog|KubeCPUOvercommit|KubeMemoryOvercommit|CDIDefaultStorageClassDegraded|KubeVirtNoAvailableNodesToRunVMs|LowKVMNodesCount|KubeVirtDeprecatedAPIRequested'
+            value: 'CPUThrottlingHigh|KubeSchedulerDown|KubeControllerManagerDown|InfoInhibitor|Watchdog|KubeCPUOvercommit|KubeMemoryOvercommit|CDIDefaultStorageClassDegraded|KubeVirtNoAvailableNodesToRunVMs|LowKVMNodesCount|KubeVirtDeprecatedAPIRequested'
         receiver: 'null'
   receivers:
     - name: 'null'

@@ -1,9 +1,11 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: Grafana
 metadata:
-  name: grafana
+  name: grafana-general
   labels:
     dashboards: 'grafana'
+    app: grafana-general
+    alertmanager-default: 'true'
 spec:
   version: 11.5.2
   config:
@@ -13,9 +15,6 @@ spec:
       mode: 'console'
     auth:
       disable_login_form: 'true'
-    security:
-      admin_user: admin
-      admin_password: admin
     auth.generic_oauth:
       enabled: 'true'
       name: 'Zitadel SSO'

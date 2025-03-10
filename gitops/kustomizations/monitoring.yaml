@@ -1,27 +1,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: monitoring-crds
-  namespace: flux-system
-spec:
-  interval: 1m
-  path: ./gitops/apps/monitoring/upstream/kube-prometheus/crds
-  prune: false
-  sourceRef:
-    kind: GitRepository
-    name: infra
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: monitoring
+  name: monitoring-general
   namespace: flux-system
 spec:
   interval: 1m
   path: ./gitops/apps/monitoring
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: infra
-  dependsOn:
-    - name: monitoring-crds

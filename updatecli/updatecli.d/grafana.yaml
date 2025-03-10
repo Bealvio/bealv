@@ -16,7 +16,7 @@ sources:
     name: get grafana image tag
     kind: yaml
     spec:
-      file: 'gitops/apps/monitoring/grafana-patch.yaml'
+      file: 'gitops/apps/monitoring/grafana.yaml'
       key: '$.spec.version'
   grafana:
     kind: githubrelease
@@ -47,7 +47,7 @@ targets:
     kind: yaml
     disablesourceinput: true
     spec:
-      file: 'gitops/apps/monitoring/grafana-patch.yaml'
+      file: 'gitops/apps/monitoring/grafana.yaml'
       key: '$.spec.version'
       value: '{{ source `grafana` }}'
 actions:
