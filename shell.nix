@@ -11,13 +11,6 @@ pkgs.mkShell {
     pkgs.kustomize
   ];
   packages = [
-    (pkgs.writeShellScriptBin "buildKubeProm" ''
-      #!/bin/bash
-      set -e
-      rm -rf gitops/apps/monitoring/upstream
-      mkdir -p gitops/apps/monitoring/upstream
-      cp -r --no-preserve=mode $(nix-build nix/kube-prometheus.nix)/* gitops/apps/monitoring/upstream/
-    '')
     (pkgs.writeShellScriptBin "buildCnpg" ''
       #!/bin/bash
       set -e
