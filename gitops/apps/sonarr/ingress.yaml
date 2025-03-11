@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sonarr
+  annotations:
+    cert-manager.io/cluster-issuer: bealv
+spec:
+  rules:
+    - host: sonarr.bealv.lan
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: sonarr
+                port:
+                  number: 8989
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - sonarr.bealv.lan
+      secretName: tls-sonarr

@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+    part-of: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - name: sonarr
+          image: ghcr.io/linuxserver/sonarr:4.0.13-develop
+          ports:
+            - name: sonarr
+              containerPort: 8989
+          env:
+            - name: AUTHENTICATION_METHOD
+              value: 'External'
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: 'Europe/Paris'
+            - name: UMASK
+              value: '022'
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sonarr-secrets
+                  key: API_KEY
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /media
+          readinessProbe:
+            tcpSocket:
+              port: sonarr
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: sonarr
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - while [ ! -f /config/config.xml ]; do echo "Waiting for config.xml creation..."; sleep 1; done; sed -i "s/<AuthenticationMethod>.*<\/AuthenticationMethod>/<AuthenticationMethod>$AUTHENTICATION_METHOD<\/AuthenticationMethod>/g" /config/config.xml; sed -i "s/<ApiKey>.*<\/ApiKey>/<ApiKey>$API_KEY<\/ApiKey>/g" /config/config.xml
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: media
+          persistentVolumeClaim:
+            claimName: media
