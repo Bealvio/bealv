@@ -1,0 +1,23 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: sonarr-data
+  namespace: velero
+spec:
+  schedule: 0 12 * * *
+  template:
+    defaultVolumesToFsBackup: true
+    includedNamespaces:
+      - sonarr
+    includedResources:
+      - pvc
+      - pods
+    labelSelector:
+      matchLabels:
+        backup: 'true'
+    snapshotMoveData: false
+    ttl: 160h00s
+    resourcePolicy:
+      apiGroup: v1
+      kind: ConfigMap
+      name: velero-volume-policies
