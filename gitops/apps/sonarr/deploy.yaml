@@ -18,6 +18,13 @@ spec:
       containers:
         - name: sonarr
           image: ghcr.io/linuxserver/sonarr:4.0.13-develop
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 100m
+            limits:
+              memory: 800Mi
+              cpu: 1
           ports:
             - name: sonarr
               containerPort: 8989

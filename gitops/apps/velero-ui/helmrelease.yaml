@@ -18,7 +18,15 @@ spec:
       repository: otwld/velero-ui
       pullPolicy: IfNotPresent
     configuration:
-      logLevel: 'debug'
+      repositoryMaintenanceJob:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          cpu: 1000m
+          memory: 1024Mi
+        latestJobsCount: 1
+      logLevel: 'info'
       general:
         secretPassPhrase:
           useSecret: true
