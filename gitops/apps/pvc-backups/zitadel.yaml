@@ -6,10 +6,12 @@ metadata:
 spec:
   schedule: 0 12 * * *
   template:
+    defaultVolumesToFsBackup: true
     includedNamespaces:
       - zitadel
     includedResources:
       - pvc
+      - pods
     snapshotMoveData: false
     ttl: 160h00s
     resourcePolicy:

@@ -6,10 +6,12 @@ metadata:
 spec:
   schedule: 0 12 * * *
   template:
+    defaultVolumesToFsBackup: true
     includedNamespaces:
       - jellyfin
     includedResources:
       - pvc
+      - pods
     labelSelector:
       matchLabels:
         backup: 'true'
