@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media
+  annotations:
+    nfs.io/storage-path: '/prod-k8s/media'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hdda
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+  labels:
+    backup: 'true'
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

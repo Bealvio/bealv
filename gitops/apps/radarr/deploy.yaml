@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  labels:
+    app: radarr
+    part-of: radarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+      annotations:
+        backup.velero.io/backup-volumes: config
+    spec:
+      containers:
+        - name: radarr
+          image: ghcr.io/linuxserver/radarr:5.20.1-nightly
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 100m
+            limits:
+              memory: 800Mi
+              cpu: 1
+          ports:
+            - name: radarr
+              containerPort: 7878
+          env:
+            - name: AUTHENTICATION_METHOD
+              value: 'External'
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: 'Europe/Paris'
+            - name: UMASK
+              value: '022'
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: radarr-secrets
+                  key: API_KEY
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /media
+          readinessProbe:
+            tcpSocket:
+              port: radarr
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: radarr
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - while [ ! -f /config/config.xml ]; do echo "Waiting for config.xml creation..."; sleep 1; done; sed -i "s/<AuthenticationMethod>.*<\/AuthenticationMethod>/<AuthenticationMethod>$AUTHENTICATION_METHOD<\/AuthenticationMethod>/g" /config/config.xml; sed -i "s/<ApiKey>.*<\/ApiKey>/<ApiKey>$API_KEY<\/ApiKey>/g" /config/config.xml
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: media
+          persistentVolumeClaim:
+            claimName: media
