@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  labels:
+    app: bazarr
+    part-of: bazarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bazarr
+  template:
+    metadata:
+      labels:
+        app: bazarr
+      annotations:
+        backup.velero.io/backup-volumes: config
+    spec:
+      containers:
+        - name: bazarr
+          image: ghcr.io/linuxserver/bazarr:1.5.2-development
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 100m
+            limits:
+              memory: 800Mi
+              cpu: 1
+          ports:
+            - name: bazarr
+              containerPort: 6767
+          env:
+            - name: AUTHENTICATION_METHOD
+              value: 'External'
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: 'Europe/Paris'
+            - name: UMASK
+              value: '022'
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: media
+              mountPath: /media
+          readinessProbe:
+            tcpSocket:
+              port: bazarr
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: bazarr
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: media
+          persistentVolumeClaim:
+            claimName: media
