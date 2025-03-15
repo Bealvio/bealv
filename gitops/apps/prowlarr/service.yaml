@@ -9,3 +9,15 @@ spec:
       targetPort: prowlarr
   selector:
     app: prowlarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8191
+      targetPort: flaresolverr
+  selector:
+    app: flaresolverr

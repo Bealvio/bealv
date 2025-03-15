@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qbittorrent
+  annotations:
+    cert-manager.io/cluster-issuer: bealv
+spec:
+  rules:
+    - host: qbittorrent.bealv.lan
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - qbittorrent.bealv.lan
+      secretName: tls-qbittorrent

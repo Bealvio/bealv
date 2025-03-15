@@ -94,7 +94,7 @@ spec:
     spec:
       containers:
         - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:v3.3.12 # {"$imagepolicy": "prowlarr:flaresolverr"}
+          image: ghcr.io/flaresolverr/flaresolverr:v3.3.12
           ports:
             - name: flaresolverr
               containerPort: 8191

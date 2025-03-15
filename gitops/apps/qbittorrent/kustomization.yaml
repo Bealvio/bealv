@@ -1,0 +1,9 @@
+namespace: qbittorrent
+resources:
+  - deploy.yaml
+  - pvcs.yaml
+  - service.yaml
+  - secrets.yaml
+  - namespace.yaml
+  - ingress.yaml
+  - oauth2-proxy

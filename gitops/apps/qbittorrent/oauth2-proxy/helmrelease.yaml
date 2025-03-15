@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: oauth2-proxy
+spec:
+  interval: 1h0m0s
+  chart:
+    spec:
+      chart: oauth2-proxy
+      version: 7.12.6
+      sourceRef:
+        kind: HelmRepository
+        name: oauth2-proxy
+  values:
+    config:
+      configFile: |-
+        email_domains = [ "*" ]
+        provider = "oidc"
+        user_id_claim = "sub" #uses the subject as ID instead of the email
+        provider_display_name = "ZITADEL"
+        pass_access_token = true
+        skip_provider_button = true
+        cookie_secure = false #localdev only false
+        upstreams = [
+          "http://qbittorrent.qbittorrent:8080"
+        ]
+        redirect_url = "https://qbittorrent.bealv.lan/oauth2/callback"
+        oidc_issuer_url = "https://zitadel.bealv.io"
+    image:
+      repository: 'quay.io/oauth2-proxy/oauth2-proxy'
+    extraEnv:
+      - name: OAUTH2_PROXY_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: qbittorrent-oidc
+            key: attribute.client_id
+      - name: OAUTH2_PROXY_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: qbittorrent-oidc
+            key: attribute.client_secret
+      - name: OAUTH2_PROXY_COOKIE_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: oauth2-proxy-secrets
+            key: cookie-secret
+    resources:
+      limits:
+        cpu: 100m
+        memory: 300Mi
+      requests:
+        cpu: 100m
+        memory: 300Mi
+    # Whether to use secrets instead of environment values for setting up OAUTH2_PROXY variables
+    proxyVarsAsSecrets: false
+    replicaCount: 1
+    podDisruptionBudget:
+      enabled: false
+      minAvailable: 1
+    # whether to use http or https
+    httpScheme: http
