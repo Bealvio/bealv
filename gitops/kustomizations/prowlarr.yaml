@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: prowlarr
+  namespace: flux-system
+spec:
+  interval: 1m
+  path: ./gitops/apps/prowlarr
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: infra
