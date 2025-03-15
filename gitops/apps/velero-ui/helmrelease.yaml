@@ -45,6 +45,8 @@ spec:
       annotations:
         cert-manager.io/cluster-issuer: bealv
         projectcontour.io/websocket-routes: /socket.io
+      labels:
+        probe: enabled
       hosts:
         - host: velero.bealv.lan
           paths:
