@@ -54,6 +54,13 @@ spec:
     # Immich components
     server:
       enabled: true
+      resources:
+        requests:
+          cpu: 200m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
       serviceAccount:
         create: true
         name: 'immich'
@@ -63,5 +70,12 @@ spec:
           enabled: false
     machine-learning:
       enabled: true
+      resources:
+        requests:
+          cpu: 200m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi
       env:
         TRANSFORMERS_CACHE: /cache
