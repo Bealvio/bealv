@@ -8,4 +8,5 @@ resources:
   - namespace.yaml
   - secrets.yaml
   - pvcs.yaml
+  - flaresolverr.yaml
   - oauth2-proxy
