@@ -92,7 +92,9 @@ spec:
     projectIdRef:
       name: public
     redirectUris:
-      - https://immich.bealv.io/oauth2/callback
+      - https://immich.bealv.io/auth/login
+      - https://immich.bealv.io/user-settings
+      - app.immich:///oauth-callback
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
