@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: requestrr
+  labels: &default
+    app: requestrr
+    part-of: requestrr
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: requestrr
+          env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: UMASK
+              value: '002'
+            - name: TZ
+              value: 'Europe/Paris'
+          image: ghcr.io/hotio/requestrr:release-2.1.7
+          ports:
+            - name: requestrr
+              containerPort: 4545
+          volumeMounts:
+            - name: config
+              mountPath: /config
+          readinessProbe:
+            tcpSocket:
+              port: requestrr
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: requestrr
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config

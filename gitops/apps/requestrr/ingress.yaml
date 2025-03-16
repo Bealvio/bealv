@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: requestrr
+  annotations:
+    cert-manager.io/cluster-issuer: bealv
+spec:
+  rules:
+    - host: requestrr.bealv.lan
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - requestrr.bealv.lan
+      secretName: tls-requestrr
