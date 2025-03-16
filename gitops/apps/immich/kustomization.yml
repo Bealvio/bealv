@@ -1,0 +1,9 @@
+namespace: immich
+resources:
+  - cnpg.yaml
+  - helmrelease.yaml
+  - helmrepo.yaml
+  - ingress.yaml
+  - namespace.yml
+  - pvc.yml
+  - secrets.yml

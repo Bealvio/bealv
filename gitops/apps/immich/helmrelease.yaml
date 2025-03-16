@@ -1,0 +1,67 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: immich
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: immich
+      version: 0.9.0
+      sourceRef:
+        kind: HelmRepository
+        name: immich
+        namespace: immich
+      interval: 12h
+  values:
+    env:
+      REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+      DB_HOSTNAME: 'immich-postgres-rw'
+      DB_USERNAME: 'immich'
+      DB_DATABASE_NAME: 'immich'
+      IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+      DB_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: immich-secrets
+    image:
+      tag: v1.125.7
+    immich:
+      metrics:
+        enable: false
+      probes:
+        liveness:
+          spec:
+            initialDelaySeconds: 300
+        readiness:
+          spec:
+            initialDelaySeconds: 300
+        startup:
+          spec:
+            failureThreshold: 60
+            periodSeconds: 10
+      persistence:
+        library:
+          existingClaim: immich-data
+    redis:
+      enabled: true
+      clusterDomain: bealv.local
+      architecture: replication
+      replica:
+        resourcesPreset: 'micro'
+    # Immich components
+    server:
+      enabled: true
+      serviceAccount:
+        create: true
+        name: 'immich'
+      automountServiceAccountToken: true
+      ingress:
+        main:
+          enabled: false
+    machine-learning:
+      enabled: true
+      env:
+        TRANSFORMERS_CACHE: /cache
