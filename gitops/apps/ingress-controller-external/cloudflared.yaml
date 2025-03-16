@@ -91,4 +91,5 @@ data:
       service: http://zitadel.zitadel:8080
       originRequest:
         http2Origin: true
+        noTLSVerify: true
     - service: http://envoy

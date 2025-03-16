@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ombi
+  annotations:
+    cert-manager.io/cluster-issuer: bealvio
+    external-dns.alpha.kubernetes.io/target: 550e0dbd-4087-47b2-ba9e-e5622e40b399.cfargotunnel.com
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+spec:
+  ingressClassName: 'external'
+  rules:
+    - host: ombi.bealv.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - ombi.bealv.io
+      secretName: tls-ombi

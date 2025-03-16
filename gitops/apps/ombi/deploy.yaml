@@ -1,0 +1,90 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ombi
+  labels:
+    app: ombi
+    part-of: ombi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ombi
+      part-of: ombi
+  template:
+    metadata:
+      labels:
+        app: ombi
+        part-of: ombi
+    spec:
+      containers:
+        - name: ombi
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 200m
+            limits:
+              memory: 800Mi
+              cpu: 1
+          image: ghcr.io/linuxserver/ombi:4.47.2-development
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - '-c'
+                  - |
+                    cat << EOF > /config/database.json
+                    {
+                      "OmbiDatabase": {
+                        "Type": "Postgres",
+                        "ConnectionString": "Server=ombi-postgres-rw;Port=5432;Database=$DATABASE;Username=$DB_USER;Password=$DB_PASSWORD"
+                      },
+                      "SettingsDatabase": {
+                        "Type": "Postgres",
+                        "ConnectionString": "Server=ombi-postgres-rw;Port=5432;Database=$DATABASE;Username=$DB_USER;Password=$DB_PASSWORD"
+                      },
+                      "ExternalDatabase": {
+                        "Type": "Postgres",
+                        "ConnectionString": "Server=ombi-postgres-rw;Port=5432;Database=$DATABASE;Username=$DB_USER;Password=$DB_PASSWORD"
+                      }
+                    }
+                    EOF
+          ports:
+            - name: ombi
+              containerPort: 3579
+          env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: UMASK
+              value: '022'
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ombi-secrets
+                  key: username
+            - name: DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: ombi-secrets
+                  key: database
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ombi-secrets
+                  key: password
+          readinessProbe:
+            httpGet:
+              path: /api/v1/Status
+              port: ombi
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/Status
+              port: ombi
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---

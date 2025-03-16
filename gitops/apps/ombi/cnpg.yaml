@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ombi-postgres
+spec:
+  instances: 1
+  storage:
+    size: 10Gi
+  bootstrap:
+    initdb:
+      database: ombi
+      owner: ombi
+      secret:
+        name: ombi-secrets
