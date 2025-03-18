@@ -1,0 +1,22 @@
+apiVersion: idp.zitadel.didactiklabs.io/v1alpha1
+kind: InstanceGoogle
+metadata:
+  name: google
+spec:
+  forProvider:
+    name: Google
+    clientId: 606938110072-kod4osvqaqvan7rvgjnr8iebfe4tse2q.apps.googleusercontent.com
+    clientSecretSecretRef:
+      name: zitadel-google
+      namespace: crossplane-system
+      key: secretid
+    isAutoCreation: true
+    isAutoUpdate: true
+    isCreationAllowed: true
+    isLinkingAllowed: false
+    scopes:
+      - openid
+      - profile
+      - email
+  providerConfigRef:
+    name: default

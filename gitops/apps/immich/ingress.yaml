@@ -17,6 +17,11 @@ spec:
         paths:
           - path: /api/socket.io
             pathType: Prefix
+            backend:
+              service:
+                name: immich-server
+                port:
+                  number: 2283
           - path: /
             pathType: Prefix
             backend:

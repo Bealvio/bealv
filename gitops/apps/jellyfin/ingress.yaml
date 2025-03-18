@@ -17,6 +17,11 @@ spec:
         paths:
           - path: /socket
             pathType: Prefix
+            backend:
+              service:
+                name: jellyfin
+                port:
+                  number: 8096
           - path: /
             pathType: Prefix
             backend:
