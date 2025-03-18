@@ -1,0 +1,59 @@
+name: zitadel Oci App update
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+sources:
+  default:
+    scmid: 'default'
+    name: zitadel image tag
+    kind: yaml
+    spec:
+      file: 'gitops/apps/zitadel/helmrelease.yaml'
+      key: 'spec.values.image.tag'
+  zitadel:
+    kind: githubrelease
+    spec:
+      owner: 'zitadel'
+      repository: 'zitadel'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      versionfilter:
+        kind: semver
+        pattern: '*'
+conditions:
+  default:
+    name: Check if version is the same
+    sourceid: 'default'
+    scmid: 'default'
+    kind: shell
+    spec:
+      environments:
+        - name: PATH
+      command: test "{{ source `zitadel` }}" !=
+targets:
+  default:
+    scmid: 'default'
+    name: update zitadel image tag
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: 'gitops/apps/zitadel/helmrelease.yaml'
+      key: 'spec.values.image.tag'
+      value: '{{ source `zitadel` }}'
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update helm charts.'
+      draft: false
+    title: 'UPDATECLI: zitadel Oci App update'

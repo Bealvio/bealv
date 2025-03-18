@@ -3,6 +3,6 @@ resources:
   - cnpg.yaml
   - secrets.yaml
   - namespace.yaml
-  - zitadel-helmrelease.yaml
-  - zitadel-helmrepo.yaml
+  - helmrelease.yaml
+  - helmrepo.yaml
   - ingress.yaml
