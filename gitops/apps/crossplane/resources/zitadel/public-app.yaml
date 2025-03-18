@@ -102,3 +102,38 @@ spec:
   writeConnectionSecretToRef:
     name: immich-oidc
     namespace: immich
+---
+apiVersion: application.zitadel.didactiklabs.io/v1alpha1
+kind: Oidc
+metadata:
+  name: vaultwarden
+spec:
+  forProvider:
+    accessTokenRoleAssertion: false
+    accessTokenType: OIDC_TOKEN_TYPE_BEARER
+    additionalOrigins: []
+    appType: OIDC_APP_TYPE_WEB
+    authMethodType: OIDC_AUTH_METHOD_TYPE_BASIC
+    clockSkew: 0s
+    devMode: false
+    grantTypes:
+      - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
+      - OIDC_GRANT_TYPE_REFRESH_TOKEN
+    idTokenRoleAssertion: false
+    idTokenUserinfoAssertion: false
+    name: vaultwarden
+    orgIdRef:
+      name: bealv
+    postLogoutRedirectUris:
+      - '*'
+    projectIdRef:
+      name: public
+    redirectUris:
+      - https://pass.bealv.io/identity/connect/oidc-signin
+    responseTypes:
+      - OIDC_RESPONSE_TYPE_CODE
+    skipNativeAppSuccessPage: false
+    version: OIDC_VERSION_1_0
+  writeConnectionSecretToRef:
+    name: vaultwarden-oidc
+    namespace: vaultwarden

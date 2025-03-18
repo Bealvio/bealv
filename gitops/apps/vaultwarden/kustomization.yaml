@@ -1,0 +1,8 @@
+namespace: vaultwarden
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deploy.yaml
+  - service.yaml
+  - ingress.yaml
+  - secrets.yaml

@@ -1,0 +1,92 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: vaultwarden
+  labels:
+    app: vaultwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+        - name: vaultwarden
+          image: timshel/vaultwarden:1.33.1-1
+          ports:
+            - name: web
+              containerPort: 80
+          env:
+            - name: DOMAIN
+              value: 'https://pass.bealv.io'
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-secrets
+                  key: admin_token
+            - name: SIGNUPS_ALLOWED
+              value: 'false'
+            - name: INVITATIONS_ALLOWED
+              value: 'false'
+            - name: SHOW_PASSWORD_HINT
+              value: 'false'
+            - name: WEBSOCKET_ENABLED
+              value: 'true'
+            - name: LOG_LEVEL
+              value: 'debug'
+            - name: SSO_ENABLED
+              value: 'true'
+            - name: SSO_SCOPES
+              value: 'openid email email_verified profile offline_access groups'
+            - name: SSO_PKCE
+              value: 'false'
+            - name: SSO_DEBUG_TOKENS
+              value: 'true'
+            - name: SSO_AUDIENCE_TRUSTED
+              value: '^31.*$'
+            - name: SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION
+              value: 'true'
+            - name: SSO_ONLY
+              value: 'true'
+            - name: SSO_ORGANIZATIONS_INVIT
+              value: 'true'
+            - name: SSO_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-oidc
+                  key: attribute.client_id
+            - name: SSO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-oidc
+                  key: attribute.client_secret
+            - name: SSO_AUTHORITY
+              value: 'https://zitadel.bealv.io'
+          readinessProbe:
+            httpGet:
+              path: /
+              port: web
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: web
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              memory: 64Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
