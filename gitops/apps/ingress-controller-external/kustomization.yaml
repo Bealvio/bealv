@@ -5,3 +5,7 @@ resources:
 patches:
   - path: envoy-patch.yaml
   - path: contour-patch.yaml
+  - path: cm-patch.yaml
+    target:
+      kind: ConfigMap
+      name: contour
