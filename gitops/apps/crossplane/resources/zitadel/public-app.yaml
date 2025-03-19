@@ -94,7 +94,7 @@ spec:
     redirectUris:
       - https://immich.bealv.io/auth/login
       - https://immich.bealv.io/user-settings
-      - app.immich:///oauth-callback
+      - https://immich.bealv.io/api/oauth/mobile-redirect
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
