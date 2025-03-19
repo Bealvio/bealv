@@ -18,12 +18,26 @@ spec:
        * @param ctx
        * @param api
        */
+      let logger = require("zitadel/log")
+      let http = require('zitadel/http')
       function mapGitHubOAuth(ctx, api) {
         if (ctx.v1.externalUser.externalIdpId != "310301624205574694") {
           return
         }
+        var accessToken = ctx.accessToken
+        var emails = http.fetch('https://api.github.com/user/emails', {
+            method: 'GET',
+            headers: {
+              'Authorization': 'token ' + ctx.accessToken,
+              'Content-Type': 'application/json',
+              'Accept': 'application/vnd.github+json',
+        }}).json();
+        var primaryEmail = emails.find(email => email.primary === true)?.email;
+        logger.log('Github Email: ' + JSON.stringify(primaryEmail));
         api.setFirstName(ctx.v1.providerInfo.name);
         api.setLastName(ctx.v1.providerInfo.name);
+        api.setEmail(primaryEmail);
+        api.setEmailVerified(true);
       }
     timeout: 10s
 ---
@@ -80,7 +94,11 @@ spec:
        * @param api
        */
       function addAdminGrant(ctx, api) {
-        if (ctx.v1.externalUser.externalIdpId != "310301624205574694") {
+        if (ctx.v1.authRequest.selectedIdpConfigId != "310301624205574694") {
+            api.userGrants.push({
+                projectID: '310416503256121894',
+                roles: ['public-user']
+            });
           return
         }
         api.userGrants.push({
@@ -89,7 +107,7 @@ spec:
         });
         api.userGrants.push({
             projectID: '310416503256121894',
-            roles: ['public-admin']
+            roles: ['public-admin', 'public-user']
         });
       }
     timeout: 10s
@@ -97,27 +115,25 @@ spec:
 apiVersion: zitadel.didactiklabs.io/v1alpha1
 kind: Action
 metadata:
-  name: addpublicgrant
+  name: setemailverified
 spec:
   forProvider:
     allowedToFail: true
-    name: addPublicGrant
+    name: setEmailVerified
     orgIdRef:
       name: bealv
     script: |
       /**
-       * Add a usergrant to a new created/registered user
+       * Set verified email of a user to true.
+       * Useful if external identity provider doesn't send email verified attribute or you like to add all users with a verified email.
        *
-       * Flow: Internal Authentication or External Authentication, Trigger: Post creation
+       * Flow: Internal Authentication or External Authentication, Trigger: Pre Creation
        *
        * @param ctx
        * @param api
        */
-      function addPublicGrant(ctx, api) {
-        api.userGrants.push({
-            projectID: '310416503256121894',
-            roles: ['public-user']
-        });
+      function setEmailVerified(ctx, api) {
+          api.setEmailVerified(true)
       }
     timeout: 10s
 ---

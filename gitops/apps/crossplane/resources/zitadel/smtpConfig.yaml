@@ -1,0 +1,16 @@
+apiVersion: zitadel.didactiklabs.io/v1alpha1
+kind: SmtpConfig
+metadata:
+  name: smtp
+spec:
+  forProvider:
+    host: smtp.gmail.com:587
+    passwordSecretRef:
+      key: password
+      name: smtp-secrets
+      namespace: crossplane
+    replyToAddress: contact.bealv@gmail.com
+    senderAddress: contact.bealv@gmail.com
+    senderName: no-reply
+    tls: true
+    user: contact.bealv@gmail.com
