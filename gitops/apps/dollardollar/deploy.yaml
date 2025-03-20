@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dollardollar-deployment
+  labels:
+    app: dollardollar
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dollardollar
+  template:
+    metadata:
+      labels:
+        app: dollardollar
+    spec:
+      containers:
+        - name: dollardollar
+          image: harung43/dollardollar:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+          env:
+            - name: SQLALCHEMY_DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: dollardollar-secrets
+                  key: SQLALCHEMY_DATABASE_URI
+            - name: DEVELOPMENT_MODE
+              value: 'False'
+            - name: DISABLE_SIGNUPS
+              value: 'True'
+            - name: DEBUG
+              value: 'False'
+            - name: LOG_LEVEL
+              value: 'INFO'
+            - name: LOCAL_LOGIN_DISABLE
+              value: 'True'
+            - name: OIDC_ENABLED
+              value: 'True'
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: dollardollar-oidc
+                  key: attribute.client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: dollardollar-oidc
+                  key: attribute.client_secret
+            - name: OIDC_ISSUER
+              value: 'zitadel.bealv.io'
+            - name: OIDC_DISCOVERY_URL
+              value: 'https://zitadel.bealv.io'
+            - name: OIDC_AUTH_URI
+              value: 'https://zitadel.bealv.io/oauth/v2/authorize'
+            - name: OIDC_TOKEN_URI
+              value: 'https://zitadel.bealv.io/oauth/v2/token'
+            - name: OIDC_USERINFO_URI
+              value: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+            - name: OIDC_LOGOUT_URI
+              value: 'https://zitadel.bealv.io/oidc/v1/end_session'
+            - name: APP_URL
+              value: 'https://money.bealv.io'
+            - name: LOCAL_LOGIN_DISABLE
+              value: 'True'
+            - name: FLASK_dollardollar
+              value: 'dollardollar.py'
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dollardollar-secrets
+                  key: secretkey
+            - name: MAIL_SERVER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: host
+            - name: MAIL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: port
+            - name: MAIL_USE_TLS
+              value: 'true'
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: username
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: password
+            - name: MAIL_DEFAULT_SENDER
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: from

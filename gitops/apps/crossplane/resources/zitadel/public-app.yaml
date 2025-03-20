@@ -163,7 +163,7 @@ spec:
     projectIdRef:
       name: public
     redirectUris:
-      - https://money.bealv.io/oidc/callback
+      - 'https://money.bealv.io/oidc/callback'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false

@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: dollardollar-postgres
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: dollardollar
+      owner: dollardollar
+      secret:
+        name: dollardollar-secrets
+  storage:
+    size: 4Gi
+---
