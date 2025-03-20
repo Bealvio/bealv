@@ -137,3 +137,37 @@ spec:
   writeConnectionSecretToRef:
     name: vaultwarden-oidc
     namespace: vaultwarden
+---
+apiVersion: application.zitadel.didactiklabs.io/v1alpha1
+kind: Oidc
+metadata:
+  name: dollardollar
+spec:
+  forProvider:
+    accessTokenRoleAssertion: false
+    accessTokenType: OIDC_TOKEN_TYPE_BEARER
+    additionalOrigins: []
+    appType: OIDC_APP_TYPE_WEB
+    authMethodType: OIDC_AUTH_METHOD_TYPE_BASIC
+    clockSkew: 0s
+    devMode: false
+    grantTypes:
+      - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
+    idTokenRoleAssertion: false
+    idTokenUserinfoAssertion: false
+    name: dollardollar
+    orgIdRef:
+      name: bealv
+    postLogoutRedirectUris:
+      - '*'
+    projectIdRef:
+      name: public
+    redirectUris:
+      - https://money.bealv.io/oidc/callback
+    responseTypes:
+      - OIDC_RESPONSE_TYPE_CODE
+    skipNativeAppSuccessPage: false
+    version: OIDC_VERSION_1_0
+  writeConnectionSecretToRef:
+    name: dollardollar-oidc
+    namespace: dollardollar
