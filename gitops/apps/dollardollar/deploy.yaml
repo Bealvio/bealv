@@ -64,8 +64,6 @@ spec:
               value: 'https://zitadel.bealv.io/oidc/v1/end_session'
             - name: APP_URL
               value: 'https://money.bealv.io'
-            - name: LOCAL_LOGIN_DISABLE
-              value: 'True'
             - name: FLASK_dollardollar
               value: 'dollardollar.py'
             - name: SECRET_KEY

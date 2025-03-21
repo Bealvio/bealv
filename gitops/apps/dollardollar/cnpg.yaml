@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: dollardollar-postgres
 spec:
-  instances: 1
+  instances: 3
   bootstrap:
     initdb:
       database: dollardollar
