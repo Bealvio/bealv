@@ -54,7 +54,6 @@ spec:
                   - sh
                   - -c
                   - |
-                    sed -i 's/enableBackdrops:function(){return P}/enableBackdrops:function(){return _}/g' /jellyfin/jellyfin-web/main.jellyfin.bundle.js
                     sed -i 's/enableThemeSongs:function(){return w}/enableThemeSongs:function(){return _}/g' /jellyfin/jellyfin-web/main.jellyfin.bundle.js
                     sed -i 's/this.get("libraryPageSize",!1),10);return 0===t?0:t||100}/this.get("libraryPageSize",!1),10);return 0===t?0:t||0}/g' /jellyfin/jellyfin-web/main.jellyfin.bundle.js
           volumeMounts:
