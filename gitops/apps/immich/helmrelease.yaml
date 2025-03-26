@@ -54,6 +54,8 @@ spec:
     # Immich components
     server:
       enabled: true
+      controller:
+        strategy: Recreate
       resources:
         requests:
           cpu: 200m
