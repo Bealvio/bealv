@@ -23,7 +23,7 @@ spec:
         containers:
           - name: runner
             command: ['/home/runner/run.sh']
-            image: banhcanh/action-runner
+            image: banhcanh/action-runner:2.323.0
             resources:
               limits:
                 cpu: '500m'
