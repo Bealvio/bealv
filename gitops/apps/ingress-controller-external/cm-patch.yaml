@@ -8,5 +8,7 @@ data:
     disablePermitInsecure: false
     enableExternalNameService: false
     accesslog-format: envoy
-    cluster:
-      per-connection-buffer-limit-bytes: 1073741824
+    # cluster:
+    #   per-connection-buffer-limit-bytes: 4073741824
+    # listener:
+    #   per-connection-buffer-limit-bytes: 4073741824

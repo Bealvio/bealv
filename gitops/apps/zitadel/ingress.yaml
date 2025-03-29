@@ -3,9 +3,8 @@ kind: Ingress
 metadata:
   name: zitadel
   annotations:
-    external-dns.alpha.kubernetes.io/target: 550e0dbd-4087-47b2-ba9e-e5622e40b399.cfargotunnel.com
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
     cert-manager.io/cluster-issuer: bealvio
+    external-dns.alpha.kubernetes.io/target: bealv.io
   labels:
     probe: enabled
 spec:

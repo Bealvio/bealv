@@ -20,11 +20,12 @@ spec:
           args:
             # Add desired Gateway API Route sources.
             - --source=ingress
-            - --source=service
+            # - --source=service
             - --source=contour-httpproxy
             - --interval=30s
-            - --policy=upsert-only
+            - --policy=sync
             - --domain-filter=bealv.io
+            - --registry=txt
             - --provider=cloudflare
             - --cloudflare-dns-records-per-page=5000
             - --txt-owner-id=bealv

@@ -3,10 +3,9 @@ kind: Ingress
 metadata:
   name: immich
   annotations:
-    external-dns.alpha.kubernetes.io/target: 550e0dbd-4087-47b2-ba9e-e5622e40b399.cfargotunnel.com
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
     cert-manager.io/cluster-issuer: bealvio
     projectcontour.io/websocket-routes: /api/socket.io
+    external-dns.alpha.kubernetes.io/target: bealv.io
   labels:
     probe: enabled
 spec:
