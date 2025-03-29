@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: zot
+    app.kubernetes.io/name: zot
+  name: zot
+spec:
+  ports:
+    - name: zot
+      port: 5000
+      targetPort: zot
+  selector:
+    app.kubernetes.io/instance: zot
+    app.kubernetes.io/name: zot

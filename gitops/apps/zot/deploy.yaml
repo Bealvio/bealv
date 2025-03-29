@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: zot
+      app.kubernetes.io/name: zot
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: zot
+        app.kubernetes.io/name: zot
+    spec:
+      containers:
+        - image: ghcr.io/project-zot/zot-linux-amd64:v2.1.2
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 5000
+            timeoutSeconds: 1
+          name: zot
+          ports:
+            - containerPort: 5000
+              name: zot
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 5000
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 5000
+            timeoutSeconds: 1
+          volumeMounts:
+            - mountPath: /var/lib/registry
+              name: zot-volume
+            - mountPath: /etc/zot
+              name: config
+      serviceAccount: zot
+      serviceAccountName: zot
+      volumes:
+        - name: zot-volume
+          persistentVolumeClaim:
+            claimName: zot-pvc
+        - name: config
+          secret:
+            defaultMode: 420
+            secretName: zot-secrets

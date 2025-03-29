@@ -1,0 +1,11 @@
+namespace: zot
+resources:
+  - namespace.yaml
+  - deploy.yaml
+  - svc.yaml
+  - sa.yaml
+  - pvc.yaml
+  - ingress.yaml
+  - secrets.yaml
+  - rbacs.yaml
+  - secretstore.yaml
