@@ -5,7 +5,7 @@ metadata:
 spec:
   instances: 3
   storage:
-    size: 10Gi
+    size: 15Gi
   bootstrap:
     initdb:
       database: ombi
