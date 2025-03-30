@@ -16,8 +16,8 @@ jobs:
         run: |
           echo "APP_ID=$APP_ID" >> $GITHUB_ENV
           echo "APP_PRIVATE_KEY=$APP_PRIVATE_KEY" | awk '{printf "%s\\n", $0}' >> $GITHUB_ENV
-          echo "NIX_PATH=nixpkgs=$(jq -r .pins.nixpkgs.url npins/sources.json)" | awk '{printf "%s\\n", $0}' >> $GITHUB_ENV
-        shell: bash
+          NIXPKGS_URL=$(jq -r .pins.nixpkgs.url npins/sources.json)
+          echo "NIX_PATH='nixpkgs=$NIXPKGS_URL'" >> $GITHUB_ENV
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
@@ -28,8 +28,7 @@ jobs:
         with:
           version: v0.96.0
       - name: Run Updatecli in apply mode
-        run: 'updatecli apply --config ./updatecli/updatecli.d --values updatecli/values.yaml'
+        run: 'env && updatecli apply --config ./updatecli/updatecli.d --values updatecli/values.yaml'
         env:
           UPDATECLI_GITHUB_TOKEN: '${{ steps.app-token.outputs.token }}'
           UPDATECLI_GITHUB_TOKEN_USER: '${{ steps.app-token.outputs.app-slug }}'
-          NIX_PATH: '${{ env.NIX_PATH }}'

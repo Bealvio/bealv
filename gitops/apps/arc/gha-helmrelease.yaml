@@ -22,7 +22,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: zot.bealv.io/public/action-runner-nix:qcv74qplmw10qd4jljj9w2zzn5yvijzz
+            image: zot.bealv.io/public/action-runner-nix:c8s3qwkyjnr3f7xdc1ckvrq5p9kcan1g
             resources:
               limits:
                 cpu: '500m'
@@ -31,6 +31,8 @@ spec:
                 cpu: '100m'
                 memory: '1Gi'
             env:
+              - name: NIX_PATH # default nixpkgs
+                value: 'nixpkgs=https://releases.nixos.org/nixos/24.11/nixos-24.11.715401.20755fa05115/nixexprs.tar.xz'
               - name: APP_ID
                 valueFrom:
                   secretKeyRef:
