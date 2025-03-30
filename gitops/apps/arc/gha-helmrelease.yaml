@@ -22,7 +22,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: zot.bealv.io/public/action-runner-nix:c8s3qwkyjnr3f7xdc1ckvrq5p9kcan1g
+            image: zot.bealv.io/public/action-runner-nix:qqzbkydzpplm5biff5wnmxknpvr9nrll
             resources:
               limits:
                 cpu: '500m'

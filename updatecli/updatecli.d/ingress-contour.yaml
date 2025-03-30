@@ -53,8 +53,6 @@ targets:
       command: |
         set -e
         npins add --name contour github projectcontour contour --at {{ source `contour` }}
-        ls -halt
-        env
         nix-shell --run "buildIngressContour"
 actions:
   default:

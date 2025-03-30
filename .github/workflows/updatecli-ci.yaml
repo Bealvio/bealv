@@ -26,9 +26,9 @@ jobs:
       - name: Install Updatecli in the runner
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.96.0
+          version: v0.82.0
       - name: Run Updatecli in apply mode
-        run: 'env && updatecli apply --config ./updatecli/updatecli.d --values updatecli/values.yaml'
+        run: 'updatecli apply --config ./updatecli/updatecli.d --values updatecli/values.yaml'
         env:
           UPDATECLI_GITHUB_TOKEN: '${{ steps.app-token.outputs.token }}'
           UPDATECLI_GITHUB_TOKEN_USER: '${{ steps.app-token.outputs.app-slug }}'
