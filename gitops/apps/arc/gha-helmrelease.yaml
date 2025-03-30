@@ -22,8 +22,7 @@ spec:
       spec:
         containers:
           - name: runner
-            command: ['/home/runner/run.sh']
-            image: banhcanh/action-runner:2.323.0
+            image: zot.bealv.io/public/action-runner-nix:qcv74qplmw10qd4jljj9w2zzn5yvijzz
             resources:
               limits:
                 cpu: '500m'
