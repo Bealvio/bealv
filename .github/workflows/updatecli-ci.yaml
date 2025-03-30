@@ -22,6 +22,7 @@ jobs:
           done <<< "$APP_PRIVATE_KEY"
           echo "APP_PRIVATE_KEY=$APP_PRIVATE_KEY" | awk '{printf "%s\\n", $0}' >> $GITHUB_ENV
           NIXPKGS_URL=$(jq -r .pins.nixpkgs.url npins/sources.json)
+          echo "" >> $GITHUB_ENV
           echo "NIX_PATH='nixpkgs=$NIXPKGS_URL'" >> $GITHUB_ENV
       - uses: actions/create-github-app-token@v1
         id: app-token
