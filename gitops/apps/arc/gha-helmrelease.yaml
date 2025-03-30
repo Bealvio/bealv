@@ -43,3 +43,13 @@ spec:
                   secretKeyRef:
                     name: github-update-chan
                     key: github_app_private_key
+              - name: REGISTRY_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: github-update-chan
+                    key: registry_user
+              - name: REGISTRY_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: github-update-chan
+                    key: registry_password

@@ -53,6 +53,8 @@ spec:
               name: zot-volume
             - mountPath: /etc/zot
               name: config
+            - mountPath: /secrets
+              name: zot-secrets-2
       serviceAccount: zot
       serviceAccountName: zot
       volumes:
@@ -63,3 +65,7 @@ spec:
           secret:
             defaultMode: 420
             secretName: zot-secrets
+        - name: zot-secrets-2
+          secret:
+            defaultMode: 420
+            secretName: zot-secrets-2
