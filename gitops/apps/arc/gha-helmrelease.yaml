@@ -25,10 +25,10 @@ spec:
             image: zot.bealv.io/public/action-runner-nix:lnijpvr0i26qf9f15k1fb7vg2sa78h09
             resources:
               limits:
-                cpu: '500m'
-                memory: '1Gi'
+                cpu: '1'
+                memory: '2Gi'
               requests:
-                cpu: '100m'
+                cpu: '500m'
                 memory: '1Gi'
             env:
               - name: NIX_PATH # default nixpkgs
