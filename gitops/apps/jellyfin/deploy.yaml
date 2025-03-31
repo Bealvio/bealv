@@ -24,6 +24,9 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: jellyfin
+          env:
+            - name: MALLOC_TRIM_THRESHOLD_
+              value: '100000'
           resources:
             requests:
               memory: 2000Mi
