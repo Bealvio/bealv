@@ -8,7 +8,7 @@ spec:
   superuserSecret:
     name: zitadel-secrets
   storage:
-    size: 40Gi
+    size: 10Gi
   bootstrap:
     initdb:
       database: zitadel
