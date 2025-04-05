@@ -23,7 +23,7 @@ spec:
             - containerPort: 6080
           volumeMounts:
             - name: data
-              mountPath: /home/fmd2/.wine
+              mountPath: /home/fmd2/.wine/drive_c/app/FMD2/data
             - name: userdata
               mountPath: /home/fmd2/.wine/drive_c/app/FMD2/userdata
             - name: downloads
