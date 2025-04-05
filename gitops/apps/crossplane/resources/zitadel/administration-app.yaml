@@ -269,3 +269,37 @@ spec:
   writeConnectionSecretToRef:
     name: requestrr-oidc
     namespace: requestrr
+---
+apiVersion: application.zitadel.didactiklabs.io/v1alpha1
+kind: Oidc
+metadata:
+  name: fmd2
+spec:
+  forProvider:
+    accessTokenRoleAssertion: false
+    accessTokenType: OIDC_TOKEN_TYPE_BEARER
+    additionalOrigins: []
+    appType: OIDC_APP_TYPE_WEB
+    authMethodType: OIDC_AUTH_METHOD_TYPE_BASIC
+    clockSkew: 0s
+    devMode: false
+    grantTypes:
+      - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
+    idTokenRoleAssertion: false
+    idTokenUserinfoAssertion: false
+    name: fmd2
+    orgIdRef:
+      name: bealv
+    postLogoutRedirectUris:
+      - '*'
+    projectIdRef:
+      name: administration
+    redirectUris:
+      - https://fmd2.bealv.lan/oauth2/callback
+    responseTypes:
+      - OIDC_RESPONSE_TYPE_CODE
+    skipNativeAppSuccessPage: false
+    version: OIDC_VERSION_1_0
+  writeConnectionSecretToRef:
+    name: fmd2-oidc
+    namespace: fmd2

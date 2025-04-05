@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fmd2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fmd2
+  template:
+    metadata:
+      labels:
+        app: fmd2
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: fmd2
+          image: zot.bealv.io/public/fmd2-nix:v2.0.34.5
+          ports:
+            - containerPort: 6080
+          volumeMounts:
+            - name: data
+              mountPath: /home/fmd2/.wine/drive_c/app/FMD2/data
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads

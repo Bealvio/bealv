@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fmd2
+  annotations:
+    cert-manager.io/cluster-issuer: bealv
+    projectcontour.io/websocket-routes: /websockify
+spec:
+  rules:
+    - host: fmd2.bealv.lan
+      http:
+        paths:
+          - path: /websockify
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - fmd2.bealv.lan
+      secretName: tls-fmd2
