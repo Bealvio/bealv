@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komga
+  labels: &default
+    app: komga
+    part-of: komga
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      serviceAccountName: komga
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: komga
+          image: gotson/komga:1.21.1
+          ports:
+            - name: komga
+              containerPort: 25600
+          env:
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_ISSUERURI
+              value: 'https://zitadel.bealv.io'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_AUTHORIZATIONURI
+              value: 'https://zitadel.bealv.io/oauth/v2/authorize'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_TOKENURI
+              value: 'https://zitadel.bealv.io/oauth/v2/token'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_JWKSETURI
+              value: 'https://zitadel.bealv.io/oauth/v2/keys'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_USERINFOURI
+              value: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+            - name: KOMGA_LIBRARIES_SCAN_CRON
+              value: '0 0 * * * ?'
+            - name: KOMGA_REMEMBERME_KEY
+              value: 'random'
+            - name: KOMGA_FILE_HASHING
+              value: 'false'
+            - name: KOMGA_OAUTH2_ACCOUNT_CREATION
+              value: 'true'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_PROVIDER
+              value: 'Zitadel'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: komga-oidc
+                  key: attribute.client_id
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: komga-oidc
+                  key: attribute.client_secret
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTNAME
+              value: 'Zitadel'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_SCOPE
+              value: 'openid,email,profile,groups'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_AUTHORIZATIONGRANTTYPE
+              value: 'authorization_code'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_REDIRECTURI
+              value: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+            - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_USERNAMEATTRIBUTE
+              value: 'sub'
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: mangas
+              mountPath: /mangas
+          readinessProbe:
+            tcpSocket:
+              port: komga
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: komga
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: mangas
+          persistentVolumeClaim:
+            claimName: mangas

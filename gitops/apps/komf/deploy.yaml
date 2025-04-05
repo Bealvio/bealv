@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: komf
+  labels: &default
+    app: komf
+    part-of: komf
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      containers:
+        - name: komf
+          image: sndxr/komf:1.3.0
+          ports:
+            - name: komf
+              containerPort: 8085
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - cp /config-file/* /config/ && sed -i "s|__KOMF_DISCORD_WEBHOOKS__|$KOMF_DISCORD_WEBHOOKS|g" /config/application.yml
+          env:
+            - name: KOMF_KOMGA_BASE_URI
+              value: 'http://komga.komga:8080'
+            - name: KOMF_KOMGA_USER
+              valueFrom:
+                secretKeyRef:
+                  name: komf-secrets
+                  key: KOMF_KOMGA_USER
+            - name: KOMF_KOMGA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: komf-secrets
+                  key: KOMF_KOMGA_PASSWORD
+            - name: KOMF_DISCORD_WEBHOOKS
+              valueFrom:
+                secretKeyRef:
+                  name: komf-secrets
+                  key: KOMF_DISCORD_WEBHOOKS
+            - name: KOMF_LOG_LEVEL
+              value: 'debug'
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: mangas
+              mountPath: /mangas
+            - name: config
+              mountPath: /config-file
+          readinessProbe:
+            tcpSocket:
+              port: komf
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: komf
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: config
+          configMap:
+            name: komf
+            items:
+              - key: application.yml
+                path: application.yml
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+        - name: mangas
+          persistentVolumeClaim:
+            claimName: mangas

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: komf
+  annotations:
+    cert-manager.io/cluster-issuer: bealv
+spec:
+  rules:
+    - host: komf.bealv.lan
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: komf
+                port:
+                  number: 8085
+  tls:
+    - hosts:
+        - komf.bealv.lan
+      secretName: tls-komf
