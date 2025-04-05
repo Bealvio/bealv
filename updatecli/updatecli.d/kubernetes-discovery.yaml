@@ -24,7 +24,7 @@ autodiscovery:
         - path: 'gitops/apps/ingress-controller-external/upstream/*'
       digest: false
       versionfilter:
-        kind: latest
+        kind: semver
         pattern: '*'
 actions:
   default:
