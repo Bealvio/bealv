@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fmd2
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: fmd2
+  template:
+    metadata:
+      labels:
+        app: fmd2
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: fmd2
+          image: zot.bealv.io/public/fmd2-nix:v2.0.34.5-v0.0.3
+          ports:
+            - containerPort: 6080
+          volumeMounts:
+            - name: data
+              mountPath: /home/fmd2/.wine
+            - name: userdata
+              mountPath: /home/fmd2/.wine/drive_c/app/FMD2/userdata
+            - name: downloads
+              mountPath: /downloads
+        - name: flaresolverr
+          image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
+          ports:
+            - name: flaresolverr
+              containerPort: 8191
+          env:
+            - name: LOG_LEVEL
+              value: 'info'
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+        - name: userdata
+          persistentVolumeClaim:
+            claimName: userdata
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
