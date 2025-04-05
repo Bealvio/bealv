@@ -25,7 +25,7 @@ spec:
             image: zot.bealv.io/public/action-runner-nix:9m699zrq60fmvv8k31s26r41gv7gysvc
             resources:
               limits:
-                cpu: '1'
+                cpu: '2'
                 memory: '2Gi'
               requests:
                 cpu: '500m'
@@ -53,3 +53,16 @@ spec:
                   secretKeyRef:
                     name: github-update-chan
                     key: registry_password
+        #     volumeMounts:
+        #       - mountPath: '/home/runner/.github-runner/_work'
+        #         name: work
+        # volumes:
+        #   - name: work
+        #     ephemeral:
+        #       volumeClaimTemplate:
+        #         spec:
+        #           accessModes: ['ReadWriteOnce']
+        #           storageClassName: 'disk-hddb'
+        #           resources:
+        #             requests:
+        #               storage: 50Gi

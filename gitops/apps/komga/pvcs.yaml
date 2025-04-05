@@ -1,27 +1,22 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: data
-  labels:
-    backup: 'true'
+  name: config
 spec:
-  storageClassName: disk
-  accessModes:
-    - ReadWriteOnce
+  accessModes: ['ReadWriteOnce']
   resources:
     requests:
-      storage: 5Gi
+      storage: 500Mi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: downloads
+  name: mangas
   annotations:
     nfs.io/storage-path: '/prod-k8s/media/mangas'
 spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: hdda
+  accessModes: ['ReadWriteOnce']
+  storageClassName: 'hdda'
   resources:
     requests:
-      storage: 1000Gi
+      storage: 1Gi

@@ -7,13 +7,14 @@ metadata:
     part-of: komga
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels: *default
   template:
     metadata:
       labels: *default
     spec:
-      serviceAccountName: komga
       terminationGracePeriodSeconds: 10
       containers:
         - name: komga
@@ -41,7 +42,7 @@ spec:
             - name: KOMGA_OAUTH2_ACCOUNT_CREATION
               value: 'true'
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_PROVIDER
-              value: 'Zitadel'
+              value: 'zitadel'
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTID
               valueFrom:
                 secretKeyRef:
@@ -53,9 +54,9 @@ spec:
                   name: komga-oidc
                   key: attribute.client_secret
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTNAME
-              value: 'Zitadel'
+              value: 'zitadel'
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_SCOPE
-              value: 'openid,email,profile,groups'
+              value: 'openid,email,profile,groups,email_verified'
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_AUTHORIZATIONGRANTTYPE
               value: 'authorization_code'
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_REDIRECTURI
