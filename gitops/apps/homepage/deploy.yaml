@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+  namespace: homepage
+  labels:
+    app.kubernetes.io/name: homepage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homepage
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: homepage
+    spec:
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: homepage
+      automountServiceAccountToken: true
+      enableServiceLinks: true
+      containers:
+        - name: homepage
+          env:
+            - name: HOMEPAGE_ALLOWED_HOSTS
+              value: 'home.bealv.io'
+          image: 'ghcr.io/gethomepage/homepage:latest'
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          volumeMounts:
+            - name: homepage-config
+              mountPath: /config/kubernetes.yaml
+              subPath: kubernetes.yaml
+            - name: homepage-config
+              mountPath: /config/settings.yaml
+              subPath: settings.yaml
+            - name: homepage-config
+              mountPath: /config/bookmarks.yaml
+              subPath: bookmarks.yaml
+            - name: homepage-config
+              mountPath: /config/services.yaml
+              subPath: services.yaml
+            - name: homepage-config
+              mountPath: /config/widgets.yaml
+              subPath: widgets.yaml
+      volumes:
+        - name: homepage-config
+          configMap:
+            name: homepage

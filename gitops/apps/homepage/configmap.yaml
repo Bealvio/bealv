@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  namespace: homepage
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  kubernetes.yaml: |
+    mode: cluster
+    ingress: true
+  settings.yaml: |
+    title: Bealv's Homepage
+    cardBlur: md
+    layout:
+       Cloud:
+         style: row
+         columns: 4
+       Medias:
+         style: row
+         columns: 4
+       System:
+         style: row
+         columns: 4
+  bookmarks.yaml: |
+    - Developer:
+        - Github:
+            - abbr: GH
+              href: https://github.com/orgs/Bealvio/repositories
+  services.yaml: |
+    - Cloud:
+      - vaultwarden:
+          icon: vaultwarden.png
+          href: https://pass.bealv.io
+          description: The password manager so simple it suits everyone, including large companies and IT teams
+          ping: https://pass.bealv.io
+      - zot:
+          icon: docker.png
+          href: https://zot.bealv.io
+          description: OCI-native container image registry, simplified
+          ping: https://zot.bealv.io
+      - money:
+          icon: sh-dollardollar-bill-y-all.png
+          href: https://money.bealv.io
+          description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
+          ping: https://money.bealv.io
+    - Medias:
+      - immich:
+          icon: immich.png
+          href: https://immich.bealv.io
+          description: Easily back up, organize, and manage your photos
+          ping: https://immich.bealv.io
+      - komga:
+          icon: komga.png
+          href: https://komga.bealv.io
+          description: A media server for your comics, mangas, BDs, magazines and eBooks
+          ping: https://komga.bealv.io
+      - ombi:
+          icon: ombi.png
+          href: https://ombi.bealv.io
+          description: Want a Movie or TV Show on Plex/Emby/Jellyfin? Use Ombi!
+          ping: https://ombi.bealv.io
+      - Jellyfin:
+          icon: jellyfin.png
+          href: https://jellyfin.bealv.io
+          description: Watch your favorite shows, automatically sorted by season and ready to binge
+          ping: https://jellyfin.bealv.io
+    - System:
+      - zitadel:
+          icon: sh-zitadel.png
+          href: https://zitadel.bealv.io
+          description: Secure authentication management
+          ping: https://zitadel.bealv.io
+  widgets.yaml: |-
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "cluster"
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+    - search:
+        provider: [google]
+    - datetime:
+        locale: en
+        format:
+          dateStyle: short
+          timeStyle: short
+    - openmeteo:
+        label: Bordeaux # optional
+        latitude: "44.8404"
+        longitude: "-0.5805"
+        timezone: Europe/Paris # optional
+        units: metric # or imperial
+        cache: 5 # Time in minutes to cache API responses, to stay within limits
+  docker.yaml: ''
