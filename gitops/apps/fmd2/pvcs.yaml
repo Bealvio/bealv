@@ -45,7 +45,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: downloads
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media/mangas'
+    nfs.io/storage-path: '/prod-k8s/media'
 spec:
   accessModes:
     - ReadWriteOnce
