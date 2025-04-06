@@ -4,6 +4,7 @@ metadata:
   name: komga
   annotations:
     cert-manager.io/cluster-issuer: bealvio
+    external-dns.alpha.kubernetes.io/target: bealv.io
 spec:
   ingressClassName: 'external'
   rules:

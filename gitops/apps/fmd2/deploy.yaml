@@ -18,7 +18,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: fmd2
-          image: zot.bealv.io/public/fmd2-nix:v2.0.34.5-v0.0.10
+          image: zot.bealv.io/public/fmd2-nix:v2.0.34.5-v0.0.12
           ports:
             - containerPort: 6080
           volumeMounts:
@@ -29,7 +29,7 @@ spec:
             - name: wine
               mountPath: /home/fmd2/.wine
             - name: downloads
-              mountPath: /downloads
+              mountPath: /app/FMD2/downloads
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
           ports:
