@@ -18,6 +18,13 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: komga
+          resources:
+            requests:
+              memory: 2000Mi
+              cpu: 500m
+            limits:
+              memory: 2000Mi
+              cpu: 1
           image: gotson/komga:1.21.1
           ports:
             - name: komga
