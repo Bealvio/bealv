@@ -1,0 +1,21 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: alertmanager-mgmt
+  namespace: monitoring
+spec:
+  allowCrossNamespaceImport: false
+  datasource:
+    access: proxy
+    isDefault: false
+    jsonData:
+      implementation: prometheus
+      timeInterval: 5s
+      tlsSkipVerify: true
+    name: alertmanager-mgmt
+    type: alertmanager
+    url: https://alertmanager.bealv-mgmt.lan
+  instanceSelector:
+    matchLabels:
+      alertmanager-default: 'true'
+  resyncPeriod: 1m

@@ -3,6 +3,7 @@ resources:
   - grafana.yaml
   - grafana-ing.yaml
   - alertmanager-config.yaml
+  - additional-datasources.yaml
   - secrets.yaml
   - grafana-prom-netpol.yaml
   - grafana-netpol.yaml
