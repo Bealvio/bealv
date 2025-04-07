@@ -217,6 +217,11 @@ data:
               href: https://minio-clusters.bealv-mgmt.lan
               description: MinIO Child Clusters Backup instance.
               siteMonitor: https://minio-clusters.bealv-mgmt.lan
+          - kamaji:
+              icon: kubernetes-dashboard.png
+              href: https://kamaji.bealv-mgmt.lan/ui
+              description: View and control Kamaji with a simple user interface from the web. Kamaji Console.
+              siteMonitor: https://kamaji.bealv-mgmt.lan/ui
   widgets.yaml: |-
     - kubernetes:
         cluster:
