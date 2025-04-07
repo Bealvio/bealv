@@ -15,6 +15,9 @@ spec:
       mode: 'console'
     auth:
       disable_login_form: 'true'
+    security:
+      admin_user: root
+      admin_password: root
     auth.generic_oauth:
       enabled: 'true'
       name: 'Zitadel SSO'
@@ -49,3 +52,13 @@ spec:
                     secretKeyRef:
                       name: grafana-oidc
                       key: attribute.client_secret
+                - name: GF_SECURITY_ADMIN_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: username
+                      name: grafana-secrets
+                - name: GF_SECURITY_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: password
+                      name: grafana-secrets

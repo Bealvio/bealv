@@ -50,6 +50,36 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: komgapassword
+            - name: HOMEPAGE_VAR_SONARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: sonarrapikey
+            - name: HOMEPAGE_VAR_RADARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: radarrapikey
+            - name: HOMEPAGE_VAR_BAZARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: bazarrapikey
+            - name: HOMEPAGE_VAR_PROWLARR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: prowlarrapikey
+            - name: HOMEPAGE_VAR_GRAFANA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: grafanausername
+            - name: HOMEPAGE_VAR_GRAFANA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: grafanapassword
           image: 'ghcr.io/gethomepage/homepage:latest'
           imagePullPolicy: Always
           ports:

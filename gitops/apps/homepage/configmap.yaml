@@ -13,78 +13,170 @@ data:
     title: Bealv's Homepage
     cardBlur: md
     layout:
-       System:
+       External:
          style: row
-         columns: 2
+         columns: 3
+       Internal:
+         style: row
+         columns: 1
+         Backend:
+           style: row
+           columns: 2
+           Stackarr:
+             style: row
+             columns: 2
+         System:
+           style: row
+           columns: 3
   bookmarks.yaml: |
     - Developer:
         - Github:
             - abbr: GH
               href: https://github.com/orgs/Bealvio/repositories
   services.yaml: |
-    - Cloud:
-      - vaultwarden:
-          icon: vaultwarden.png
-          href: https://pass.bealv.io
-          description: The password manager so simple it suits everyone, including large companies and IT teams
-          siteMonitor: http://vaultwarden.vaultwarden
-      - zot:
-          icon: docker.png
-          href: https://zot.bealv.io
-          description: OCI-native container image registry, simplified
-          siteMonitor: http://zot.zot:5000
-      - money:
-          icon: sh-dollardollar-bill-y-all.png
-          href: https://money.bealv.io
-          description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
-          siteMonitor: http://dollardollar.dollardollar:5001
-    - Medias:
-      - immich:
-          icon: immich.png
-          href: https://immich.bealv.io
-          description: Easily back up, organize, and manage your photos
-          siteMonitor: http://immich-server.immich:2283
-          widget:
-            type: immich
-            url: https://immich.bealv.io
-            key: {{HOMEPAGE_VAR_IMMICH_KEY}}
-            version: 2
-      - komga:
-          icon: komga.png
-          href: https://komga.bealv.io
-          description: A media server for your comics, mangas, BDs, magazines and eBooks
-          siteMonitor: http://komga.komga:8080
-          widget:
-            type: komga
-            url: https://komga.bealv.io
-            username: {{HOMEPAGE_VAR_KOMGA_USERNAME}}
-            password: {{HOMEPAGE_VAR_KOMGA_PASSWORD}}
-            key: {{HOMEPAGE_VAR_KOMGA_KEY}}
-      - ombi:
-          icon: ombi.png
-          href: https://ombi.bealv.io
-          description: Want a Movie or TV Show on Plex/Emby/Jellyfin? Use Ombi!
-          siteMonitor: http://ombi.ombi:3579
-      - Jellyfin:
-          icon: jellyfin.png
-          href: https://jellyfin.bealv.io
-          description: Watch your favorite shows, automatically sorted by season and ready to binge
-          siteMonitor: http://jellyfin.jellyfin:8096
-          widget:
-            type: jellyfin
-            url: https://jellyfin.bealv.io
-            key: {{HOMEPAGE_VAR_JELLYFIN_KEY}}
-            enableBlocks: true # optional, defaults to false
-            enableNowPlaying: true # optional, defaults to true
-            enableUser: true # optional, defaults to false
-            showEpisodeNumber: true # optional, defaults to false
-            expandOneStreamToTwoRows: true # optional, defaults to true
-    - System:
-      - zitadel:
-          icon: sh-zitadel.png
-          href: https://zitadel.bealv.io
-          description: Secure authentication management
-          siteMonitor: https://zitadel.bealv.io
+    - External:
+      - Cloud:
+        - vaultwarden:
+            icon: vaultwarden.png
+            href: https://pass.bealv.io
+            description: The password manager so simple it suits everyone, including large companies and IT teams.
+            siteMonitor: http://vaultwarden.vaultwarden
+        - zot:
+            icon: docker.png
+            href: https://zot.bealv.io
+            description: OCI-native container image registry, simplified.
+            siteMonitor: http://zot.zot:5000
+        - money:
+            icon: sh-dollardollar-bill-y-all.png
+            href: https://money.bealv.io
+            description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
+            siteMonitor: http://dollardollar.dollardollar:5001
+      - Medias:
+        - immich:
+            icon: immich.png
+            href: https://immich.bealv.io
+            description: Easily back up, organize, and manage your photos.
+            siteMonitor: http://immich-server.immich:2283
+            widget:
+              type: immich
+              url: https://immich.bealv.io
+              key: {{HOMEPAGE_VAR_IMMICH_KEY}}
+              version: 2
+        - komga:
+            icon: komga.png
+            href: https://komga.bealv.io
+            description: A media server for your comics, mangas, BDs, magazines and eBooks.
+            siteMonitor: http://komga.komga:8080
+            widget:
+              type: komga
+              url: https://komga.bealv.io
+              username: {{HOMEPAGE_VAR_KOMGA_USERNAME}}
+              password: {{HOMEPAGE_VAR_KOMGA_PASSWORD}}
+              key: {{HOMEPAGE_VAR_KOMGA_KEY}}
+        - ombi:
+            icon: ombi.png
+            href: https://ombi.bealv.io
+            description: Want a Movie or TV Show on Plex/Emby/Jellyfin? Use Ombi!
+            siteMonitor: http://ombi.ombi:3579
+        - jellyfin:
+            icon: jellyfin.png
+            href: https://jellyfin.bealv.io
+            description: Watch your favorite shows, automatically sorted by season and ready to binge.
+            siteMonitor: http://jellyfin.jellyfin:8096
+            widget:
+              type: jellyfin
+              url: https://jellyfin.bealv.io
+              key: {{HOMEPAGE_VAR_JELLYFIN_KEY}}
+              enableBlocks: true # optional, defaults to false
+              enableNowPlaying: true # optional, defaults to true
+              enableUser: true # optional, defaults to false
+              showEpisodeNumber: true # optional, defaults to false
+              expandOneStreamToTwoRows: true # optional, defaults to true
+      - Identity:
+        - zitadel:
+            icon: sh-zitadel.png
+            href: https://zitadel.bealv.io
+            description: Secure authentication management.
+            siteMonitor: https://zitadel.bealv.io
+    - Internal:
+        - Backend:
+          - Stackarr:
+            - sonarr:
+                icon: sonarr.png
+                href: https://sonarr.bealv.lan
+                description: Monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them.
+                siteMonitor: http://sonarr.sonarr:8989
+                widget:
+                  type: sonarr
+                  url: https://sonarr.bealv.lan
+                  key: {{HOMEPAGE_VAR_SONARR_KEY}}
+                  enableQueue: true
+            - radarr:
+                icon: radarr.png
+                href: https://radarr.bealv.lan
+                description: See all your upcoming movies in one convenient location. Manual Search Find all the releases, choose the one you want and send it right to your download client.
+                siteMonitor: http://radarr.radarr:7878
+                widget:
+                  type: radarr
+                  url: https://radarr.bealv.lan
+                  key: {{HOMEPAGE_VAR_RADARR_KEY}}
+                  enableQueue: true
+            - bazarr:
+                icon: bazarr.png
+                href: https://bazarr.bealv.lan
+                description: Bazarr is a companion application to Sonarr and Radarr that manages and downloads subtitles.
+                siteMonitor: http://bazarr.bazarr:6767
+                widget:
+                  type: bazarr
+                  url: https://bazarr.bealv.lan
+                  key: {{HOMEPAGE_VAR_BAZARR_KEY}}
+            - prowlarr:
+                icon: prowlarr.png
+                href: https://prowlarr.bealv.lan
+                description: Prowlarr is a indexer manager/proxy built on the popular arr . net/reactjs base stack to integrate with your various PVR apps.
+                siteMonitor: http://prowlarr.prowlarr:9696
+                widget:
+                  type: prowlarr
+                  url: https://prowlarr.bealv.lan
+                  key: {{HOMEPAGE_VAR_PROWLARR_KEY}}
+            - requestrr:
+                icon: discord.png
+                href: https://requestrr.bealv.lan
+                description: Requestrr is a chatbot used to simplify using services like Sonarr/Radarr/Ombi via the use of chat.
+                siteMonitor: http://requestrr.requestrr:4545
+          - DownloadClient:
+            - qbittorrent:
+                icon: qbittorrent.png
+                href: https://qbittorrent.bealv.lan
+                description: qBittorrent is a cross-platform free and open-source BitTorrent client written in native C++.
+                siteMonitor: http://qbittorrent.qbittorrent:8080
+                widget:
+                  type: qbittorrent
+                  url: http://qbittorrent.qbittorrent:8080
+                  username: admin2
+                  password: adminadmin
+                  enableLeechProgress: true
+            - fmd2:
+                icon: sh-cwa-book-downloader.png
+                href: https://fmd2.bealv.lan
+                description: A free open source application written in Object Pascal for managing and downloading manga from various websites.
+                siteMonitor: http://fmd2.fmd2:6080
+        - System:
+          - Vault:
+              icon: vault.png
+              href: https://vault.bealv-mgmt.lan
+              description: Vault secures, stores, and tightly controls access to tokens, passwords, certificates, API keys, and other secrets critical in modern computing.
+              siteMonitor: https://vault.bealv-mgmt.lan
+          - Grafana:
+              icon: grafana.png
+              href: https://grafana.bealv.lan
+              description: Grafana is a multi-platform open source analytics and interactive visualization web application.
+              siteMonitor: http://grafana-general-service.monitoring:3000
+              widget:
+                type: grafana
+                url: https://grafana.bealv.lan
+                username: {{HOMEPAGE_VAR_GRAFANA_USERNAME}}
+                password: {{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
   widgets.yaml: |-
     - kubernetes:
         cluster:
