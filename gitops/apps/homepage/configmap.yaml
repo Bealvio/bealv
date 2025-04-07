@@ -177,6 +177,46 @@ data:
                 url: https://grafana.bealv.lan
                 username: {{HOMEPAGE_VAR_GRAFANA_USERNAME}}
                 password: {{HOMEPAGE_VAR_GRAFANA_PASSWORD}}
+          - proxmox:
+              icon: proxmox.png
+              href: https://proxmox.bealv.lan:8006
+              description: Virtualization Management.
+              siteMonitor: https://proxmox.bealv.lan:8006
+              widget:
+                type: proxmox
+                url: https://proxmox.bealv.lan:8006
+                username: {{HOMEPAGE_VAR_PROXMOX_USERNAME}}
+                password: {{HOMEPAGE_VAR_PROXMOX_PASSWORD}}
+          - opnsense:
+              icon: opnsense.png
+              href: https://opnsense.bealv.lan:8443
+              description: Network and security management.
+              siteMonitor: https://opnsense.bealv.lan:8443
+              widget:
+                type: opnsense
+                url: https://opnsense.bealv.lan:8443
+                username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
+                password: {{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}
+          - velero:
+              icon: sh-velero.png
+              href: https://velero.bealv.lan
+              description: Velero is an open source tool to safely backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes.
+              siteMonitor: http://velero-ui.velero-ui:3000
+          - velero-mgmt:
+              icon: sh-velero.png
+              href: https://velero.bealv-mgmt.lan
+              description: Velero MGMT Cluster instance.
+              siteMonitor: http://velero.bealv-mgmt.lan
+          - minio:
+              icon: sh-minio.png
+              href: https://minio.bealv-mgmt.lan
+              description: MinIO Is The Most Reliable Object Storage Solution For On-Premise Deployments.
+              siteMonitor: https://minio.bealv-mgmt.lan
+          - minio-clusters:
+              icon: sh-minio.png
+              href: https://minio-clusters.bealv-mgmt.lan
+              description: MinIO Child Clusters Backup instance.
+              siteMonitor: https://minio-clusters.bealv-mgmt.lan
   widgets.yaml: |-
     - kubernetes:
         cluster:

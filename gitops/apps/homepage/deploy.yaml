@@ -80,6 +80,26 @@ spec:
                 secretKeyRef:
                   name: homepage-secrets
                   key: grafanapassword
+            - name: HOMEPAGE_VAR_PROXMOX_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: proxmoxusername
+            - name: HOMEPAGE_VAR_PROXMOX_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: proxmoxpassword
+            - name: HOMEPAGE_VAR_OPNSENSE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: opnsenseusername
+            - name: HOMEPAGE_VAR_OPNSENSE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: opnsensepassword
           image: 'ghcr.io/gethomepage/homepage:latest'
           imagePullPolicy: Always
           ports:
