@@ -15,7 +15,7 @@ data:
     layout:
        System:
          style: row
-         columns: 4
+         columns: 2
   bookmarks.yaml: |
     - Developer:
         - Github:
@@ -27,23 +27,23 @@ data:
           icon: vaultwarden.png
           href: https://pass.bealv.io
           description: The password manager so simple it suits everyone, including large companies and IT teams
-          ping: https://pass.bealv.io
+          siteMonitor: http://vaultwarden.vaultwarden
       - zot:
           icon: docker.png
           href: https://zot.bealv.io
           description: OCI-native container image registry, simplified
-          ping: https://zot.bealv.io
+          siteMonitor: http://zot.zot:5000
       - money:
           icon: sh-dollardollar-bill-y-all.png
           href: https://money.bealv.io
           description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
-          ping: https://money.bealv.io
+          siteMonitor: http://dollardollar.dollardollar:5001
     - Medias:
       - immich:
           icon: immich.png
           href: https://immich.bealv.io
           description: Easily back up, organize, and manage your photos
-          ping: https://immich.bealv.io
+          siteMonitor: http://immich-server.immich:2283
           widget:
             type: immich
             url: https://immich.bealv.io
@@ -53,23 +53,38 @@ data:
           icon: komga.png
           href: https://komga.bealv.io
           description: A media server for your comics, mangas, BDs, magazines and eBooks
-          ping: https://komga.bealv.io
+          siteMonitor: http://komga.komga:8080
+          widget:
+            type: komga
+            url: https://komga.bealv.io
+            username: {{HOMEPAGE_VAR_KOMGA_USERNAME}}
+            password: {{HOMEPAGE_VAR_KOMGA_PASSWORD}}
+            key: {{HOMEPAGE_VAR_KOMGA_KEY}}
       - ombi:
           icon: ombi.png
           href: https://ombi.bealv.io
           description: Want a Movie or TV Show on Plex/Emby/Jellyfin? Use Ombi!
-          ping: https://ombi.bealv.io
+          siteMonitor: http://ombi.ombi:3579
       - Jellyfin:
           icon: jellyfin.png
           href: https://jellyfin.bealv.io
           description: Watch your favorite shows, automatically sorted by season and ready to binge
-          ping: https://jellyfin.bealv.io
+          siteMonitor: http://jellyfin.jellyfin:8096
+          widget:
+            type: jellyfin
+            url: https://jellyfin.bealv.io
+            key: {{HOMEPAGE_VAR_JELLYFIN_KEY}}
+            enableBlocks: true # optional, defaults to false
+            enableNowPlaying: true # optional, defaults to true
+            enableUser: true # optional, defaults to false
+            showEpisodeNumber: true # optional, defaults to false
+            expandOneStreamToTwoRows: true # optional, defaults to true
     - System:
       - zitadel:
           icon: sh-zitadel.png
           href: https://zitadel.bealv.io
           description: Secure authentication management
-          ping: https://zitadel.bealv.io
+          siteMonitor: https://zitadel.bealv.io
   widgets.yaml: |-
     - kubernetes:
         cluster:
@@ -77,7 +92,7 @@ data:
           cpu: true
           memory: true
           showLabel: true
-          label: "cluster"
+          label: "bealv"
         nodes:
           show: true
           cpu: true

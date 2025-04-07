@@ -29,7 +29,27 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: homepage-secrets
-                  key: apikey
+                  key: immichapikey
+            - name: HOMEPAGE_VAR_JELLYFIN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: jellyfinapikey
+            - name: HOMEPAGE_VAR_KOMGA_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: komgaapikey
+            - name: HOMEPAGE_VAR_KOMGA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: komgausername
+            - name: HOMEPAGE_VAR_KOMGA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: komgapassword
           image: 'ghcr.io/gethomepage/homepage:latest'
           imagePullPolicy: Always
           ports:
