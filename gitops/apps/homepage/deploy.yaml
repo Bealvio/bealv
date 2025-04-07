@@ -25,6 +25,11 @@ spec:
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: 'home.bealv.io'
+            - name: HOMEPAGE_VAR_IMMICH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-secrets
+                  key: apikey
           image: 'ghcr.io/gethomepage/homepage:latest'
           imagePullPolicy: Always
           ports:

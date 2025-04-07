@@ -13,12 +13,6 @@ data:
     title: Bealv's Homepage
     cardBlur: md
     layout:
-       Cloud:
-         style: row
-         columns: 4
-       Medias:
-         style: row
-         columns: 4
        System:
          style: row
          columns: 4
@@ -50,6 +44,11 @@ data:
           href: https://immich.bealv.io
           description: Easily back up, organize, and manage your photos
           ping: https://immich.bealv.io
+          widget:
+            type: immich
+            url: https://immich.bealv.io
+            key: {{HOMEPAGE_VAR_IMMICH_KEY}}
+            version: 2
       - komga:
           icon: komga.png
           href: https://komga.bealv.io
