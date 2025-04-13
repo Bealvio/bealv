@@ -30,9 +30,12 @@ data:
            columns: 3
   bookmarks.yaml: |
     - Developer:
-        - Github:
+        - BealvioGithub:
             - abbr: GH
               href: https://github.com/orgs/Bealvio/repositories
+        - DidactiklabsGithub:
+            - abbr: GH
+              href: https://github.com/orgs/didactiklabs/repositories
   services.yaml: |
     - External:
       - Cloud:
