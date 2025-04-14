@@ -28,7 +28,7 @@ data:
               - "en"
               - "ja"
               - "ja-ro"
-            orderBooks: false # will order books using parsed volume or chapter number
+            orderBooks: true # will order books using parsed volume or chapter number
             scoreTag: false # adds score tag of format "score: 8" only uses integer part of rating. Can be used in search using query: tag:"score: 8" in komga
             readingDirectionValue: # override reading direction for all series. should be one of these: LEFT_TO_RIGHT, RIGHT_TO_LEFT, VERTICAL, WEBTOON
             languageValue: "en" # set default language for series. Must use BCP 47 format e.g. "en"
