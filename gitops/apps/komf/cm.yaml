@@ -19,6 +19,7 @@ data:
           mergeGenres: false # if true and aggregate is enabled will merge genres from all providers
           bookCovers: true # update book thumbnails
           seriesCovers: true # update series thumbnails
+          overrideExistingCovers: true
           overrideComicInfo: true
           postProcessing:
             seriesTitle: true # update series title
