@@ -8,10 +8,11 @@ spec:
   chart:
     spec:
       chart: zitadel
-      version: 8.13.1
+      version: '8.13.1'
       sourceRef:
         kind: HelmRepository
         name: zitadel
+        namespace: zitadel
   values:
     # Default values for zitadel.
     zitadel:

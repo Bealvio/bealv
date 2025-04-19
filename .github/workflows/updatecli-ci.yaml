@@ -32,7 +32,7 @@ jobs:
       - name: Install Updatecli in the runner
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.98.0
+          version: v0.93.1
       - name: Run Updatecli in apply mode
         run: 'updatecli apply --config ./updatecli/updatecli.d --values updatecli/values.yaml'
         env:
