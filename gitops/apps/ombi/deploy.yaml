@@ -26,7 +26,7 @@ spec:
             limits:
               memory: 800Mi
               cpu: 1
-          image: ghcr.io/linuxserver/ombi:4.47.2-development
+          image: ghcr.io/linuxserver/ombi:4.47.3-development
           lifecycle:
             postStart:
               exec:
