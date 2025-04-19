@@ -87,4 +87,3 @@ spec:
               port: ombi
             initialDelaySeconds: 15
             periodSeconds: 20
----
