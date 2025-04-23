@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: dollardollar
-          image: harung43/dollardollar:v4.3
+          image: harung43/dollardollar:v5.0
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
