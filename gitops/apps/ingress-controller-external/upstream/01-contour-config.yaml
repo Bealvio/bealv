@@ -6,11 +6,6 @@ metadata:
   namespace: projectcontour
 data:
   contour.yaml: |
-    #
-    # server:
-    #   determine which XDS Server implementation to utilize in Contour.
-    #   xds-server-type: envoy
-    #
     # Specify the Gateway API configuration.
     # gateway:
     #   namespace: projectcontour
@@ -184,3 +179,7 @@ data:
     #  socket-options:
     #    tos: 64
     #    traffic-class: 64
+    #
+    # omEnforcedHealthListener:
+    #   address: 0.0.0.0
+    #   port: 8003
