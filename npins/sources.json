@@ -25,10 +25,10 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "v1.30.3",
-      "revision": "1c1b79b5aeb8e4bccfae67818a2fb7ff54f59113",
-      "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.30.3",
-      "hash": "0bw23k3cdgf7drz8dhxk3nrriq2f0x9zyvpfr834ny1q1spydphp"
+      "version": "v1.31.0",
+      "revision": "bc620f2b8ea5662440c8bed0fcc59eaf8c41a318",
+      "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.31.0",
+      "hash": "17p48lsj3q31k60bskcwrw2vwp6j44407s3nnw7pd92yy24knbl5"
     },
     "grafana-operator": {
       "type": "GitRelease",
