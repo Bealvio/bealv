@@ -9,7 +9,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: backups.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -39,7 +39,8 @@ spec:
     name: v1
     schema:
       openAPIV3Schema:
-        description: Backup is the Schema for the backups API
+        description: A Backup resource is a request for a PostgreSQL backup by the
+          user.
         properties:
           apiVersion:
             description: |-
@@ -450,7 +451,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: clusterimagecatalogs.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -531,7 +532,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: clusters.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -1680,10 +1681,10 @@ spec:
                             description: |-
                               Compress a backup file (a tar file per tablespace) while streaming it
                               to the object store. Available options are empty string (no
-                              compression, default), `gzip`, `bzip2` or `snappy`.
+                              compression, default), `gzip`, `bzip2`, and `snappy`.
                             enum:
-                            - gzip
                             - bzip2
+                            - gzip
                             - snappy
                             type: string
                           encryption:
@@ -1871,11 +1872,15 @@ spec:
                           compression:
                             description: |-
                               Compress a WAL file before sending it to the object store. Available
-                              options are empty string (no compression, default), `gzip`, `bzip2` or `snappy`.
+                              options are empty string (no compression, default), `gzip`, `bzip2`,
+                              `lz4`, `snappy`, `xz`, and `zstd`.
                             enum:
-                            - gzip
                             - bzip2
+                            - gzip
+                            - lz4
                             - snappy
+                            - xz
+                            - zstd
                             type: string
                           encryption:
                             description: |-
@@ -3182,10 +3187,10 @@ spec:
                               description: |-
                                 Compress a backup file (a tar file per tablespace) while streaming it
                                 to the object store. Available options are empty string (no
-                                compression, default), `gzip`, `bzip2` or `snappy`.
+                                compression, default), `gzip`, `bzip2`, and `snappy`.
                               enum:
-                              - gzip
                               - bzip2
+                              - gzip
                               - snappy
                               type: string
                             encryption:
@@ -3373,11 +3378,15 @@ spec:
                             compression:
                               description: |-
                                 Compress a WAL file before sending it to the object store. Available
-                                options are empty string (no compression, default), `gzip`, `bzip2` or `snappy`.
+                                options are empty string (no compression, default), `gzip`, `bzip2`,
+                                `lz4`, `snappy`, `xz`, and `zstd`.
                               enum:
-                              - gzip
                               - bzip2
+                              - gzip
+                              - lz4
                               - snappy
+                              - xz
+                              - zstd
                               type: string
                             encryption:
                               description: |-
@@ -4669,7 +4678,6 @@ spec:
                       feature
                     properties:
                       dataDurability:
-                        default: required
                         description: |-
                           If set to "required", data durability is strictly enforced. Write operations
                           with synchronous commit settings (`on`, `remote_write`, or `remote_apply`) will
@@ -6958,7 +6966,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: databases.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -7220,7 +7228,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: imagecatalogs.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -7300,7 +7308,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: poolers.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -16159,7 +16167,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: publications.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -16354,7 +16362,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: scheduledbackups.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -16545,7 +16553,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.17.2
+    controller-gen.kubebuilder.io/version: v0.17.3
   name: subscriptions.postgresql.cnpg.io
 spec:
   group: postgresql.cnpg.io
@@ -17568,14 +17576,15 @@ spec:
         - /manager
         env:
         - name: OPERATOR_IMAGE_NAME
-          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.1
+          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.2
         - name: OPERATOR_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
         - name: MONITORING_QUERIES_CONFIGMAP
           value: cnpg-default-monitoring
-        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.1
+        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.2
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /readyz
