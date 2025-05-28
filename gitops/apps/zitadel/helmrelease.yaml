@@ -33,7 +33,7 @@ spec:
     image:
       repository: ghcr.io/zitadel/zitadel
       pullPolicy: IfNotPresent
-      tag: v3.2.1
+      tag: v3.2.2
     # Annotations to add to the configMap
     serviceAccount:
       create: true
