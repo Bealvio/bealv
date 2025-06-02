@@ -200,16 +200,16 @@ data:
                 url: https://opnsense.bealv.lan:8443
                 username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
                 password: {{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}
-          # - velero:
-          #     icon: sh-velero.png
-          #     href: https://velero.bealv.lan
-          #     description: Velero is an open source tool to safely backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes.
-          #     siteMonitor: http://velero-ui.velero-ui:3000
-          # - velero-mgmt:
-          #     icon: sh-velero.png
-          #     href: https://velero.bealv-mgmt.lan
-          #     description: Velero MGMT Cluster instance.
-          #     siteMonitor: http://velero.bealv-mgmt.lan
+          - velero:
+              icon: sh-velero.png
+              href: https://velero.bealv.lan
+              description: Velero is an open source tool to safely backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes.
+              siteMonitor: http://velero-ui.velero-ui:3000
+          - velero-mgmt:
+              icon: sh-velero.png
+              href: https://velero.bealv-mgmt.lan
+              description: Velero MGMT Cluster instance.
+              siteMonitor: http://velero.bealv-mgmt.lan
           - minio:
               icon: sh-minio.png
               href: https://minio.bealv-mgmt.lan
