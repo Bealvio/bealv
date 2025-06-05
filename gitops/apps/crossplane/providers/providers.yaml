@@ -3,7 +3,7 @@ kind: Provider
 metadata:
   name: provider-zitadel
 spec:
-  package: banhcanh/provider-zitadel:v0.9.0
+  package: xpkg.upbound.io/banhcanh/provider-zitadel:v0.9.0
 ---
 apiVersion: zitadel.didactiklabs.io/v1beta1
 kind: ProviderConfig
