@@ -20,6 +20,8 @@ spec:
     maxRunners: 2
     template:
       spec:
+        securityContext:
+          fsGroup: 1001
         containers:
           - name: runner
             image: zot.bealv.io/public/action-runner-nix:9m699zrq60fmvv8k31s26r41gv7gysvc
