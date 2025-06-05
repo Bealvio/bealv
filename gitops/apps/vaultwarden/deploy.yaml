@@ -51,7 +51,7 @@ spec:
             - name: SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION
               value: 'true'
             - name: SSO_ONLY
-              value: 'true'
+              value: 'false'
             - name: SSO_ORGANIZATIONS_TOKEN_PATH
               value: '/groups'
             - name: SSO_ORGANIZATIONS_ALL_COLLECTIONS
