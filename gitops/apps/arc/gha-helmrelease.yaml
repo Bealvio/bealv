@@ -53,16 +53,60 @@ spec:
                   secretKeyRef:
                     name: github-update-chan
                     key: registry_password
-        #     volumeMounts:
-        #       - mountPath: '/home/runner/.github-runner/_work'
-        #         name: work
-        # volumes:
-        #   - name: work
-        #     ephemeral:
-        #       volumeClaimTemplate:
-        #         spec:
-        #           accessModes: ['ReadWriteOnce']
-        #           storageClassName: 'disk-hddb'
-        #           resources:
-        #             requests:
-        #               storage: 50Gi
+            volumeMounts:
+              - mountPath: '/home/runner/.github-runner/_work/_temp/_github_home'
+                name: home
+              - mountPath: '/home/runner/.github-runner/_work/_temp/_github_workflow'
+                name: workflows
+              - mountPath: '/home/runner/.github-runner/_work/_temp/_runner_file_commands'
+                name: commands
+              - mountPath: '/home/runner/.github-runner/_work/bealv/bealv'
+                name: bealv
+              - mountPath: '/home/runner/.github-runner/_work/flux-mgmt/flux-mgmt'
+                name: flux-mgmt
+        volumes:
+          - name: home
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ['ReadWriteOnce']
+                  storageClassName: 'disk-hddb'
+                  resources:
+                    requests:
+                      storage: 50Gi
+          - name: workflows
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ['ReadWriteOnce']
+                  storageClassName: 'disk-hddb'
+                  resources:
+                    requests:
+                      storage: 50Gi
+          - name: commands
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ['ReadWriteOnce']
+                  storageClassName: 'disk-hddb'
+                  resources:
+                    requests:
+                      storage: 50Gi
+          - name: bealv
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ['ReadWriteOnce']
+                  storageClassName: 'disk-hddb'
+                  resources:
+                    requests:
+                      storage: 50Gi
+          - name: flux-mgmt
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ['ReadWriteOnce']
+                  storageClassName: 'disk-hddb'
+                  resources:
+                    requests:
+                      storage: 50Gi
