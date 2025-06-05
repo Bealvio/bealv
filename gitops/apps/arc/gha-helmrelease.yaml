@@ -24,7 +24,7 @@ spec:
           fsGroup: 1001
         containers:
           - name: runner
-            image: zot.bealv.io/public/action-runner-nix:9m699zrq60fmvv8k31s26r41gv7gysvc
+            image: zot.bealv.io/public/action-runner-nix:ss4wvhbfq6f6mplj2qyh0n0m2z6abhpk
             resources:
               limits:
                 cpu: '3'
