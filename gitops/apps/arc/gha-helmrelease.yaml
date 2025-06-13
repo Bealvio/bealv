@@ -24,7 +24,7 @@ spec:
           fsGroup: 1001
         containers:
           - name: runner
-            image: zot.bealv.io/public/action-runner-nix:6bpakg1p06srbkcnnv66g5y42hzjcbq6
+            image: zot.bealv.io/public/action-runner-nix:drcmpa33951hib3b6yy0hzwg7lz70dbj
             resources:
               limits:
                 cpu: '3'
@@ -66,6 +66,8 @@ spec:
                 name: bealv
               - mountPath: '/home/runner/.github-runner/_work/flux-mgmt/flux-mgmt'
                 name: flux-mgmt
+              - mountPath: '/home/runner/.github-runner/_work/flux-mgmt/action-runner-nix'
+                name: action-runner-nix
         volumes:
           - name: home
             ephemeral:
@@ -104,6 +106,15 @@ spec:
                     requests:
                       storage: 50Gi
           - name: flux-mgmt
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  accessModes: ['ReadWriteOnce']
+                  storageClassName: 'disk-hddb'
+                  resources:
+                    requests:
+                      storage: 50Gi
+          - name: action-runner-nix
             ephemeral:
               volumeClaimTemplate:
                 spec:
