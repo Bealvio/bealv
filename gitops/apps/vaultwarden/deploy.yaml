@@ -49,7 +49,7 @@ spec:
             - name: SSO_DEBUG_TOKENS
               value: 'true'
             - name: SSO_AUDIENCE_TRUSTED
-              value: '^31.*$'
+              value: '^.*$'
             - name: SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION
               value: 'true'
             - name: SSO_ONLY
