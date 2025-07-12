@@ -3,12 +3,13 @@ kind: Cluster
 metadata:
   name: zitadel-postgres
 spec:
-  instances: 1
+  instances: 3
   enableSuperuserAccess: true
   superuserSecret:
     name: zitadel-secrets
   storage:
-    size: 30Gi
+    size: 50Gi
+    storageClass: disk-hddb
   bootstrap:
     initdb:
       database: zitadel
