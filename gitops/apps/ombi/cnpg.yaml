@@ -5,6 +5,7 @@ metadata:
 spec:
   instances: 3
   storage:
+    storageClass: disk-hddb
     size: 50Gi
   bootstrap:
     initdb:
