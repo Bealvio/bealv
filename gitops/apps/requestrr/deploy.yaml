@@ -6,6 +6,8 @@ metadata:
     app: requestrr
     part-of: requestrr
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels: *default
