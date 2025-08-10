@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: radarr
-          image: ghcr.io/linuxserver/radarr:5.27.2-nightly
+          image: ghcr.io/linuxserver/radarr:5.27.4-nightly
           resources:
             requests:
               memory: 800Mi
