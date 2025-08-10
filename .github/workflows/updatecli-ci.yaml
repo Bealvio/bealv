@@ -1,38 +1,36 @@
 name: Updatecli
 on:
   workflow_dispatch:
-  # schedule:
-    # - cron: '0 */2 * * *' # every 6 hours
+  schedule:
+    - cron: '0 */2 * * *' # every 6 hours
 permissions:
   contents: 'write'
   pull-requests: 'write'
 jobs:
   updatecli:
-    runs-on: 'bealv-runners'
+    runs-on: 'ubuntu-latest'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set environment variables
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@v2
+      - name: Get Nixpkgs revision for nixfmt
         run: |
-          echo "::add-mask::$APP_ID"
-          echo "APP_ID=$APP_ID" >> $GITHUB_ENV
-          while read -r line;
-          do
-            echo "::add-mask::${line}"
-          done <<< "$APP_PRIVATE_KEY"
-          echo "APP_PRIVATE_KEY=$APP_PRIVATE_KEY" | awk '{printf "%s\\n", $0}' >> $GITHUB_ENV
-          NIXPKGS_URL=$(jq -r .pins.nixpkgs.url npins/sources.json)
-          echo "" >> $GITHUB_ENV
-          echo "NIX_PATH=nixpkgs=$NIXPKGS_URL" >> $GITHUB_ENV
+          # This should not be a URL, because it would allow PRs to run arbitrary code in CI!
+          url=$(jq -r .pins.nixpkgs.url npins/sources.json)
+          echo "url=$url" >> "$GITHUB_ENV"
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
-          app-id: ${{ env.APP_ID }}
-          private-key: ${{ env.APP_PRIVATE_KEY }}
-      - name: Install Updatecli in the runner
-        uses: updatecli/updatecli-action@v2
+          app-id: ${{ secrets.UPCLI_APP_ID }}
+          private-key: ${{ secrets.UPCLI_SECRET_ID }}
+      - uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
         with:
-          version: v0.93.1
+          nix_path: nixpkgs=${{ env.url }}
+          extra_nix_config: |
+            fallback = true
+            trusted-public-keys = didactiklabs-nixcache:PxLKN0+ZkP07M8g8/B6xbP6A4MYpqQg6LH7V3muiy/0= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://s3.didactiklabs.io/nix-cache https://cache.nixos.org/
       - name: Run Updatecli in apply mode
         run: 'updatecli apply --config ./updatecli/updatecli.d --values updatecli/values.yaml'
         env:
