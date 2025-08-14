@@ -27,7 +27,7 @@ spec:
             key: password
             name: immich-secrets
     image:
-      tag: v1.137.3
+      tag: v1.138.0
     immich:
       metrics:
         enable: false
