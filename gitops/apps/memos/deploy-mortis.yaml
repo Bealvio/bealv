@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mortis-deployment
+  labels:
+    app: mortis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mortis
+  template:
+    metadata:
+      labels:
+        app: mortis
+    spec:
+      containers:
+      - name: mortis
+        image: ghcr.io/mudkipme/mortis:0.25.0
+        ports:
+        - containerPort: 5231
+        command:
+          - "/app/mortis"
+          - "-grpc-addr=memos:5230"

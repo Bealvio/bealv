@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mortis
+  labels:
+    app: mortis
+spec:
+  ports:
+  - port: 5231
+    targetPort: 5231
+  selector:
+    app: mortis

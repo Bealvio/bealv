@@ -7,3 +7,5 @@ resources:
   - namespace.yaml
   - cnpg.yaml
   - secrets.yaml
+  - deploy-mortis.yaml
+  - service-mortis.yaml
