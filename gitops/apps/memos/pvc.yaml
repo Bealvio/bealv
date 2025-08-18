@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: memos
+spec:
+  storageClassName: disk-hddb
+  accessModes:
+    - ReadWriteOnce # This volume can be mounted by a single node
+  resources:
+    requests:
+      storage: 50Gi

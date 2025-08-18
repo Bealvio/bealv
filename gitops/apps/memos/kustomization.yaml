@@ -1,0 +1,9 @@
+namespace: memos
+resources:
+  - deploy.yaml
+  - pvc.yaml
+  - service.yaml
+  - ingress.yaml
+  - namespace.yaml
+  - cnpg.yaml
+  - secrets.yaml

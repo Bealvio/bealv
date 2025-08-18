@@ -49,11 +49,11 @@ data:
             href: https://zot.bealv.io
             description: OCI-native container image registry, simplified.
             siteMonitor: http://zot.zot:5000
-        - money:
-            icon: sh-dollardollar-bill-y-all.png
-            href: https://money.bealv.io
-            description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
-            siteMonitor: http://dollardollar.dollardollar:5001
+        - memos:
+            icon: sh-memos.png
+            href: https://memos.bealv.io
+            description: Memos is a privacy-first, lightweight note-taking solution that allows you to effortlessly capture and share your ideas.
+            siteMonitor: http://memos.memos:5230
       - Medias:
         - immich:
             icon: immich.png

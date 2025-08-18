@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: memos-postgres
+spec:
+  instances: 3
+  storage:
+    storageClass: disk-hddb
+    size: 50Gi
+  bootstrap:
+    initdb:
+      database: memos
+      owner: memos
+      secret:
+        name: memos-secrets

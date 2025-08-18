@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memos-deployment
+  labels:
+    app: memos
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memos
+  template:
+    metadata:
+      labels:
+        app: memos
+    spec:
+      containers:
+        - name: memos
+          image: neosmemo/memos:stable
+          env:
+            - name: MEMOS_MODE
+              value: "prod"
+            - name: MEMOS_ADDR
+              value: "0.0.0.0"
+            - name: MEMOS_PORT
+              value: "5230"
+            - name: MEMOS_DRIVER
+              value: postgres
+            - name: MEMOS_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: memos-secrets
+                  key: database_uri
+          ports:
+            - containerPort: 5230
+          volumeMounts:
+            - name: memos-data
+              mountPath: /var/opt/memos
+      volumes:
+        - name: memos-data
+          persistentVolumeClaim:
+            claimName: memos
