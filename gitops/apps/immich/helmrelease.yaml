@@ -75,9 +75,9 @@ spec:
       resources:
         requests:
           cpu: 200m
-          memory: 1Gi
+          memory: 2Gi
         limits:
-          cpu: 1
-          memory: 1Gi
+          cpu: 6
+          memory: 2Gi
       env:
         TRANSFORMERS_CACHE: /cache
