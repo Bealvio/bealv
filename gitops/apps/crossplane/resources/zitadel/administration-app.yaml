@@ -303,3 +303,37 @@ spec:
   writeConnectionSecretToRef:
     name: fmd2-oidc
     namespace: fmd2
+---
+apiVersion: application.zitadel.didactiklabs.io/v1alpha1
+kind: Oidc
+metadata:
+  name: kubernetes-bealv
+spec:
+  forProvider:
+    accessTokenRoleAssertion: false
+    accessTokenType: OIDC_TOKEN_TYPE_BEARER
+    additionalOrigins: []
+    appType: OIDC_APP_TYPE_WEB
+    authMethodType: OIDC_AUTH_METHOD_TYPE_NONE
+    clockSkew: 0s
+    devMode: true
+    grantTypes:
+      - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
+    idTokenRoleAssertion: false
+    idTokenUserinfoAssertion: false
+    name: kubernetes-bealv
+    orgIdRef:
+      name: bealv
+    postLogoutRedirectUris:
+      - '*'
+    projectIdRef:
+      name: administration
+    redirectUris:
+      - '*'
+    responseTypes:
+      - OIDC_RESPONSE_TYPE_CODE
+    skipNativeAppSuccessPage: false
+    version: OIDC_VERSION_1_0
+  writeConnectionSecretToRef:
+    name: fmd2-oidc
+    namespace: fmd2
