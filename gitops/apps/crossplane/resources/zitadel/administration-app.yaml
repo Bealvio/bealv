@@ -335,5 +335,5 @@ spec:
     skipNativeAppSuccessPage: false
     version: OIDC_VERSION_1_0
   writeConnectionSecretToRef:
-    name: fmd2-oidc
-    namespace: fmd2
+    name: kubernetes-bealv-oidc
+    namespace: default
