@@ -331,6 +331,7 @@ spec:
     redirectUris:
       - 'http://localhost:8000/*'
       - 'http://localhost/*'
+      - 'http://*'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
