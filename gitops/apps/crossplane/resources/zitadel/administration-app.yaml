@@ -330,9 +330,7 @@ spec:
       name: administration
     redirectUris:
       - 'http://localhost:8000/*'
-      - 'http://localhost:8080/*'
-      - 'http://localhost/*'
-      - 'http://*'
+      - 'http://localhost:8080/auth/callback'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
