@@ -314,13 +314,13 @@ spec:
     accessTokenType: OIDC_TOKEN_TYPE_BEARER
     additionalOrigins: []
     appType: OIDC_APP_TYPE_WEB
-    authMethodType: OIDC_AUTH_METHOD_TYPE_NONE
+    authMethodType: OIDC_AUTH_METHOD_TYPE_CODE
     clockSkew: 0s
     devMode: true
     grantTypes:
       - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
     idTokenRoleAssertion: false
-    idTokenUserinfoAssertion: false
+    idTokenUserinfoAssertion: true
     name: kubernetes-bealv
     orgIdRef:
       name: bealv
