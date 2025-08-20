@@ -316,7 +316,7 @@ spec:
     appType: OIDC_APP_TYPE_WEB
     authMethodType: OIDC_AUTH_METHOD_TYPE_NONE
     clockSkew: 0s
-    devMode: false
+    devMode: true
     grantTypes:
       - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
     idTokenRoleAssertion: false
