@@ -330,6 +330,7 @@ spec:
       name: administration
     redirectUris:
       - 'http://localhost:8000/*'
+      - 'http://localhost/*'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
