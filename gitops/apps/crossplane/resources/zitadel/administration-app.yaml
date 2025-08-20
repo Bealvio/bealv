@@ -316,7 +316,7 @@ spec:
     appType: OIDC_APP_TYPE_WEB
     authMethodType: OIDC_AUTH_METHOD_TYPE_NONE
     clockSkew: 0s
-    devMode: true
+    devMode: false
     grantTypes:
       - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
     idTokenRoleAssertion: false
@@ -329,7 +329,7 @@ spec:
     projectIdRef:
       name: administration
     redirectUris:
-      - '*'
+      - 'http://localhost:8000/*'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
