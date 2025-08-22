@@ -331,6 +331,7 @@ spec:
     redirectUris:
       - 'http://localhost:8000/*'
       - 'http://localhost:8080/auth/callback'
+      - 'http://localhost:3000/auth/callback'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
