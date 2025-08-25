@@ -59,10 +59,10 @@ spec:
       resources:
         requests:
           cpu: 200m
-          memory: 1Gi
+          memory: 2Gi
         limits:
           cpu: 2
-          memory: 2Gi
+          memory: 4Gi
       serviceAccount:
         create: true
         name: 'immich'
