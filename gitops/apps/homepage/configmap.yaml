@@ -54,6 +54,10 @@ data:
             href: https://memos.bealv.io
             description: Memos is a privacy-first, lightweight note-taking solution that allows you to effortlessly capture and share your ideas.
             siteMonitor: http://memos.memos:5230
+        - money:
+            icon: sh-dollardollar-bill-y-all.png
+            href: https://money.bealv.io
+            description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
       - Medias:
         - immich:
             icon: immich.png
