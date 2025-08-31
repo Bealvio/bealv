@@ -45,14 +45,12 @@ targets:
     scmid: 'default'
     disablesourceinput: true
     spec:
-      # environments:
-      #   - name: PATH
-      #   - name: NIX_PATH
-      #   - name: NIX_SSL_CERT_FILE
-      #   - name: NIX_REMOTE
+      environments:
+        - name: PATH
+        - name: NIX_PATH
       command: |
         set -e
-        npins update contour
+        nix run nixpkgs#npins -- add --name contour github projectcontour contour --at {{ source `contour` }}
         nix-shell --run "buildIngressContour"
 actions:
   default:

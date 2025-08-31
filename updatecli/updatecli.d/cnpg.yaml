@@ -50,7 +50,7 @@ targets:
         - name: NIX_PATH
       command: |
         set -e
-        npins update cloudnative-pg
+        nix run nixpkgs#npins -- add --name cloudnative-pg github cloudnative-pg cloudnative-pg --at {{ source `cloudnative-pg` }}
         nix-shell shell.nix --run "buildCnpg '{{ source `cloudnative-pg` }}'"
 actions:
   default:
