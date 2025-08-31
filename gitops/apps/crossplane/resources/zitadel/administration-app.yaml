@@ -334,6 +334,7 @@ spec:
       - 'http://localhost:8080/auth/callback'
       - 'http://localhost:8000/auth/callback'
       - 'http://localhost:3000/auth/callback'
+      - 'https://bealv.lolo:8443/auth/callback'
       - 'https://netwatch.bealv.lan/auth/callback'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
