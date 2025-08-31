@@ -52,7 +52,7 @@ targets:
       #   - name: NIX_REMOTE
       command: |
         set -e
-        npins add --name contour github projectcontour contour --at {{ source `contour` }}
+        npins update contour
         nix-shell --run "buildIngressContour"
 actions:
   default:

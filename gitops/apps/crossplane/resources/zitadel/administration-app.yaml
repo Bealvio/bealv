@@ -329,7 +329,8 @@ spec:
     projectIdRef:
       name: administration
     redirectUris:
-      - 'http://localhost:8000/*'
+      - 'http://localhost:8443/.*'
+      - 'http://localhost:8443/auth/callback'
       - 'http://localhost:8080/auth/callback'
       - 'http://localhost:3000/auth/callback'
       - 'https://netwatch.bealv.lan/auth/callback'
