@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: plex
+spec:
+  type: ClusterIP
+  ports:
+    - port: 32400
+      targetPort: plex
+  selector:
+    app: plex
+    role: web
