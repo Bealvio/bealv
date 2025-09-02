@@ -1,0 +1,164 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: plex
+  labels: &default
+    app: plex
+    role: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+      annotations:
+        backup.velero.io/backup-volumes: config
+    spec:
+      dnsConfig:
+        nameservers:
+          - 1.1.1.1
+      dnsPolicy: "None"
+      serviceAccount: plex
+      automountServiceAccountToken: false
+      initContainers:
+      - name: vpn
+        image: ghcr.io/qdm12/gluetun:latest
+        restartPolicy: Always
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+          privileged: true
+        env:
+          - name: TZ
+            value: 'Europe/Paris'
+          - name: VPN_SERVICE_PROVIDER
+            value: "custom"
+          - name: VPN_TYPE
+            value: "wireguard"
+          - name: FIREWALL_VPN_INPUT_PORTS
+            value: "32400"
+          - name: FIREWALL_OUTBOUND_SUBNETS
+            value: 239.255.255.250/32
+        volumeMounts:
+        - name: wg-config
+          mountPath: /gluetun/wireguard
+      - name: ping
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          while ! ping -c 1 172.18.0.1; do
+            echo "Ping failed, retrying in 5"
+            sleep 5
+          done
+          echo "ping succesfull, exiting"
+      containers:
+      - name: plex
+        securityContext:
+          privileged: true
+        image: plexinc/pms-docker:1.42.1.10060-4e8b05daf
+        imagePullPolicy: Always
+        # resources:
+        #   limits:
+        #     gpu.intel.com/i915: 1
+        ports:
+        - containerPort: 32400
+          name: plex
+        env:
+        - name: HOSTNAME
+          value: plex.bealv.io
+        - name: ADVERTISE_IP
+          value: "https://plex.bealv.io:443,http://plex.bealv.io:80"
+        - name: ALLOWED_NETWORKS
+          value: "192.168.0.0/16,10.0.0.8/8,172.16.0.0/12"
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "Europe/Paris"
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: tvshows
+          mountPath: /tvshows
+        - name: animes
+          mountPath: /animes
+        - name: movies
+          mountPath: /movies
+        - name: transcode
+          mountPath: /transcode
+        - name: saved-movies
+          mountPath: /bealv/hddb/saved_movies
+      volumes:
+      - name: wg-config
+        secret:
+          secretName: plex-wireguard
+  volumeClaimTemplates:
+  - metadata:
+      name: config
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "disk-hddb"
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: tvshows
+      annotations:
+        nfs.io/storage-path: "/prod-k8s/media/tvshows"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "hdda"
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: animes
+      annotations:
+        nfs.io/storage-path: "/prod-k8s/media/animes"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "hdda"
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: movies
+      annotations:
+        nfs.io/storage-path: "/prod-k8s/media/movies"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "hdda"
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: transcode
+      annotations:
+        nfs.io/storage-path: "/prod-k8s/plex/transcode"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "hddb"
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: saved-movies
+      annotations:
+        nfs.io/storage-path: "/saved_movies"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: "hddb"
+      resources:
+        requests:
+          storage: 1Gi
