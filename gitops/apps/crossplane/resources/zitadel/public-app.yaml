@@ -274,3 +274,37 @@ spec:
     name: memos-oidc
     namespace: memos
 ---
+apiVersion: application.zitadel.didactiklabs.io/v1alpha1
+kind: Oidc
+metadata:
+  name: nextcloud
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accessTokenRoleAssertion: false
+    accessTokenType: OIDC_TOKEN_TYPE_BEARER
+    additionalOrigins: []
+    appType: OIDC_APP_TYPE_WEB
+    authMethodType: OIDC_AUTH_METHOD_TYPE_BASIC
+    clockSkew: 0s
+    devMode: false
+    grantTypes:
+      - OIDC_GRANT_TYPE_AUTHORIZATION_CODE
+    idTokenRoleAssertion: false
+    idTokenUserinfoAssertion: false
+    name: nextcloud
+    orgIdRef:
+      name: bealv
+    postLogoutRedirectUris:
+      - '*'
+    projectIdRef:
+      name: public
+    redirectUris:
+      - https://nimbus.bealv.io/apps/sociallogin/custom_oauth2/Zitadel
+    responseTypes:
+      - OIDC_RESPONSE_TYPE_CODE
+    skipNativeAppSuccessPage: false
+    version: OIDC_VERSION_1_0
+  writeConnectionSecretToRef:
+    name: nextcloud-oidc
+    namespace: nextcloud
