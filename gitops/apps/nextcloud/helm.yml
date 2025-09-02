@@ -1,0 +1,251 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  interval: 24h
+  url: https://nextcloud.github.io/helm/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: nextcloud
+      version: "7.0.2"
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud
+        namespace: nextcloud
+      interval: 12h
+  values:
+    image:
+    #  tag: 29.0.8-apache
+      repository: nextcloud
+      pullPolicy: IfNotPresent
+
+    replicaCount: 1
+    
+    # resources:
+    #   limits:
+    #     gpu.intel.com/i915: 1
+    lifecycle:
+      postStartCommand:
+      - /bin/sh
+      - -c
+      - |
+        apt -y update
+        apt -y install vim ffmpeg bz2
+        chown www-data:www-data /var/www/html -R
+        chmod 666 /dev/dri/renderD128
+        chmod 777 /tmp -R
+
+    cronjob:
+      enabled: true
+
+    ingress:
+      enabled: true
+      className: "external"
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Files and Sharing Server
+        gethomepage.dev/group: Cloud
+        gethomepage.dev/icon: nextcloud.png
+        gethomepage.dev/name: Nimbus
+        gethomepage.dev/widget.type: "nextcloud"
+        gethomepage.dev/widget.url: "https://nimbus.bealv.io"
+        nginx.ingress.kubernetes.io/proxy-body-size: 4G
+        nginx.ingress.kubernetes.io/rewrite-target: /
+        cert-manager.io/cluster-issuer: bealvio
+        external-dns.alpha.kubernetes.io/target: bealv.io
+        cert-manager.io/common-name: nimbus.bealv.io
+        nginx.ingress.kubernetes.io/server-snippet: |-
+          server_tokens off;
+          proxy_hide_header X-Powered-By;
+   
+          rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+          rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+          location = /.well-known/carddav {
+              return 301 /remote.php/dav;
+          }
+          location = /.well-known/caldav {
+              return 301 /remote.php/dav;
+          }
+          location = /.well-known/webfinger {
+            return 301 /index.php/.well-known/webfinger;
+          }
+          location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+          }
+          location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+            deny all;
+          }
+          location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+            deny all;
+          }
+      tls:
+        - secretName: nextcloud-tls
+          hosts:
+            - nimbus.bealv.io
+      path: /
+      pathType: Prefix
+
+    phpClientHttpsFix:
+      enabled: false
+      protocol: https
+
+    nextcloud:
+      host: nimbus.bealv.io
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-secrets
+        usernameKey: username
+        passwordKey: password
+        tokenKey: token
+        smtpUsernameKey: smtp-username
+        smtpPasswordKey: smtp-password
+        smtpHostKey: smtp-host
+      update: 0
+      datadir: /var/www/html/data
+      persistence:
+        subPath:
+      mail:
+        enabled: true
+        fromAddress: contact.bealv
+        domain: gmail.com
+        smtp:
+          secure: tls
+          port: 587
+          authtype: LOGIN
+
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 2000
+      #   runAsNonRoot: true
+      #   readOnlyRootFilesystem: true
+      extraEnv:
+        - name: TRUSTED_PROXIES
+          value: "10.0.1.204 10.0.1.205 192.168.1.200 192.168.1.201"
+        - name: NEXTCLOUD_TRUSTED_DOMAINS
+          value: "192.168.0.0/16 10.0.0.0/8"
+        - name: OC_MAINTENANCE_WINDOW_START
+          value: "1"
+        - name: OVERWRITEPROTOCOL
+          value: "https"
+        - name: NC_default_locale
+          value: fr_FR
+        - name: NC_default_language
+          value: fr
+        - name: NC_default_phone_region
+          value: fr
+
+      config:
+        default: true
+      
+      # configs:
+      #   proxy.config.php: |-
+      #     <?php
+      #     $CONFIG = array (
+      #       'trusted_proxies' => array(
+      #         0 => '127.0.0.1',
+      #         1 => '10.0.0.0/8',
+      #         2 => '192.168.0.0/16',
+      #       ),
+      #       'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+      #     );
+
+      extraVolumes: []
+      extraVolumeMounts: []
+
+    internalDatabase:
+      enabled: false
+
+    externalDatabase:
+      enabled: true
+      type: postgresql
+      host: nextcloud-postgres-rw:5432
+      database: nextcloud
+
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-psql-secrets
+        usernameKey: username
+        passwordKey: password
+
+    postgresql:
+      enabled: false
+
+    redis:
+      enabled: true
+      architecture: standalone
+      auth:
+        enabled: true
+        existingSecret: nextcloud-secrets
+        existingSecretPasswordKey: redis-password
+      master:
+        persistence:
+          enabled: false
+          size: 250Mi
+          storageClass: "disk"
+          accessModes:
+          - ReadWriteOnce
+
+    persistence:
+      enabled: true
+      annotations:
+      storageClass: "disk"
+      accessMode: ReadWriteOnce
+      size: 2Gi
+
+      nextcloudData:
+        enabled: true
+        subPath:
+        annotations:
+          nfs.io/storage-path: /prod-k8s/nextcloud
+        storageClass: "hddb"
+        accessMode: ReadWriteOnce
+        size: 1Gi
+
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    startupProbe:
+      enabled: false
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
+
+    serviceMonitor:
+      enabled: true
+      namespace: ""
+      jobLabel: ""
+      interval: 30s
+      scrapeTimeout: ""
+      labels: {}
+
+    rbac:
+      enabled: true
+      serviceaccount:
+        create: true
+        name: nextcloud
