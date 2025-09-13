@@ -6,7 +6,7 @@ metadata:
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.3.0
   bootstrap:
     initdb:
       database: immich
@@ -15,7 +15,6 @@ spec:
         name: immich-secrets
       postInitSQL:
         - ALTER USER immich WITH SUPERUSER;
-        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
         - ALTER SYSTEM SET search_path TO "$user", public, vectors;
         - CREATE EXTENSION IF NOT EXISTS "vectors";
         - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
@@ -31,7 +30,7 @@ spec:
         - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
   postgresql:
     shared_preload_libraries:
-      - 'vchord.so'
+      - 'vectors.so'
   storage:
     size: 8Gi
 ---

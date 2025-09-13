@@ -16,7 +16,6 @@ spec:
       interval: 12h
   values:
     env:
-      DB_VECTOR_EXTENSION: vectorchord
       REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
       DB_HOSTNAME: 'immich-postgres-rw'
       DB_USERNAME: 'immich'
