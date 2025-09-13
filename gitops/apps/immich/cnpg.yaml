@@ -6,7 +6,7 @@ metadata:
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.5.1
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.5.0
   bootstrap:
     initdb:
       database: immich
