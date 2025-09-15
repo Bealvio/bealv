@@ -1,0 +1,27 @@
+github_user: "Banh-Canh"
+
+api:
+  professional_json: "https://raw.githubusercontent.com/Banh-Canh/salaryman/main/examples/example.json"
+
+connect_links:
+  - name: GitHub
+    url: https://github.com/Banh-Canh
+    icon: "📂"
+    type: github
+  - name: LinkedIn
+    url: https://www.linkedin.com/in/victor-hang/
+    icon: "💼"
+    type: linkedin
+  - name: Email
+    url: mailto:vhvictorhang@gmail.com
+    icon: "📧"
+    type: email
+  - name: Docker Hub
+    url: https://hub.docker.com/u/banhcanh
+    icon: "🐳"
+    type: docker
+
+refresh_config:
+  projects_interval: '10m'
+  activity_interval: '5m'
+  cache_ttl: '5m'
