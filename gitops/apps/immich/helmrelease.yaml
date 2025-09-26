@@ -62,6 +62,7 @@ spec:
           cpu: 200m
           memory: 2Gi
         limits:
+          gpu.intel.com/i915: 1
           cpu: 2
           memory: 4Gi
       serviceAccount:
