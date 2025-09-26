@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: intel-device-plugins-gpu
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: intel-device-plugins-gpu
+  namespace: intel-device-plugins-gpu
+spec:
+  interval: 5m
+  url: https://github.com/intel/intel-device-plugins-for-kubernetes
+  ref:
+    branch: release-0.34
+  ignore: |
+    # exclude all
+    /*
+    # include deploy dir
+    !/deployments/gpu_plugin
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: intel-device-plugins-gpu
+  namespace: intel-device-plugins-gpu
+spec:
+  interval: 10m
+  targetNamespace: intel-device-plugins-gpu
+  sourceRef:
+    kind: GitRepository
+    name: intel-device-plugins-gpu
+  path: './deployments/gpu_plugin'
+  prune: true
+  patches:
+    - patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/command
+          value: ["/usr/local/bin/intel_gpu_device_plugin"]
+        - op: add
+          path: /spec/template/spec/containers/0/args
+          value: ["-shared-dev-num", "4"]
+      target:
+        kind: DaemonSet
+        name: intel-gpu-plugin
