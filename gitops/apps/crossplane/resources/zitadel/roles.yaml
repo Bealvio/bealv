@@ -39,3 +39,31 @@ spec:
     projectIdRef:
       name: public
     roleKey: public-user
+---
+apiVersion: project.zitadel.didactiklabs.io/v1alpha1
+kind: Role
+metadata:
+  name: kube-user
+spec:
+  forProvider:
+    displayName: kube-user
+    group: kube-user
+    orgIdRef:
+      name: bealv
+    projectIdRef:
+      name: kubernetes
+    roleKey: kube-user
+---
+apiVersion: project.zitadel.didactiklabs.io/v1alpha1
+kind: Role
+metadata:
+  name: kube-admin
+spec:
+  forProvider:
+    displayName: kube-admin
+    group: kube-admin
+    orgIdRef:
+      name: bealv
+    projectIdRef:
+      name: kubernetes
+    roleKey: kube-admin
