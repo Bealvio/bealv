@@ -3,6 +3,7 @@ resources:
   - instancegithub.yaml
   - instancegoogle.yaml
   - administration-app.yaml
+  - kubernetes-app.yaml
   - public-app.yaml
   - org.yaml
   - project.yaml
