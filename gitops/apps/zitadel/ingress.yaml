@@ -20,6 +20,13 @@ spec:
                 name: zitadel
                 port:
                   number: 8080
+          - path: /ui/v2/login
+            pathType: Prefix
+            backend:
+              service:
+                name: zitadel-login
+                port:
+                  number: 3000
   tls:
     - hosts:
         - 'zitadel.bealv.io'
