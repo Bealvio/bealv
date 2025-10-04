@@ -115,7 +115,7 @@ spec:
         });
         api.userGrants.push({
             projectID: '339899635864699426',
-            roles: ['kube-admin', 'dev-kube-user']
+            roles: ['kube-admin']
         });
       }
     timeout: 10s
