@@ -99,6 +99,10 @@ spec:
                 projectID: '310416503256121894',
                 roles: ['public-user']
             });
+            api.userGrants.push({
+                projectID: '339899635864699426',
+                roles: ['dev-kube-user']
+            });
           return
         }
         api.userGrants.push({
