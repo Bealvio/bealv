@@ -99,10 +99,6 @@ spec:
                 projectID: '310416503256121894',
                 roles: ['public-user']
             });
-            api.userGrants.push({
-                projectID: '339899635864699426',
-                roles: ['kube-user']
-            });
           return
         }
         api.userGrants.push({
@@ -115,7 +111,7 @@ spec:
         });
         api.userGrants.push({
             projectID: '339899635864699426',
-            roles: ['kube-admin', 'kube-user']
+            roles: ['kube-admin']
         });
       }
     timeout: 10s
