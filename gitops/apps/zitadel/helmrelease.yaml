@@ -18,6 +18,7 @@ spec:
     zitadel:
       # https://github.com/zitadel/zitadel/blob/main/cmd/defaults.yaml
       configmapConfig:
+        ExternalDomain: zitadel.bealv.io
         ExternalSecure: true
         Machine:
           Identification:
