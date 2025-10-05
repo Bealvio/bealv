@@ -17,7 +17,7 @@ spec:
   values:
     env:
       DB_VECTOR_EXTENSION: vectorchord
-      REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
+      REDIS_HOSTNAME: 'immich-valkey'
       DB_HOSTNAME: 'immich-postgres-rw'
       DB_USERNAME: 'immich'
       DB_DATABASE_NAME: 'immich'
@@ -46,12 +46,6 @@ spec:
       persistence:
         library:
           existingClaim: immich-data
-    redis:
-      enabled: true
-      clusterDomain: bealv.local
-      architecture: replication
-      replica:
-        resourcesPreset: 'micro'
     # Immich components
     server:
       enabled: true
