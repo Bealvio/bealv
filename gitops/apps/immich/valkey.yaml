@@ -7,7 +7,7 @@ spec:
   # the number of master nodes in the cluster
   nodes: 1
   # the number of replicas per master node
-  replicas: 3
+  replicas: 0
   # the resource requests and limits for the Valkey Container
   resources:
     limits:
