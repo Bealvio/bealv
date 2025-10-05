@@ -1,0 +1,63 @@
+name: valkey-operator Update
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+sources:
+  default:
+    name: Get value from json
+    scmid: 'default'
+    kind: json
+    spec:
+      file: npins/sources.json
+      key: pins.valkey-operator.version
+  valkey-operator:
+    kind: githubrelease
+    spec:
+      owner: 'hyperspike'
+      repository: 'valkey-operator'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: semver
+        pattern: '*'
+conditions:
+  default:
+    name: Check if version is the same
+    sourceid: 'default'
+    scmid: 'default'
+    kind: shell
+    spec:
+      environments:
+        - name: PATH
+      command: test "{{ source `valkey-operator` }}" !=
+targets:
+  default:
+    name: valkey-operator npins update {{ source `valkey-operator` }}
+    kind: shell
+    scmid: 'default'
+    disablesourceinput: true
+    spec:
+      environments:
+        - name: PATH
+        - name: NIX_PATH
+      command: |
+        set -e
+        nix run nixpkgs#npins -- add --name valkey-operator github hyperspike valkey-operator --at {{ source `valkey-operator` }}
+        nix-shell shell.nix --run "buildValkey '{{ source `valkey-operator` }}'"
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update valkey-operator npins.'
+      draft: false
+      title: 'UPDATECLI: Update valkey-operator'
