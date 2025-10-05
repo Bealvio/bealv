@@ -101,7 +101,7 @@ spec:
             });
             api.userGrants.push({
                 projectID: '339899635864699426',
-                roles: ['dev-kube-user']
+                roles: ['kube-user']
             });
           return
         }
