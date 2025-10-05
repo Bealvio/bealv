@@ -32,6 +32,22 @@
       "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.33.0",
       "hash": "0bzyjip64silhigq69b40iplsqhmnn81ghhilzq255xh5kpxlvj8"
     },
+    "dragonfly-operator": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "dragonflydb",
+        "repo": "dragonfly-operator"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.3.0",
+      "revision": "f769eef08534acd986cea218413fcc1248fa3f84",
+      "url": "https://api.github.com/repos/dragonflydb/dragonfly-operator/tarball/v1.3.0",
+      "hash": "0vlsr2y8fw8c34hcv5xcjsjbmlqjlk93swsr0i1l4xp6qyj6kkm4"
+    },
     "grafana-operator": {
       "type": "GitRelease",
       "repository": {

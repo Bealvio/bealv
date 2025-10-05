@@ -1,4 +1,4 @@
-name: valkey-operator Update
+name: ingress-dragonfly-operator Update
 scms:
   default:
     kind: 'github'
@@ -17,14 +17,14 @@ sources:
     kind: json
     spec:
       file: npins/sources.json
-      key: pins.valkey-operator.version
-  valkey-operator:
+      key: pins.dragonfly-operator.version
+  dragonfly-operator:
     kind: githubrelease
     spec:
-      owner: 'hyperspike'
-      repository: 'valkey-operator'
+      owner: 'dragonflydb'
+      repository: 'dragonfly-operator'
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
-      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
       versionfilter:
         kind: semver
         pattern: '*'
@@ -37,10 +37,10 @@ conditions:
     spec:
       environments:
         - name: PATH
-      command: test "{{ source `valkey-operator` }}" !=
+      command: test "{{ source `dragonfly-operator` }}" !=
 targets:
   default:
-    name: valkey-operator npins update {{ source `valkey-operator` }}
+    name: dragonfly-operator npins update {{ source `dragonfly-operator` }}
     kind: shell
     scmid: 'default'
     disablesourceinput: true
@@ -50,14 +50,14 @@ targets:
         - name: NIX_PATH
       command: |
         set -e
-        nix run nixpkgs#npins -- add --name valkey-operator github hyperspike valkey-operator --at {{ source `valkey-operator` }}
-        nix-shell shell.nix --run "buildValkey '{{ source `valkey-operator` }}'"
+        nix run nixpkgs#npins -- add --name dragonfly-operator github dragonflydb dragonfly-operator --at {{ source `dragonfly-operator` }}
+        nix-shell --run "buildDragonFly"
 actions:
   default:
     kind: 'github/pullrequest'
     scmid: 'default'
     spec:
       automerge: false
-      description: 'Update valkey-operator npins.'
+      description: 'Update dragonfly-operator npins.'
       draft: false
-      title: 'UPDATECLI: Update valkey-operator'
+      title: 'UPDATECLI: Update dragonfly-operator'

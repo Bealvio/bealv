@@ -169,7 +169,7 @@ spec:
       enabled: false
     externalRedis:
       enabled: true
-      host: 'nextcloud-valkey'
+      host: 'nextcloud-dragonfly'
       port: '6379'
       password: ''
     persistence:

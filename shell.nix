@@ -6,13 +6,12 @@ pkgs.mkShell {
     pkgs.kustomize
   ];
   packages = [
-    (pkgs.writeShellScriptBin "buildValkey" ''
+    (pkgs.writeShellScriptBin "buildDragonFly" ''
       #!/bin/bash
       set -e
-      rm -rf gitops/apps/valkey/upstream
-      mkdir -p gitops/apps/valkey/upstream
-      cnpghash=$(nix-prefetch-url https://github.com/hyperspike/valkey-operator/releases/download/$1/install.yaml)
-      cp -r --no-preserve=mode $(nix-build nix/valkey.nix --argstr manifest01Hash "$cnpghash" --argstr version $1)/* gitops/apps/valkey/upstream/
+      rm -rf gitops/apps/dragonfly/upstream
+      mkdir -p gitops/apps/dragonfly/upstream
+      cp -r --no-preserve=mode $(nix-build nix/dragonfly.nix)/* gitops/apps/dragonfly/upstream/
     '')
     (pkgs.writeShellScriptBin "buildCnpg" ''
       #!/bin/bash

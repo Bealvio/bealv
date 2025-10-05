@@ -6,4 +6,4 @@ resources:
   - namespace.yml
   - external-secret.yml
   - cnpg.yml
-  - valkey.yaml
+  - dragonfly.yaml
