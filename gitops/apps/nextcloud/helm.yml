@@ -31,7 +31,7 @@ spec:
       pullPolicy: IfNotPresent
 
     replicaCount: 1
-    
+
     # resources:
     #   limits:
     #     gpu.intel.com/i915: 1
@@ -68,7 +68,7 @@ spec:
         nginx.ingress.kubernetes.io/server-snippet: |-
           server_tokens off;
           proxy_hide_header X-Powered-By;
-   
+
           rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
           rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
           location = /.well-known/carddav {
@@ -149,7 +149,7 @@ spec:
 
       config:
         default: true
-      
+
       # configs:
       #   proxy.config.php: |-
       #     <?php
@@ -183,20 +183,11 @@ spec:
     postgresql:
       enabled: false
 
-    redis:
+    externalRedis:
       enabled: true
-      architecture: standalone
-      auth:
-        enabled: true
-        existingSecret: nextcloud-secrets
-        existingSecretPasswordKey: redis-password
-      master:
-        persistence:
-          enabled: false
-          size: 250Mi
-          storageClass: "disk"
-          accessModes:
-          - ReadWriteOnce
+      host: "nextcloud-valkey"
+      port: "6379"
+      password: ""
 
     persistence:
       enabled: true

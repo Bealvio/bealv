@@ -2,7 +2,7 @@ apiVersion: hyperspike.io/v1
 kind: Valkey
 metadata:
   labels:
-  name: immich-valkey
+  name: nextcloud-valkey
 spec:
   # the number of master nodes in the cluster
   nodes: 3
