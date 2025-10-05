@@ -17,7 +17,7 @@ spec:
       cpu: 100m
       memory: 128Mi
   # boolean value to enable or disable TLS, cert-manager is required for TLS
-  tls: true
+  tls: false
   # the cert issuer to use for the Valkey Container
   certIssuer: bealv
   # the cert issuer type to use for the Valkey Container (ClusterIssuer or Issuer)
