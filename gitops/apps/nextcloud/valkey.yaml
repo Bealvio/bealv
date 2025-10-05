@@ -5,9 +5,9 @@ metadata:
   name: nextcloud-valkey
 spec:
   # the number of master nodes in the cluster
-  nodes: 3
+  nodes: 1
   # the number of replicas per master node
-  replicas: 0
+  replicas: 3
   # the resource requests and limits for the Valkey Container
   resources:
     limits:
