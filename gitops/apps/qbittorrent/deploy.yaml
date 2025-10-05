@@ -34,7 +34,7 @@ spec:
           command:
             - /bin/bash
             - -c
-            - cp /config/wireguard/wg0.conf.tmpl /config/wireguard/wg0.conf && /usr/local/bin/init.sh
+            - cp /config/wireguard/wg0.conf.tmpl /config/wireguard/wg0.conf && init.sh
           securityContext:
             privileged: true
           image: binhex/arch-qbittorrentvpn
