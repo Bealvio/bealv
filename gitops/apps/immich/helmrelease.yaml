@@ -17,7 +17,7 @@ spec:
   values:
     env:
       DB_VECTOR_EXTENSION: vectorchord
-      REDIS_HOSTNAME: 'immich-valkey'
+      REDIS_HOSTNAME: 'immich-valkey-headless'
       DB_HOSTNAME: 'immich-postgres-rw'
       DB_USERNAME: 'immich'
       DB_DATABASE_NAME: 'immich'
