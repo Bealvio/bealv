@@ -79,6 +79,22 @@
       "name": "nixos-24.11",
       "url": "https://releases.nixos.org/nixos/24.11/nixos-24.11.715401.20755fa05115/nixexprs.tar.xz",
       "hash": "1bl0r0axzk3swpa2cph7zgsh576xvr179slga38ww0x562hln7gf"
+    },
+    "valkey-operator": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "hyperspike",
+        "repo": "valkey-operator"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.0.60",
+      "revision": "cac14d64723832a01aa71d77e8beac114a7771fb",
+      "url": "https://api.github.com/repos/hyperspike/valkey-operator/tarball/v0.0.60",
+      "hash": "0mb2wywbr9551b2p0apm1371qaxpa2g5fky1b6ijcslw2qnzlyja"
     }
   },
   "version": 5
