@@ -94,28 +94,13 @@ spec:
        * @param api
        */
       function addAdminGrant(ctx, api) {
-        if (ctx.v1.authRequest.selectedIdpConfigId != "310301624205574694") {
-            api.userGrants.push({
-                projectID: '310416503256121894',
-                roles: ['public-user']
-            });
-            api.userGrants.push({
-                projectID: '339899635864699426',
-                roles: ['kube-user']
-            });
-          return
-        }
-        api.userGrants.push({
-            projectID: '310301928460386854',
-            roles: ['bealv-admin']
-        });
         api.userGrants.push({
             projectID: '310416503256121894',
-            roles: ['public-admin', 'public-user']
+            roles: ['public-user']
         });
         api.userGrants.push({
             projectID: '339899635864699426',
-            roles: ['kube-admin']
+            roles: ['kube-user']
         });
       }
     timeout: 10s
