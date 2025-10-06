@@ -59,9 +59,9 @@ data:
             href: https://money.bealv.io
             description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
         - chihiro:
-            icon: https://raw.githubusercontent.com/Bealvio/chihiro/main/assets/chihiro.png
+            icon: https://i.imgur.com/hEYZ5Cl.png
             href: https://chihiro.bealv.io/
-            description: Chihiro
+            description: Chihiro is a web-based management platform for Cluster API (CAPI) that enables users to provision and manage Kubernetes clusters through a dashboard interface with OIDC authentication.
       - Medias:
         - immich:
             icon: immich.png
