@@ -58,6 +58,10 @@ data:
             icon: sh-dollardollar-bill-y-all.png
             href: https://money.bealv.io
             description: Money management platform with comprehensive expense tracking, budgeting, account synchronization, and bill-splitting features - designed for privacy, flexibility, and complete financial control.
+        - chihiro:
+            icon: https://raw.githubusercontent.com/Bealvio/chihiro/main/assets/chihiro.png
+            href: https://chihiro.bealv.io/
+            description: Chihiro
       - Medias:
         - immich:
             icon: immich.png
