@@ -5,6 +5,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: bealvio
     external-dns.alpha.kubernetes.io/target: bealv.io
+    projectcontour.io/websocket-routes: /
   labels:
     probe: enabled
 spec:

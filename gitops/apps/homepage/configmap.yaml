@@ -62,6 +62,10 @@ data:
             icon: https://i.imgur.com/hEYZ5Cl.png
             href: https://chihiro.bealv.io/
             description: Chihiro is a web-based management platform for Cluster API (CAPI) that enables users to provision and manage Kubernetes clusters through a dashboard interface with OIDC authentication.
+        - outline:
+            icon: outline.png
+            href: https://doc.bealv.io
+            description: Outline is a modern team knowledge base and wiki for growing teams.
       - Medias:
         - immich:
             icon: immich.png
