@@ -22,14 +22,12 @@ spec:
               name: http
           env:
             - name: DATABASE_URL
-              value: 'postgresql://outline:$(POSTGRES_PASSWORD)@outline-postgres-rw:5432/outline'
-            - name: REDIS_URL
-              value: 'redis://outline-dragonfly:6379'
-            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: outline-secrets
-                  key: password
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              value: 'redis://outline-dragonfly:6379'
             - name: URL
               value: https://doc.bealv.io
             - name: PORT

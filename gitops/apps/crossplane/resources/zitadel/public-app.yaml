@@ -334,7 +334,7 @@ spec:
     projectIdRef:
       name: public
     redirectUris:
-      - '*'
+      - 'https://doc.bealv.io/auth/oidc.callback'
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
