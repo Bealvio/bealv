@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: outline
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: outline
+  template:
+    metadata:
+      labels:
+        app: outline
+    spec:
+      containers:
+        - name: outline
+          image: docker.getoutline.com/outlinewiki/outline:latest
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: DATABASE_URL
+              value: 'postgresql://outline:$(POSTGRES_PASSWORD)@outline-postgres-rw:5432/outline'
+            - name: REDIS_URL
+              value: 'redis://outline-dragonfly:6379'
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: outline-secrets
+                  key: password
+            - name: URL
+              value: https://doc.bealv.io
+            - name: PORT
+              value: '3000'
+            - name: SMTP_SERVICE
+              value: Gmail
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: username
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secrets
+                  key: password
+            - name: SMTP_FROM_EMAIL
+              value: Outline <contact.bealv@gmail.com>
+            - name: SMTP_REPLY_EMAIL
+              value: Outline <contact.bealv@gmail.com>
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: outline-oidc
+                  key: attribute.client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: outline-oidc
+                  key: attribute.client_secret
+            - name: OIDC_AUTH_URI
+              value: https://zitadel.bealv.io/oauth/v2/authorize
+            - name: OIDC_TOKEN_URI
+              value: https://zitadel.bealv.io/oauth/v2/token
+            - name: OIDC_USERINFO_URI
+              value: https://zitadel.bealv.io/oidc/v1/userinfo
+            - name: OIDC_LOGOUT_URI
+              value: https://zitadel.bealv.io/oidc/v1/end_session
+            - name: OIDC_DISPLAY_NAME
+              value: Zitadel
+            - name: OIDC_SCOPES
+              value: openid profile email group
+          envFrom:
+            - secretRef:
+                name: outline-env
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/outline/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: outline-data
