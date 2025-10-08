@@ -62,8 +62,6 @@ spec:
               value: 'no'
             - name: LAN_NETWORK
               value: '10.0.0.0/8,172.16.0.0/16,172.17.0.0/16'
-            - name: NAME_SERVERS
-              value: '10.250.0.11'
             - name: DEBUG
               value: 'false'
             - name: WEBUI_PORT
