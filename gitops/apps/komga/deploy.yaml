@@ -25,7 +25,7 @@ spec:
             limits:
               memory: 2000Mi
               cpu: 1
-          image: gotson/komga:1.23.4
+          image: gotson/komga:1.23.5
           ports:
             - name: komga
               containerPort: 25600
