@@ -1,6 +1,8 @@
 namespace: ingress-contour-external
 resources:
   - upstream/
+  - gateway.yaml
+  - gatewayclass.yaml
   # - cloudflared.yaml
 patches:
   - path: envoy-patch.yaml
