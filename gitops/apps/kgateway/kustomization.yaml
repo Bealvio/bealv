@@ -1,0 +1,7 @@
+namespace: kgateway-system
+resources:
+  - namespace.yaml
+  - helmrepo.yaml
+  - helmrelease-crds.yaml
+  - helmrelease.yaml
+  - gateway.yaml

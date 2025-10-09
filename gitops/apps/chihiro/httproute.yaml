@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: chihiro
+  labels:
+    probe: enabled
+spec:
+  parentRefs:
+    - name: https
+      namespace: kgateway-system
+  hostnames:
+    - 'chihiro.bealv.io'
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: chihiro
+          port: 8080

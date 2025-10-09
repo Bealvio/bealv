@@ -4,7 +4,7 @@ namespace: jellyfin
 resources:
   - deploy.yaml
   - service.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yaml
   - cm.yaml
   - custom-css-cm.yaml

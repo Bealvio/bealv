@@ -3,7 +3,7 @@ resources:
   - deploy.yaml
   - pvc.yaml
   - service.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yaml
   - cnpg.yaml
   - secrets.yaml

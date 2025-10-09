@@ -29,5 +29,12 @@ pkgs.mkShell {
       mkdir -p gitops/apps/ingress-controller-external/upstream
       cp -r --no-preserve=mode $(nix-build nix/ingress-contour.nix)/* gitops/apps/ingress-controller-external/upstream/
     '')
+    (pkgs.writeShellScriptBin "buildGatewayAPI" ''
+      #!/bin/bash
+      set -e
+      rm -rf gitops/apps/gateway-api/upstream
+      mkdir -p gitops/apps/gateway-api/upstream
+      cp -r --no-preserve=mode $(nix-build nix/gateway-api.nix)/* gitops/apps/gateway-api/upstream/
+    '')
   ];
 }

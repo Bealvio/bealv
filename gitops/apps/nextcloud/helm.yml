@@ -45,7 +45,7 @@ spec:
     cronjob:
       enabled: true
     ingress:
-      enabled: true
+      enabled: false
       className: 'external'
       annotations:
         gethomepage.dev/enabled: 'true'

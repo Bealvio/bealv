@@ -2,7 +2,7 @@ namespace: dollardollar
 resources:
   - cnpg.yaml
   - deploy.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yaml
   - secrets.yaml
   - service.yaml

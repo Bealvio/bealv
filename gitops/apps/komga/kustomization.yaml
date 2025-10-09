@@ -4,6 +4,6 @@ namespace: komga
 resources:
   - deploy.yaml
   - service.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yaml
   - pvcs.yaml

@@ -1,0 +1,41 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: memos
+  labels:
+    probe: enabled
+spec:
+  parentRefs:
+    - name: https
+      namespace: kgateway-system
+  hostnames:
+    - 'memos.bealv.io'
+  rules:
+    - matches:
+        - path:
+            type: RegularExpression
+            value: /memos\.api\..*
+      backendRefs:
+        - name: memos-grpc
+          port: 5230
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1
+      backendRefs:
+        - name: mortis
+          port: 5231
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /o/r
+      backendRefs:
+        - name: mortis
+          port: 5231
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: memos
+          port: 5230

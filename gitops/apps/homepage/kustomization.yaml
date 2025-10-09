@@ -4,7 +4,7 @@ namespace: homepage
 resources:
   - deploy.yaml
   - service.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yaml
   - sa.yaml
   - clusterrole.yaml

@@ -3,7 +3,7 @@ resources:
   - cnpg.yaml
   - helmrelease.yaml
   - helmrepo.yaml
-  - ingress.yaml
+  - httproute.yaml
   - namespace.yml
   - pvc.yml
   - secrets.yml

@@ -5,4 +5,4 @@ resources:
   - namespace.yaml
   - helmrelease.yaml
   - helmrepo.yaml
-  - ingress.yaml
+  - httproute.yaml

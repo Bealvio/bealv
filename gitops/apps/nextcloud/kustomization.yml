@@ -7,3 +7,4 @@ resources:
   - external-secret.yml
   - cnpg.yml
   - dragonfly.yaml
+  - httproute.yaml

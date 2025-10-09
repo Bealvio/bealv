@@ -5,7 +5,7 @@ resources:
   - svc.yaml
   - sa.yaml
   - pvc.yaml
-  - ingress.yaml
+  - httproute.yaml
   - secrets.yaml
   - rbacs.yaml
   - secretstore.yaml

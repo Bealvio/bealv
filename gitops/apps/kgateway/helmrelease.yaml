@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kgateway
+  namespace: kgateway-system
+spec:
+  interval: 1m
+  dependsOn:
+    - name: kgateway-crds
+  chart:
+    spec:
+      chart: kgateway
+      version: v2.0.4
+      interval: 5m
+      sourceRef:
+        kind: HelmRepository
+        name: kgateway
+        namespace: kgateway-system
+  values:
+    # Add custom values here if needed

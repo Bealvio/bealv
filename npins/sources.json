@@ -48,6 +48,22 @@
       "url": "https://api.github.com/repos/dragonflydb/dragonfly-operator/tarball/v1.3.0",
       "hash": "0vlsr2y8fw8c34hcv5xcjsjbmlqjlk93swsr0i1l4xp6qyj6kkm4"
     },
+    "gateway-api": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "kubernetes-sigs",
+        "repo": "gateway-api"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.3.0",
+      "revision": "40be951cebe5cb3f0365fe6951403de4ff8b9f33",
+      "url": "https://api.github.com/repos/kubernetes-sigs/gateway-api/tarball/v1.3.0",
+      "hash": "0wna4d0izfk41v4cfaakqappdsqglz30k8b9ynzhsrs3lxvmvfpp"
+    },
     "grafana-operator": {
       "type": "GitRelease",
       "repository": {

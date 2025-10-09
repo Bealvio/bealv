@@ -1,0 +1,28 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nimbus
+  labels:
+    probe: enabled
+  annotations:
+    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/description: Files and Sharing Server
+    gethomepage.dev/group: Cloud
+    gethomepage.dev/icon: nextcloud.png
+    gethomepage.dev/name: Nimbus
+    gethomepage.dev/widget.type: 'nextcloud'
+    gethomepage.dev/widget.url: 'https://nimbus.bealv.io'
+spec:
+  parentRefs:
+    - name: https
+      namespace: kgateway-system
+  hostnames:
+    - 'nimbus.bealv.io'
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nextcloud
+          port: 8080

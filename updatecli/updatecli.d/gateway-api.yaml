@@ -1,0 +1,63 @@
+name: gateway-api Update
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+sources:
+  default:
+    name: Get value from json
+    scmid: 'default'
+    kind: json
+    spec:
+      file: npins/sources.json
+      key: pins.gateway-api.version
+  gateway-api:
+    kind: githubrelease
+    spec:
+      owner: 'kubernetes-sigs'
+      repository: 'gateway-api'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      versionfilter:
+        kind: semver
+        pattern: '*'
+conditions:
+  default:
+    name: Check if version is the same
+    sourceid: 'default'
+    scmid: 'default'
+    kind: shell
+    spec:
+      environments:
+        - name: PATH
+      command: test "{{ source `gateway-api` }}" !=
+targets:
+  default:
+    name: gateway-api npins update {{ source `gateway-api` }}
+    kind: shell
+    scmid: 'default'
+    disablesourceinput: true
+    spec:
+      environments:
+        - name: PATH
+        - name: NIX_PATH
+      command: |
+        set -e
+        nix run nixpkgs#npins -- add --name gateway-api github kubernetes-sigs gateway-api --at {{ source `gateway-api` }}
+        nix-shell --run "buildGatewayAPI"
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update gateway-api npins.'
+      draft: false
+      title: 'UPDATECLI: Update gateway-api'

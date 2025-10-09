@@ -1,0 +1,84 @@
+name: kgateway Update
+scms:
+  default:
+    kind: 'github'
+    spec:
+      email: 'updatecli@bealv.io'
+      owner: 'Bealvio'
+      repository: 'bealv'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      user: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      branch: 'main'
+sources:
+  crds-version:
+    name: Get kgateway-crds chart version
+    scmid: 'default'
+    kind: yaml
+    spec:
+      file: 'gitops/apps/kgateway/helmrelease-crds.yaml'
+      key: 'spec.chart.spec.version'
+  main-version:
+    name: Get kgateway chart version
+    scmid: 'default'
+    kind: yaml
+    spec:
+      file: 'gitops/apps/kgateway/helmrelease.yaml'
+      key: 'spec.chart.spec.version'
+  kgateway:
+    kind: githubrelease
+    spec:
+      owner: 'kgateway-dev'
+      repository: 'kgateway'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN_USER" }}'
+      versionfilter:
+        kind: semver
+        pattern: '*'
+conditions:
+  check-crds-version:
+    name: Check if CRDs version needs update
+    sourceid: 'crds-version'
+    scmid: 'default'
+    kind: shell
+    spec:
+      environments:
+        - name: PATH
+      command: test "{{ source `kgateway` }}" !=
+  check-main-version:
+    name: Check if main chart version needs update
+    sourceid: 'main-version'
+    scmid: 'default'
+    kind: shell
+    spec:
+      environments:
+        - name: PATH
+      command: test "{{ source `kgateway` }}" !=
+targets:
+  update-crds-version:
+    name: Update kgateway-crds chart version to {{ source `kgateway` }}
+    scmid: 'default'
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: 'gitops/apps/kgateway/helmrelease-crds.yaml'
+      key: 'spec.chart.spec.version'
+      value: '{{ source `kgateway` }}'
+  update-main-version:
+    name: Update kgateway chart version to {{ source `kgateway` }}
+    scmid: 'default'
+    kind: yaml
+    disablesourceinput: true
+    spec:
+      file: 'gitops/apps/kgateway/helmrelease.yaml'
+      key: 'spec.chart.spec.version'
+      value: '{{ source `kgateway` }}'
+actions:
+  default:
+    kind: 'github/pullrequest'
+    scmid: 'default'
+    spec:
+      automerge: false
+      description: 'Update kgateway helm charts.'
+      draft: false
+      title: 'UPDATECLI: kgateway update'
