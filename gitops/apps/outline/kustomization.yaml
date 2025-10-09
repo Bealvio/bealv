@@ -9,4 +9,5 @@ resources:
   - service.yaml
   - pvc.yaml
   - httproute.yaml
+  - ingress.yaml
   - external-secret.yaml

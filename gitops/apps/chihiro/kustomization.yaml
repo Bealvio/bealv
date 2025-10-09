@@ -1,5 +1,7 @@
 namespace: chihiro-system
 resources:
+  - endpointslice.yaml
   - httproute.yaml
+  - ingress.yaml
   - svc.yaml
   - ns.yaml

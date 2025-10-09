@@ -6,7 +6,6 @@ metadata:
     app.kubernetes.io/name: chihiro
   name: chihiro
 spec:
-  type: ClusterIP
   ports:
     - name: http
       port: 8080

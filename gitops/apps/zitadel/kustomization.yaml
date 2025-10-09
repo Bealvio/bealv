@@ -6,3 +6,4 @@ resources:
   - helmrelease.yaml
   - helmrepo.yaml
   - httproute.yaml
+  - ingress.yaml

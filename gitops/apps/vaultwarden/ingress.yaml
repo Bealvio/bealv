@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vaultwarden
+  annotations:
+    cert-manager.io/cluster-issuer: bealvio
+    external-dns.alpha.kubernetes.io/target: bealv.io
+  labels:
+    probe: enabled
+spec:
+  ingressClassName: external
+  rules:
+    - host: 'pass.bealv.io'
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vaultwarden
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - 'pass.bealv.io'
+      secretName: vaultwarden-tls

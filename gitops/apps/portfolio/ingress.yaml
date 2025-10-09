@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portfolio
+  annotations:
+    cert-manager.io/cluster-issuer: bealvio
+    external-dns.alpha.kubernetes.io/target: bealv.io
+  labels:
+    probe: enabled
+spec:
+  ingressClassName: external
+  rules:
+    - host: 'victorhang.bealv.io'
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: portfolio
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - 'victorhang.bealv.io'
+      secretName: portfolio-tls

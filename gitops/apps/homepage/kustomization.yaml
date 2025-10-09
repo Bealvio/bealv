@@ -5,6 +5,7 @@ resources:
   - deploy.yaml
   - service.yaml
   - httproute.yaml
+  - ingress.yaml
   - namespace.yaml
   - sa.yaml
   - clusterrole.yaml

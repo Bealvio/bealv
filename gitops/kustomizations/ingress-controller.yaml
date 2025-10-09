@@ -1,12 +1,12 @@
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: ingress-controller
-#   namespace: flux-system
-# spec:
-#   interval: 1m
-#   path: ./gitops/apps/ingress-controller-external
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: infra
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ingress-controller
+  namespace: flux-system
+spec:
+  interval: 1m
+  path: ./gitops/apps/ingress-controller-external
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: infra
