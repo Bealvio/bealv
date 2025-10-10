@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- gateway.networking.k8s.io_backendtlspolicies.yaml
 - gateway.networking.k8s.io_gatewayclasses.yaml
 - gateway.networking.k8s.io_gateways.yaml
 - gateway.networking.k8s.io_grpcroutes.yaml
