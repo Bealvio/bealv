@@ -9,3 +9,4 @@ resources:
   - pvc.yml
   - secrets.yml
   - dragonfly.yaml
+  - svc.yaml

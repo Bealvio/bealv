@@ -9,5 +9,6 @@ spec:
     targetPort: 3000
     protocol: TCP
     name: http
+    appProtocol: kubernetes.io/wss
   selector:
     app: outline
