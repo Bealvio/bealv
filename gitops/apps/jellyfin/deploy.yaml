@@ -71,6 +71,8 @@ spec:
               mountPath: /animes
             - name: movies
               mountPath: /movies
+            - name: transcodes
+              mountPath: /transcodes
             - name: configjson
               mountPath: /jellyfin/jellyfin-web/config.json
               subPath: config.json
@@ -93,6 +95,9 @@ spec:
         - name: cache
           persistentVolumeClaim:
             claimName: cache
+        - emptyDir:
+            medium: Memory
+          name: transcodes
         - name: configjson
           configMap:
             name: jellyfin
