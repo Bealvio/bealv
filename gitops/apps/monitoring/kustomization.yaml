@@ -1,5 +1,4 @@
 resources:
-  - servicemonitors/
   - grafana.yaml
   - grafana-ing.yaml
   - alertmanager-config.yaml
