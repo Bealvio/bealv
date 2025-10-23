@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.27.0",
-      "revision": "8b442dcc3d2390e891ec4a53fe576fe9936dfa08",
-      "url": "https://api.github.com/repos/cloudnative-pg/cloudnative-pg/tarball/v1.27.0",
-      "hash": "10f8sfnl1d8ywfq2zpmdld1x8r8zqn05rb9hin73phwscnndacqq"
+      "version": "v1.27.1",
+      "revision": "9daa681325034a6b6548e347bbc4c0b54ea668db",
+      "url": "https://api.github.com/repos/cloudnative-pg/cloudnative-pg/tarball/v1.27.1",
+      "hash": "14iykc6vrxsfm3fvhrvcfa08mr0la9gsardfw9k7bip71pg9lj48"
     },
     "contour": {
       "type": "GitRelease",
