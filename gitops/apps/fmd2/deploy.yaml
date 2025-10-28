@@ -31,7 +31,7 @@ spec:
             - name: downloads
               mountPath: /app/FMD2/downloads
         - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:v3.4.2
+          image: ghcr.io/flaresolverr/flaresolverr:v3.4.3
           ports:
             - name: flaresolverr
               containerPort: 8191
