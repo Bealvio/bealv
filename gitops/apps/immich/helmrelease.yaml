@@ -15,20 +15,23 @@ spec:
         namespace: immich
       interval: 12h
   values:
-    env:
-      DB_VECTOR_EXTENSION: vectorchord
-      REDIS_HOSTNAME: 'immich-dragonfly'
-      DB_HOSTNAME: 'immich-postgres-rw'
-      DB_USERNAME: 'immich'
-      DB_DATABASE_NAME: 'immich'
-      IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
-      DB_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            key: password
-            name: immich-secrets
-    image:
-      tag: v2.1.0
+    controllers:
+      containers:
+        main:
+          env:
+            DB_VECTOR_EXTENSION: vectorchord
+            REDIS_HOSTNAME: 'immich-dragonfly'
+            DB_HOSTNAME: 'immich-postgres-rw'
+            DB_USERNAME: 'immich'
+            DB_DATABASE_NAME: 'immich'
+            IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: immich-secrets
+          image:
+            tag: v2.1.0
     immich:
       metrics:
         enable: false
