@@ -20,11 +20,11 @@ spec:
           args:
             # Add desired Gateway API Route sources.
             - --source=gateway-httproute
-            - --source=ingress
-            - --source=gateway-grpcroute
-            - --source=gateway-tlsroute
-            - --source=gateway-tcproute
-            - --source=gateway-udproute
+            - --source=service
+            # - --source=gateway-grpcroute
+            # - --source=gateway-tlsroute
+            # - --source=gateway-tcproute
+            # - --source=gateway-udproute
             - --interval=30s
             - --policy=sync
             - --domain-filter=bealv.io

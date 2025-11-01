@@ -4,7 +4,6 @@ namespace: ombi
 resources:
   - service.yaml
   - httproute.yaml
-  - ingress.yaml
   - namespace.yaml
   - deploy.yaml
   - secrets.yaml

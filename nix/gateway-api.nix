@@ -15,8 +15,8 @@ pkgs.runCommand "gateway-api"
     set -e
     mkdir -p $out/
     kustomize init
-    cp ${manifest01}/config/crd/standard/*.yaml ./
+    kustomize build ${manifest01}/config/crd/experimental > ./experimental.yaml
     kustomize edit add resource *.yaml
-    cp ${manifest01}/config/crd/standard/*.yaml $out/
+    cp experimental.yaml $out/
     cp kustomization.yaml $out/
   ''

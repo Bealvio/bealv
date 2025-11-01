@@ -1,0 +1,47 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prestashop-http
+  namespace: shop
+spec:
+  parentRefs:
+    - name: https
+      namespace: kgateway-system
+      sectionName: http
+  hostnames:
+    - shop.bealv.io
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: prestashop
+  namespace: shop
+spec:
+  parentRefs:
+    - name: https
+      namespace: kgateway-system
+      sectionName: https
+  hostnames:
+    - shop.bealv.io
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: prestashop
+          port: 80
+      filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            add:
+              - name: X-Scheme
+                value: https
+              - name: X-Forwarded-Proto
+                value: https

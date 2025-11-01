@@ -10,4 +10,4 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      appProtocol: kubernetes.io/wss
+      appProtocol: kubernetes.io/ws

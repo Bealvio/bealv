@@ -4,7 +4,6 @@ resources:
   - pvc.yaml
   - service.yaml
   - httproute.yaml
-  - ingress.yaml
   - namespace.yaml
   - cnpg.yaml
   - secrets.yaml
