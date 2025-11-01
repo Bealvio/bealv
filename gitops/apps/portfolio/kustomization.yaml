@@ -2,7 +2,6 @@ namespace: portfolio
 resources:
   - deploy.yaml
   - httproute.yaml
-  - ingress.yaml
   - namespace.yaml
   - secrets.yaml
   - service.yaml

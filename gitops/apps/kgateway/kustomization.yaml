@@ -5,3 +5,4 @@ resources:
   - helmrelease-crds.yaml
   - helmrelease.yaml
   - gateway.yaml
+  - httplistenerpolicy.yaml
