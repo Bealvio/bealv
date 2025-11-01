@@ -17,7 +17,7 @@ sources:
     kind: yaml
     spec:
       file: 'gitops/apps/immich/helmrelease.yaml'
-      key: 'spec.values.controllers.main.image.tag'
+      key: 'spec.values.controllers.main.containers.main.image.tag'
   immich:
     kind: githubrelease
     spec:
@@ -46,7 +46,7 @@ targets:
     disablesourceinput: true
     spec:
       file: 'gitops/apps/immich/helmrelease.yaml'
-      key: 'spec.values.controllers.main.image.tag'
+      key: 'spec.values.controllers.main.containers.main.image.tag'
       value: '{{ source `immich` }}'
 actions:
   default:
