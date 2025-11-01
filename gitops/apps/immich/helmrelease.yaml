@@ -39,13 +39,13 @@ spec:
       probes:
         liveness:
           spec:
-            initialDelaySeconds: 300
+            initialDelaySeconds: 3600
         readiness:
           spec:
-            initialDelaySeconds: 300
+            initialDelaySeconds: 3600
         startup:
           spec:
-            failureThreshold: 60
+            failureThreshold: 1000
             periodSeconds: 10
       persistence:
         library:
