@@ -44,6 +44,8 @@ spec:
           volumeMounts:
             - name: downloads
               mountPath: /downloads
+            - name: saved-movies
+              mountPath: /bealv/hddb/saved_movies
             - name: config
               mountPath: /config
             - name: qbittorrent-secrets
@@ -76,6 +78,9 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
+        - name: saved-movies
+          persistentVolumeClaim:
+            claimName: saved-movies
         - name: config
           persistentVolumeClaim:
             claimName: config

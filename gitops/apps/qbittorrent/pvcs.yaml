@@ -24,3 +24,17 @@ spec:
   resources:
     requests:
       storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: saved-movies
+  annotations:
+    nfs.io/storage-path: "/saved_movies"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "hddb"
+  resources:
+    requests:
+      storage: 1Gi
