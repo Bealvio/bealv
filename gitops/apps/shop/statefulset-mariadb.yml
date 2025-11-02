@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mariadb
-        image: ghcr.io/linuxserver/mariadb:10.5.13-alpine
+        image: ghcr.io/linuxserver/mariadb:10.5.17-alpine
         ports:
         - name: mariadb
           containerPort: 3306
@@ -54,7 +54,7 @@ spec:
   - metadata:
       name: prestashop-mariadb
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: ["ReadWriteOnce"]
       storageClassName: "disk"
       resources:
         requests:
