@@ -28,26 +28,13 @@ spec:
         - containerPort: 80
           name: http
         env:
-        # - name: PS_INSTALL_AUTO
-        #   value: "0"
+        - name: PS_DEV_MODE
+          value: "1"
         - name: PS_LANGUAGE
           value: fr
-        # - name: DB_PREFIX
-        #   value: "ps_"
         - name: PS_DOMAIN
           value: shop.bealv.io
-          # value: shop.bealv.io
         - name: PS_ENABLE_SSL
-          value: "1"
-        - name: PS_SSL_ENABLED
-          value: "1"
-        # - name: PS_DEV_MODE
-        #   value: "0"
-        # - name: PS_ERASE_DB
-        #   value: "1"
-        # - name: PS_INSTALL_DB
-        #   value: "1"
-        - name: PS_HANDLE_DYNAMIC_DOMAIN
           value: "1"
         - name: DB_SERVER
           value: prestashop-mariadb
