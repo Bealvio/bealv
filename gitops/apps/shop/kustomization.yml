@@ -5,6 +5,6 @@ resources:
   - deploy.yml
   - service.yml
   - namespace.yml
-  - ingress.yaml
   - external-secret.yml
   - statefulset-mariadb.yml
+  - httproute.yml
