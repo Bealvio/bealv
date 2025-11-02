@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prestashop
+  labels: &default
+    app: prestashop
+    role: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      initContainers:
+      - name: cleanup
+        image: busybox
+        command: ["sh", "-c", "rm -rf /var/www/html/lost+found || true"]
+        volumeMounts:
+        - name: config
+          mountPath: /var/www/html
+      containers:
+      - name: prestashop
+        image: prestashop/prestashop:9.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+        env:
+        # - name: PS_INSTALL_AUTO
+        #   value: "0"
+        - name: PS_LANGUAGE
+          value: fr
+        # - name: DB_PREFIX
+        #   value: "ps_"
+        - name: PS_DOMAIN
+          value: shop.bealv.io
+          # value: shop.bealv.io
+        - name: PS_ENABLE_SSL
+          value: "1"
+        # - name: PS_DEV_MODE
+        #   value: "0"
+        # - name: PS_ERASE_DB
+        #   value: "1"
+        # - name: PS_INSTALL_DB
+        #   value: "1"
+        - name: PS_HANDLE_DYNAMIC_DOMAIN
+          value: "1"
+        - name: DB_SERVER
+          value: prestashop-mariadb
+        - name: DB_NAME
+          value: prestashop
+        - name: DB_USER
+          value: prestashop
+        - name: DB_PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: prestashop-mysql-secrets
+              key: prestashop-password
+        - name: ADMIN_MAIL
+          value: mary.go.round.yt@gmail.com
+        - name: ADMIN_PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: prestashop-secrets
+              key: prestashop-password
+        volumeMounts:
+        - mountPath: /var/www/html
+          name: config
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: config
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: disk-hddb
+      volumeMode: Filesystem
