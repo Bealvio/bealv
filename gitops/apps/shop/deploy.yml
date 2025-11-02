@@ -22,7 +22,7 @@ spec:
           mountPath: /var/www/html
       containers:
       - name: prestashop
-        image: prestashop/prestashop:9.0.0
+        image: prestashop/prestashop:9.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 80
