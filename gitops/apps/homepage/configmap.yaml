@@ -39,6 +39,11 @@ data:
   services.yaml: |
     - External:
       - Cloud:
+        - nimbus:
+            icon: nextcloud.png
+            href: https://nimbus.bealv.io
+            description: Open source content collaboration platform
+            siteMonitor: http://nextcloud.nextcloud:8080
         - vaultwarden:
             icon: vaultwarden.png
             href: https://pass.bealv.io
