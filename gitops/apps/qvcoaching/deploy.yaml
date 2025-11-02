@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qvcoaching
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: qvcoaching
+  template:
+    metadata:
+      labels:
+        app: qvcoaching
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: qvcoaching
+          image: zot.bealv.io/public/qvcoaching:0.3
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: COACH_EMAIL
+              value: "qvcoaching33@gmail.com"
+            - name: ENABLE_RECAPTCHA
+              value: "true"
+            - name: RECAPTCHA_SITE_KEY
+              value: "6Lcv_70rAAAAAC2BzDx3YbWXGt0gu1yjJOJknMLQ"
+            - name: RECAPTCHA_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: qvcoaching-secrets
+                  key: RECAPTCHA_SECRET_KEY
+            - name: SMTP_HOST
+              value: "smtp.gmail.com"
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_USER
+              value: "contact.bealv@gmail.com"
+            - name: SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: qvcoaching-secrets
+                  key: SMTP_PASS
