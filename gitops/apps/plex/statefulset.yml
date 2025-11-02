@@ -97,6 +97,9 @@ spec:
       - name: wg-config
         secret:
           secretName: plex-wireguard
+      - name: transcode
+        emptyDir:
+          medium: Memory
   volumeClaimTemplates:
   - metadata:
       name: config
@@ -137,17 +140,6 @@ spec:
       accessModes:
         - ReadWriteOnce
       storageClassName: "hdda"
-      resources:
-        requests:
-          storage: 1Gi
-  - metadata:
-      name: transcode
-      annotations:
-        nfs.io/storage-path: "/prod-k8s/plex/transcode"
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: "hddb"
       resources:
         requests:
           storage: 1Gi
