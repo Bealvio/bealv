@@ -61,9 +61,9 @@ spec:
           privileged: true
         image: plexinc/pms-docker:1.42.1.10060-4e8b05daf
         imagePullPolicy: Always
-        # resources:
-        #   limits:
-        #     gpu.intel.com/i915: 1
+        resources:
+          limits:
+            gpu.intel.com/i915: 1
         ports:
         - containerPort: 32400
           name: plex
