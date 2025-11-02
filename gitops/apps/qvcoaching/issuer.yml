@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: qvcoaching
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: qvcoaching-account-key
+    solvers:
+    - http01:
+        ingress:
+          ingressClassName: external
