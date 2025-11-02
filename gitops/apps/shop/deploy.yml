@@ -39,6 +39,8 @@ spec:
           # value: shop.bealv.io
         - name: PS_ENABLE_SSL
           value: "1"
+        - name: PS_SSL_ENABLED
+          value: "1"
         # - name: PS_DEV_MODE
         #   value: "0"
         # - name: PS_ERASE_DB
