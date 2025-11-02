@@ -1,0 +1,61 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mariadb
+  labels: &default
+    app: mariadb
+    part-of: prestashop
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      containers:
+      - name: mariadb
+        image: ghcr.io/linuxserver/mariadb:10.5.13-alpine
+        ports:
+        - name: mariadb
+          containerPort: 3306
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "Europe/Paris"
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: prestashop-mysql-secrets
+              key: root-password
+        - name: MYSQL_LOG_CONSOLE
+          value: "true"
+        - name: MYSQL_USER
+          value: prestashop
+        - name: MYSQL_DATABASE
+          value: prestashop
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: prestashop-mysql-secrets
+              key: prestashop-password
+        volumeMounts:
+        - name: prestashop-mariadb
+          mountPath: /config
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 128Mi
+  volumeClaimTemplates:
+  - metadata:
+      name: prestashop-mariadb
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "disk"
+      resources:
+        requests:
+          storage: 2Gi
