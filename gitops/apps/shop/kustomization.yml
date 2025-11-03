@@ -7,4 +7,4 @@ resources:
   - namespace.yml
   - external-secret.yml
   - statefulset-mariadb.yml
-  - httproute.yml
+  - httproute.yaml
