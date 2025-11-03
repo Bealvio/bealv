@@ -15,14 +15,14 @@ spec:
         - group: gateway.kgateway.dev
           kind: Backend
           name: chihiro
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            hostname: chihiro.bealv-mgmt.lan
-        - type: RequestHeaderModifier
-          requestHeaderModifier:
-            add:
-              - name: Connection
-                value: 'Upgrade'
-              - name: Upgrade
-                value: 'websocket'
+      # filters:
+      #   - type: URLRewrite
+      #     urlRewrite:
+      #       hostname: chihiro.bealv-mgmt.lan
+      #   - type: RequestHeaderModifier
+      #     requestHeaderModifier:
+      #       add:
+      #         - name: Connection
+      #           value: 'Upgrade'
+      #         - name: Upgrade
+      #           value: 'websocket'
