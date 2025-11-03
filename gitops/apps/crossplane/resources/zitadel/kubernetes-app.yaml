@@ -66,6 +66,7 @@ spec:
       name: kubernetes
     redirectUris:
       - https://chihiro.bealv.io/auth/callback
+      - https://chihiro.bealv-mgmt.lan/auth/callback
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
