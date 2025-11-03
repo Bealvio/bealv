@@ -15,7 +15,3 @@ spec:
         - group: gateway.kgateway.dev
           kind: Backend
           name: chihiro
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            hostname: chihiro.bealv-mgmt.lan
