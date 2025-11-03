@@ -15,3 +15,10 @@ spec:
         - group: gateway.kgateway.dev
           kind: Backend
           name: chihiro
+      filters:
+        - requestHeaderModifier:
+            add:
+              - name: Connection
+                value: 'Upgrade'
+              - name: Upgrade
+                value: 'websocket'
