@@ -16,7 +16,8 @@ spec:
           kind: Backend
           name: chihiro
       filters:
-        - requestHeaderModifier:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
             add:
               - name: Connection
                 value: 'Upgrade'
