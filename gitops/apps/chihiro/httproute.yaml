@@ -11,10 +11,11 @@ spec:
   hostnames:
     - 'chihiro.bealv.io'
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: chihiro
-          port: 8080
+    - backendRefs:
+        - group: gateway.kgateway.dev
+          kind: Backend
+          name: chihiro
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            hostname: chihiro.bealv-mgmt.lan
