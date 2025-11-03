@@ -6,8 +6,8 @@ spec:
   type: Static
   static:
     hosts:
-      - host: chihiro.bealv-mgmt.lan
-        port: 443
+      - host: 10.250.0.19
+        port: 8080
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: BackendTLSPolicy
