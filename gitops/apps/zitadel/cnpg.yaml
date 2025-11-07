@@ -8,8 +8,7 @@ spec:
   superuserSecret:
     name: zitadel-secrets
   storage:
-    size: 50Gi
-    storageClass: disk-hddb
+    size: 20Gi
   bootstrap:
     initdb:
       database: zitadel

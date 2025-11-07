@@ -7,6 +7,9 @@ spec:
   storage:
     storageClass: disk-hddb
     size: 50Gi
+  walStorage:
+    size: 10Gi
+    storageClass: disk
   bootstrap:
     initdb:
       database: ombi
