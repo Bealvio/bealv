@@ -3,8 +3,9 @@ kind: Kustomization
 namespace: qvcoaching
 resources:
   - service.yaml
-  - ingress.yaml
   - namespace.yaml
   - deploy.yaml
   - external-secret.yml
   - issuer.yml
+  - listenerset.yaml
+  - httproute.yaml

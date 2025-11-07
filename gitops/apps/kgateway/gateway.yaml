@@ -35,17 +35,6 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: bealvio-wildcard-tls
-    - protocol: HTTPS
-      port: 443
-      name: https-qvcoaching
-      hostname: 'qvcoaching.fr'
-      allowedRoutes:
-        namespaces:
-          from: All
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: tls-qvcoaching
 ---
 apiVersion: gateway.kgateway.dev/v1alpha1
 kind: GatewayParameters

@@ -5,8 +5,10 @@ metadata:
   namespace: qvcoaching
 spec:
   parentRefs:
-    - name: https
-      namespace: kgateway-system
+    - name: qvcoaching-listener
+      namespace: qvcoaching
+      kind: XListenerSet
+      group: 'gateway.networking.x-k8s.io'
   hostnames:
     - qvcoaching.fr
   rules:
