@@ -54,31 +54,38 @@ spec:
     # Immich components
     server:
       enabled: true
-      controller:
+      controllers:
         strategy: Recreate
-      resources:
-        requests:
-          cpu: 200m
-          memory: 2Gi
-        limits:
-          gpu.intel.com/i915: 1
-          cpu: 2
-          memory: 4Gi
-      serviceAccount:
-        create: true
-        name: 'immich'
+        main:
+          containers:
+            main:
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 2Gi
+                limits:
+                  gpu.intel.com/i915: 1
+                  cpu: 2
+                  memory: 4Gi
+              serviceAccount:
+                create: true
+                name: 'immich'
       automountServiceAccountToken: true
       ingress:
         main:
           enabled: false
     machine-learning:
       enabled: true
-      resources:
-        requests:
-          cpu: 200m
-          memory: 2Gi
-        limits:
-          cpu: 6
-          memory: 2Gi
-      env:
-        TRANSFORMERS_CACHE: /cache
+      controllers:
+        main:
+          containers:
+            main:
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 2Gi
+                limits:
+                  cpu: 6
+                  memory: 2Gi
+              env:
+                TRANSFORMERS_CACHE: /cache
