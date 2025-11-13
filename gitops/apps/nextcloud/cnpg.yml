@@ -13,4 +13,4 @@ spec:
       secret:
         name: nextcloud-secrets
   storage:
-    size: 8Gi
+    size: 16Gi
