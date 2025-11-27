@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mortis
-        image: ghcr.io/mudkipme/mortis:0.25.2
+        image: ghcr.io/mudkipme/mortis:0.25.3
         ports:
         - containerPort: 5231
         command:
