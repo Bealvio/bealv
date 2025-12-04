@@ -59,10 +59,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.4.0",
-      "revision": "5e5891a5adad272363de782eb02a042166f1913c",
-      "url": "https://api.github.com/repos/kubernetes-sigs/gateway-api/tarball/v1.4.0",
-      "hash": "1bkfpbq9zxdxdw16k8gsyib65bzy3cs4v4vwyxg9ihw5382krhx2"
+      "version": "v1.4.1",
+      "revision": "062b039bc61f68334198240553a4ac9053074a7d",
+      "url": "https://api.github.com/repos/kubernetes-sigs/gateway-api/tarball/v1.4.1",
+      "hash": "1kq6i9814ig9ag6vmc2jg8989x66py7abpa96y1h3n828y5g4qgw"
     },
     "grafana-operator": {
       "type": "GitRelease",
