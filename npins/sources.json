@@ -27,10 +27,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.33.0",
-      "revision": "408056e8b27795d5d2d3fdeabf4edf635673368e",
-      "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.33.0",
-      "hash": "0bzyjip64silhigq69b40iplsqhmnn81ghhilzq255xh5kpxlvj8"
+      "version": "v1.33.1",
+      "revision": "4830ec8fe3bad39c90228c9ab1ffec95dc5ea41f",
+      "url": "https://api.github.com/repos/projectcontour/contour/tarball/v1.33.1",
+      "hash": "0jmfivzl8c4kc0vb8pyvqz7lw3rw0i2msj3m1b19dlffxjbdkz0v"
     },
     "dragonfly-operator": {
       "type": "GitRelease",
