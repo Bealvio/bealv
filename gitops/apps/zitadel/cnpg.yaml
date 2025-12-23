@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: zitadel-postgres
 spec:
-  instances: 3
+  instances: 1
   enableSuperuserAccess: true
   superuserSecret:
     name: zitadel-secrets
