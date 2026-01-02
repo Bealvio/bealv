@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: config
   labels:
-    backup: 'true'
+    backup: "true"
 spec:
   storageClassName: disk
   accessModes:
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: tvshows
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media/tvshows'
+    nfs.io/storage-path: "/prod-k8s/media/tvshows"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -31,7 +31,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: animes
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media/animes'
+    nfs.io/storage-path: "/prod-k8s/media/animes"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -45,11 +45,25 @@ kind: PersistentVolumeClaim
 metadata:
   name: movies
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media/movies'
+    nfs.io/storage-path: "/prod-k8s/media/movies"
 spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: hdda
+  resources:
+    requests:
+      storage: 1000Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: saved-movies
+  annotations:
+    nfs.io/storage-path: "/saved_movies"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hddb
   resources:
     requests:
       storage: 1000Gi

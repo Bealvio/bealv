@@ -5,7 +5,7 @@ metadata:
   labels: &default
     app: jellyfin
     role: web
-    backup: 'true'
+    backup: "true"
 spec:
   replicas: 1
   strategy:
@@ -26,7 +26,7 @@ spec:
         - name: jellyfin
           env:
             - name: MALLOC_TRIM_THRESHOLD_
-              value: '100000'
+              value: "100000"
           resources:
             requests:
               memory: 2000Mi
@@ -71,6 +71,8 @@ spec:
               mountPath: /animes
             - name: movies
               mountPath: /movies
+            - name: saved-movies
+              mountPath: /bealv/hddb/saved_movies
             - name: transcodes
               mountPath: /transcodes
             - name: configjson
@@ -92,6 +94,9 @@ spec:
         - name: movies
           persistentVolumeClaim:
             claimName: movies
+        - name: saved-movies
+          persistentVolumeClaim:
+            claimName: saved-movies
         - name: cache
           persistentVolumeClaim:
             claimName: cache
