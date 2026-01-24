@@ -4,6 +4,13 @@ metadata:
   name: qvcoaching-listener
 spec:
   listeners:
+    - protocol: HTTP
+      port: 80
+      name: http-qvcoaching
+      hostname: 'qvcoaching.fr'
+      allowedRoutes:
+        namespaces:
+          from: All
     - protocol: HTTPS
       port: 443
       name: https-qvcoaching

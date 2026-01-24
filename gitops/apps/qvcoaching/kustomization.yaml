@@ -7,5 +7,8 @@ resources:
   - deploy.yaml
   - external-secret.yml
   - issuer.yml
+  - cert.yaml
+  - referencegrant.yaml
   - listenerset.yaml
   - httproute.yaml
+  - httproute-redirect.yaml

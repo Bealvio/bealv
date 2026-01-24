@@ -1,15 +1,15 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: qvcoaching
+  name: qvcoaching-https-redirect
   namespace: qvcoaching
 spec:
   parentRefs:
     - name: qvcoaching-listener
       namespace: qvcoaching
       kind: XListenerSet
-      group: 'gateway.networking.x-k8s.io'
-      sectionName: https-qvcoaching
+      group: gateway.networking.x-k8s.io
+      sectionName: http-qvcoaching
   hostnames:
     - qvcoaching.fr
   rules:
@@ -17,6 +17,8 @@ spec:
         - path:
             type: PathPrefix
             value: /
-      backendRefs:
-        - name: qvcoaching
-          port: 3000
+      filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301

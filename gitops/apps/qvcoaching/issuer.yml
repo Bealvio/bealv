@@ -9,5 +9,9 @@ spec:
       name: qvcoaching-account-key
     solvers:
     - http01:
-        ingress:
-          ingressClassName: external
+        gatewayHTTPRoute:
+          parentRefs:
+            - name: qvcoaching-listener
+              namespace: qvcoaching
+              kind: XListenerSet
+              group: gateway.networking.x-k8s.io
