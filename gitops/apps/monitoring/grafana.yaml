@@ -7,7 +7,7 @@ metadata:
     app: grafana-general
     alertmanager-default: 'true'
 spec:
-  version: 12.3.1
+  version: 12.3.2
   config:
     server:
       root_url: https://grafana.bealv.lan
