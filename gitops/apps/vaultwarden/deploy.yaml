@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: vaultwarden
-          image: timshel/vaultwarden:1.34.1-1
+          image: vaultwarden/server:1.35.2
           ports:
             - name: web
               containerPort: 80
