@@ -5,7 +5,7 @@ metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
-  instances: 3
+  instances: 1
   bootstrap:
     initdb:
       database: nextcloud
