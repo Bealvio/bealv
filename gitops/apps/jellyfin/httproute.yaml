@@ -15,6 +15,9 @@ spec:
         - path:
             type: PathPrefix
             value: /
+      timeouts:
+        request: "300s"
+        backendRequest: "300s"
       backendRefs:
         - name: jellyfin
           port: 8096
