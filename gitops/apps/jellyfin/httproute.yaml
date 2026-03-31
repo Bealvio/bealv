@@ -9,15 +9,15 @@ spec:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'jellyfin.bealv.io'
+    - "jellyfin.bealv.io"
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       timeouts:
-        request: "300s"
-        backendRequest: "300s"
+        request: "3600s"
+        backendRequest: "3600s"
       backendRefs:
         - name: jellyfin
           port: 8096

@@ -9,12 +9,15 @@ spec:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'immich.bealv.io'
+    - "immich.bealv.io"
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
+      timeouts:
+        request: "3600s"
+        backendRequest: "3600s"
       backendRefs:
         - name: immich-server-custom
           port: 2283
