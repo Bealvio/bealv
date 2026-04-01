@@ -6,6 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: bealvio
     external-dns.alpha.kubernetes.io/target: bealv.io
+    kgateway.dev/per-connection-buffer-limit: '128Mi'
 spec:
   gatewayClassName: kgateway
   allowedListeners:
@@ -43,6 +44,12 @@ metadata:
   namespace: kgateway-system
 spec:
   kube:
+    envoyContainer:
+      resources:
+        limits:
+          memory: 4Gi
+        requests:
+          memory: 1Gi
     service:
       type: LoadBalancer
       extraAnnotations:
