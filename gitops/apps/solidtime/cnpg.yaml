@@ -10,5 +10,7 @@ spec:
     initdb:
       database: solidtime
       owner: solidtime
+      postInitSQL:
+        - ALTER USER solidtime WITH SUPERUSER;
   storage:
     size: 5Gi
