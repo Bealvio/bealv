@@ -48,20 +48,8 @@ spec:
               value: "http"
             - name: AUTO_DB_MIGRATE
               value: "true"
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: solidtime-postgres-app
-                  key: password
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: solidtime-postgres-app
-                  key: username
-            - name: DB_HOST
-              value: solidtime-postgres-rw
-            - name: DB_DATABASE
-              value: solidtime
+            # Mail config from configmap/secrets
+            # DB config handled by envFrom
           volumeMounts:
             - name: app-storage
               mountPath: /var/www/html/storage
