@@ -17,6 +17,21 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsUser: 1000
+      initContainers:
+        - name: init-storage
+          image: solidtime/solidtime:latest
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /var/www/html/storage/framework/views
+              mkdir -p /var/www/html/storage/framework/cache/data
+              mkdir -p /var/www/html/storage/framework/sessions
+              mkdir -p /var/www/html/storage/logs
+              mkdir -p /var/www/html/storage/app/public
+          volumeMounts:
+            - name: app-storage
+              mountPath: /var/www/html/storage
       containers:
         - name: app
           image: solidtime/solidtime:latest
