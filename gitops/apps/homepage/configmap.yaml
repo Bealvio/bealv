@@ -75,7 +75,6 @@ data:
             icon: sh-solidtime.png
             href: https://solidtime.bealv.io
             description: Modern open-source time tracker.
-            siteMonitor: http://solidtime.solidtime:8000
       - Medias:
         - immich:
             icon: immich.png
@@ -274,4 +273,4 @@ data:
         timezone: Europe/Paris # optional
         units: metric # or imperial
         cache: 5 # Time in minutes to cache API responses, to stay within limits
-  docker.yaml: ''
+  docker.yaml: ""
