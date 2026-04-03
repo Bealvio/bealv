@@ -12,6 +12,6 @@ spec:
   bootstrap:
     initdb:
       database: solidtime
-      owner: solidtime
+      owner: postgres
   storage:
     size: 5Gi

@@ -118,6 +118,8 @@ spec:
               value: solidtime-postgres-rw
             - name: DB_DATABASE
               value: solidtime
+            - name: SUPERVISOR_HTTP_PORT
+              value: "9002"
           volumeMounts:
             - name: app-storage
               mountPath: /var/www/html/storage
