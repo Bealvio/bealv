@@ -51,12 +51,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: solidtime-secrets
+                  name: solidtime-postgres-app
                   key: password
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: solidtime-secrets
+                  name: solidtime-postgres-app
                   key: username
             - name: DB_HOST
               value: solidtime-postgres-rw
@@ -78,12 +78,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: solidtime-secrets
+                  name: solidtime-postgres-app
                   key: password
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: solidtime-secrets
+                  name: solidtime-postgres-app
                   key: username
             - name: DB_HOST
               value: solidtime-postgres-rw
@@ -107,12 +107,12 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: solidtime-secrets
+                  name: solidtime-postgres-app
                   key: password
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: solidtime-secrets
+                  name: solidtime-postgres-app
                   key: username
             - name: DB_HOST
               value: solidtime-postgres-rw

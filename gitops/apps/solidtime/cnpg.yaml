@@ -10,7 +10,5 @@ spec:
     initdb:
       database: solidtime
       owner: solidtime
-      secret:
-        name: solidtime-secrets
   storage:
     size: 5Gi
