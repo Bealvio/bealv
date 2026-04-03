@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solidtime-config
+data:
+  APP_NAME: "solidtime"
+  VITE_APP_NAME: "solidtime"
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  APP_ENABLE_REGISTRATION: "true"
+  APP_URL: "https://solidtime.bealv.io"
+  APP_FORCE_HTTPS: "true"
+  TRUSTED_PROXIES: "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+  LOG_CHANNEL: "stderr_daily"
+  LOG_LEVEL: "debug"
+  DB_CONNECTION: "pgsql"
+  DB_PORT: "5432"
+  MAIL_MAILER: "smtp"
+  QUEUE_CONNECTION: "database"
+  FILESYSTEM_DISK: "local"
+  PUBLIC_FILESYSTEM_DISK: "public"
+  GOTENBERG_URL: "http://localhost:3000"
