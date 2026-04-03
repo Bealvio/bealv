@@ -71,6 +71,11 @@ data:
             icon: outline.png
             href: https://doc.bealv.io
             description: Outline is a modern team knowledge base and wiki for growing teams.
+        - solidtime:
+            icon: sh-solidtime.png
+            href: https://solidtime.bealv.io
+            description: Modern open-source time tracker.
+            siteMonitor: http://solidtime.solidtime:8000
       - Medias:
         - immich:
             icon: immich.png
