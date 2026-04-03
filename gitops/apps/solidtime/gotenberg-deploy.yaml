@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solidtime-gotenberg
+  labels: &default
+    app: solidtime-gotenberg
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      containers:
+        - name: gotenberg
+          image: gotenberg/gotenberg:8
+          ports:
+            - name: gotenberg
+              containerPort: 3000
+      # No volumes needed for gotenberg based on docker-compose.yml

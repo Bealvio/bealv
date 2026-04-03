@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: solidtime-scheduler
+  labels: &default
+    app: solidtime-scheduler
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: *default
+  template:
+    metadata:
+      labels: *default
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+      containers:
+        - name: scheduler
+          image: solidtime/solidtime:latest
+          envFrom:
+            - configMapRef:
+                name: solidtime-config
+            - secretRef:
+                name: solidtime-secrets
+          env:
+            - name: CONTAINER_MODE
+              value: "scheduler"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-postgres-app
+                  key: password
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-postgres-app
+                  key: username
+            - name: DB_HOST
+              value: solidtime-postgres-rw
+            - name: DB_DATABASE
+              value: solidtime
+          volumeMounts:
+            - name: app-storage
+              mountPath: /var/www/html/storage
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: solidtime-app-storage
