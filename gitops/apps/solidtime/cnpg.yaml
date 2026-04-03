@@ -6,11 +6,12 @@ metadata:
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   instances: 1
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: solidtime-postgres-superuser
   bootstrap:
     initdb:
       database: solidtime
       owner: solidtime
-      postInitSQL:
-        - ALTER USER solidtime WITH SUPERUSER;
   storage:
     size: 5Gi
