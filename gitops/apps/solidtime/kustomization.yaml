@@ -7,6 +7,10 @@ resources:
   - cnpg.yaml
   - pvcs.yaml
   - configmap.yaml
-  - deploy.yaml
-  - service.yaml
+  - app-deploy.yaml
+  - scheduler-deploy.yaml
+  - queue-deploy.yaml
+  - gotenberg-deploy.yaml
+  - app-service.yaml
+  - gotenberg-service.yaml
   - httproute.yaml
