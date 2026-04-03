@@ -28,6 +28,16 @@ spec:
           env:
             - name: CONTAINER_MODE
               value: "scheduler"
+            # Explicit DB config to ensure precedence
+            - name: DB_DATABASE
+              value: solidtime
+            - name: DB_USERNAME
+              value: solidtime
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: solidtime-postgres-app
+                  key: password
             # Mail config from configmap/secrets
             # DB config handled by envFrom
           volumeMounts:
