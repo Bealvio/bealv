@@ -34,7 +34,7 @@ spec:
             limits:
               gpu.intel.com/i915: 1
               memory: 2000Mi
-          image: jellyfin/jellyfin:10.11.7
+          image: jellyfin/jellyfin:10.11.8
           ports:
             - containerPort: 8096
               name: jellyfin
