@@ -75,6 +75,10 @@ data:
             icon: sh-solidtime.png
             href: https://solidtime.bealv.io
             description: Modern open-source time tracker.
+        - trek:
+            icon: sh-trek.png
+            href: https://trek.bealv.io
+            description: A self-hosted travel/trip planner with real-time collaboration, interactive maps, PWA support, SSO, budgets, packing lists, and more.
       - Medias:
         - immich:
             icon: immich.png

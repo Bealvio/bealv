@@ -1,0 +1,7 @@
+namespace: trek
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - httproute.yaml

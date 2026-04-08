@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trek
+  labels:
+    app: trek
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: trek
+  template:
+    metadata:
+      labels:
+        app: trek
+    spec:
+      containers:
+        - name: trek
+          image: mauriceboe/trek:latest
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+            - name: APP_URL
+              value: "https://trek.bealv.io"
+            - name: OIDC_ISSUER
+              value: "https://zitadel.bealv.io"
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: trek-oidc
+                  key: attribute.client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: trek-oidc
+                  key: attribute.client_secret
+            - name: OIDC_DISPLAY_NAME
+              value: "SSO"
+            - name: OIDC_SCOPE
+              value: "openid email profile"
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+            - name: uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: trek-data
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: trek-uploads
