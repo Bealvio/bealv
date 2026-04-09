@@ -44,7 +44,9 @@ spec:
             - name: OIDC_DISPLAY_NAME
               value: "SSO"
             - name: OIDC_SCOPE
-              value: "openid email profile"
+              value: "openid email profile groups"
+            - name: OIDC_ONLY
+              value: "true"
           volumeMounts:
             - name: data
               mountPath: /app/data
