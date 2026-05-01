@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: trek
-          image: mauriceboe/trek:3.0.12
+          image: mauriceboe/trek:3.0.13
           ports:
             - containerPort: 3000
               name: http
