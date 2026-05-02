@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:2.3.6-nightly
+          image: ghcr.io/linuxserver/prowlarr:2.3.7-nightly
           resources:
             requests:
               memory: 800Mi
