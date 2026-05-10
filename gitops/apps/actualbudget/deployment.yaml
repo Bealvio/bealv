@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actualbudget
+  labels:
+    app: actualbudget
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: actualbudget
+  template:
+    metadata:
+      labels:
+        app: actualbudget
+    spec:
+      containers:
+        - name: actualbudget
+          image: actualbudget/actual-server:25.12.0
+          ports:
+            - containerPort: 5006
+              name: http
+          env:
+            - name: ACTUAL_OPENID_DISCOVERY_URL
+              value: 'https://zitadel.bealv.io/.well-known/openid-configuration'
+            - name: ACTUAL_OPENID_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: actualbudget-oidc
+                  key: attribute.client_id
+            - name: ACTUAL_OPENID_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: actualbudget-oidc
+                  key: attribute.client_secret
+            - name: ACTUAL_OPENID_SERVER_HOSTNAME
+              value: 'https://budget.bealv.io'
+            - name: ACTUAL_OPENID_ENFORCE
+              value: 'true'
+            - name: ACTUAL_TOKEN_EXPIRATION
+              value: 'openid-provider'
+            - name: ACTUAL_USER_CREATION_MODE
+              value: 'login'
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: actualbudget-data
