@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pz-control
+  namespace: project-zomboid
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pz-control
+  namespace: project-zomboid
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames: ["project-zomboid"]
+    verbs: ["get", "patch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pz-control
+  namespace: project-zomboid
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pz-control
+subjects:
+  - kind: ServiceAccount
+    name: pz-control
+    namespace: project-zomboid

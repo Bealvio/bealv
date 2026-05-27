@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>PZ Control — login</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login">
+  <form method="post" action="/login">
+    <h1>Project Zomboid Control</h1>
+    {{ if .Error }}<p class="error">Mot de passe incorrect.</p>{{ end }}
+    <input type="password" name="password" placeholder="mot de passe" autofocus>
+    <button type="submit">Entrer</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,7 @@
+namespace: project-zomboid
+resources:
+  - rbac.yaml
+  - external-secret.yml
+  - deployment.yaml
+  - service.yaml
+  - httproute.yaml

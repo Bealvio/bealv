@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Project Zomboid — Control</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>GLYNV-HARD</h1>
+    <span id="status-badge" class="badge unknown">…</span>
+  </header>
+
+  <section id="info">
+    <dl>
+      <dt>Pod</dt><dd id="pod-name">—</dd>
+      <dt>Démarré</dt><dd id="started-at">—</dd>
+      <dt>Restarts</dt><dd id="restarts">—</dd>
+    </dl>
+    <button id="restart-btn">Redémarrer le serveur</button>
+    <p id="restart-msg"></p>
+  </section>
+
+  <section id="logs">
+    <h2>Logs (500 dernières lignes)</h2>
+    <pre id="logs-pre">chargement…</pre>
+  </section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

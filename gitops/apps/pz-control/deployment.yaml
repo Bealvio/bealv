@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pz-control
+  namespace: project-zomboid
+  labels:
+    app: pz-control
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pz-control
+  template:
+    metadata:
+      labels:
+        app: pz-control
+    spec:
+      serviceAccountName: pz-control
+      containers:
+        - name: pz-control
+          image: zot.bealv.io/public/pz-control:v0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: PZCTL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pz-control-secrets
+                  key: password
+            - name: PZCTL_SIGNING_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pz-control-secrets
+                  key: signing-key
+          readinessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            periodSeconds: 30
+          resources:
+            requests: { cpu: "10m", memory: "32Mi" }
+            limits:   { memory: "128Mi" }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            capabilities:
+              drop: ["ALL"]
