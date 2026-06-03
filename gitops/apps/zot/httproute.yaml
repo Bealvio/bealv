@@ -14,7 +14,10 @@ spec:
   hostnames:
     - 'zot.bealv.io'
   rules:
-    - matches:
+    - timeouts:
+        request: "0s"
+        backendRequest: "0s"
+      matches:
         - path:
             type: PathPrefix
             value: /
