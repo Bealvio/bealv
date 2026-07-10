@@ -14,10 +14,13 @@ metadata:
   namespace: nextcloud
 spec:
   interval: 30m
+  # Give the rollout headroom for the occ major upgrade (image pull + apt + occ)
+  # so Flux doesn't mark the release failed on the default 5m Helm timeout.
+  timeout: 15m
   chart:
     spec:
       chart: nextcloud
-      version: '8.9.1'
+      version: '9.1.4'
       sourceRef:
         kind: HelmRepository
         name: nextcloud
@@ -39,7 +42,6 @@ spec:
         - |
           apt -y update
           apt -y install vim ffmpeg bz2
-          chown www-data:www-data /var/www/html -R
           chmod 666 /dev/dri/renderD128
           chmod 777 /tmp -R
     cronjob:
