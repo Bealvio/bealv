@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: immich
-      version: 0.12.0
+      version: 0.13.1
       sourceRef:
         kind: HelmRepository
         name: immich
@@ -36,18 +36,7 @@ spec:
               tag: v3.0.2
     immich:
       metrics:
-        enable: false
-      probes:
-        liveness:
-          spec:
-            initialDelaySeconds: 3600
-        readiness:
-          spec:
-            initialDelaySeconds: 3600
-        startup:
-          spec:
-            failureThreshold: 1000
-            periodSeconds: 10
+        enabled: false
       persistence:
         library:
           existingClaim: immich-data
@@ -55,8 +44,11 @@ spec:
     server:
       enabled: true
       controllers:
-        strategy: Recreate
         main:
+          strategy: Recreate
+          serviceAccount:
+            create: true
+            name: 'immich'
           containers:
             main:
               resources:
@@ -67,9 +59,6 @@ spec:
                   gpu.intel.com/i915: 1
                   cpu: 2
                   memory: 4Gi
-              serviceAccount:
-                create: true
-                name: 'immich'
       automountServiceAccountToken: true
       ingress:
         main:
@@ -79,11 +68,9 @@ spec:
       persistence:
         cache:
           enabled: true
-          size: 10Gi
-          # Optional: Set this to pvc to avoid downloading the ML models every start.
+          # Optional: switch type to persistentVolumeClaim (and add size/accessMode/storageClass
+          # under it) to avoid re-downloading the ML models on every start.
           type: emptyDir
-          accessMode: ReadWriteOnce
-          storageClass: disk
       controllers:
         main:
           containers:
