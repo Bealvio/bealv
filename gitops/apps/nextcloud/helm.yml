@@ -97,6 +97,13 @@ spec:
       protocol: https
     nextcloud:
       host: nimbus.bealv.io
+      # Set via the chart's native value (single NEXTCLOUD_TRUSTED_DOMAINS env).
+      # Previously also set through extraEnv, producing a duplicate env var that
+      # broke the strategic-merge-patch on upgrade.
+      trustedDomains:
+        - nimbus.bealv.io
+        - 192.168.0.0/16
+        - 10.0.0.0/8
       existingSecret:
         enabled: true
         secretName: nextcloud-secrets
@@ -126,8 +133,6 @@ spec:
       extraEnv:
         - name: TRUSTED_PROXIES
           value: '10.0.1.204 10.0.1.205 192.168.1.200 192.168.1.201'
-        - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: '192.168.0.0/16 10.0.0.0/8'
         - name: OC_MAINTENANCE_WINDOW_START
           value: '1'
         - name: OVERWRITEPROTOCOL
