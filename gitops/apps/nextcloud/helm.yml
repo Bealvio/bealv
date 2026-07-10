@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: '7.0.2'
+      version: '8.9.1'
       sourceRef:
         kind: HelmRepository
         name: nextcloud
@@ -201,7 +201,9 @@ spec:
       failureThreshold: 3
       successThreshold: 1
     startupProbe:
-      enabled: false
+      # Enabled for the major upgrade: holds liveness/readiness off while
+      # `occ upgrade` runs. 30 x 10s = 5 min of grace before liveness kicks in.
+      enabled: true
       initialDelaySeconds: 30
       periodSeconds: 10
       timeoutSeconds: 5
