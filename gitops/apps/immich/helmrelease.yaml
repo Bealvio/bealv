@@ -46,9 +46,8 @@ spec:
       controllers:
         main:
           strategy: Recreate
-          serviceAccount:
-            create: true
-            name: 'immich'
+          # No serviceAccount override: use the chart's auto-created "immich-server" SA.
+          # (Pinning name: immich referenced a non-existent SA and blocked pod creation.)
           containers:
             main:
               resources:
