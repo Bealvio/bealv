@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: trek
-          image: mauriceboe/trek:3.2.1
+          image: mauriceboe/trek:3.3.0
           ports:
             - containerPort: 3000
               name: http
@@ -27,8 +27,22 @@ spec:
               value: "production"
             - name: PORT
               value: "3000"
+            - name: TZ
+              value: "Europe/Paris"
             - name: APP_URL
               value: "https://trek.bealv.io"
+            - name: ALLOWED_ORIGINS
+              value: "https://trek.bealv.io"
+            # TLS is terminated at kgateway, one proxy hop in front of the pod
+            - name: TRUST_PROXY
+              value: "1"
+            - name: FORCE_HTTPS
+              value: "true"
+            # Immich (and other integrations) resolve to RFC-1918 addresses inside the cluster
+            - name: ALLOW_INTERNAL_NETWORK
+              value: "true"
+            - name: DEFAULT_LANGUAGE
+              value: "fr"
             - name: OIDC_ISSUER
               value: "https://zitadel.bealv.io"
             - name: OIDC_CLIENT_ID
@@ -47,6 +61,12 @@ spec:
               value: "openid email profile groups"
             - name: OIDC_ONLY
               value: "true"
+            # Zitadel groupsClaim action emits granted role keys in the "groups" claim;
+            # trek lives in the "public" project whose admin role key is public-admin
+            - name: OIDC_ADMIN_CLAIM
+              value: "groups"
+            - name: OIDC_ADMIN_VALUE
+              value: "public-admin"
           volumeMounts:
             - name: data
               mountPath: /app/data
