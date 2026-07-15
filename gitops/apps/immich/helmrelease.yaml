@@ -33,7 +33,7 @@ spec:
                     key: password
                     name: immich-secrets
             image:
-              tag: v3.0.2
+              tag: v3.0.3
     immich:
       metrics:
         enabled: false
