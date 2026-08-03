@@ -38,9 +38,11 @@ spec:
         - name: prestashop
           port: 80
       filters:
+        # "set" et non "add" : sans ecrasement, un X-Forwarded-Proto envoye par
+        # le client se retrouverait en double et pourrait etre usurpe.
         - type: RequestHeaderModifier
           requestHeaderModifier:
-            add:
+            set:
               - name: X-Scheme
                 value: https
               - name: X-Forwarded-Proto

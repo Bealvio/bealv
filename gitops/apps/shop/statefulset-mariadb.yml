@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mariadb
-        image: ghcr.io/linuxserver/mariadb:10.5.17-alpine
+        image: ghcr.io/linuxserver/mariadb:11.4.9
         ports:
         - name: mariadb
           containerPort: 3306
@@ -45,11 +45,13 @@ spec:
         volumeMounts:
         - name: prestashop-mariadb
           mountPath: /config
+        # MariaDB 11.4 ne demarre pas sous 256Mi (OOMKill pendant l'init InnoDB).
+        # Conso mesuree au repos : ~330Mi.
         resources:
           limits:
-            memory: 256Mi
+            memory: 768Mi
           requests:
-            memory: 128Mi
+            memory: 256Mi
   volumeClaimTemplates:
   - metadata:
       name: prestashop-mariadb

@@ -14,12 +14,43 @@ spec:
       labels: *default
     spec:
       initContainers:
+      # Ce conteneur ne monte QUE le PVC : /var/www/html/var/cache y designe donc
+      # le repertoire du PVC, pas l'emptyDir monte par-dessus dans le conteneur
+      # principal. On purge ce contenu masque, sinon ses inodes restent
+      # consommes sans etre accessibles.
       - name: cleanup
         image: busybox
-        command: ["sh", "-c", "rm -rf /var/www/html/lost+found || true"]
+        command: ["sh", "-c", "rm -rf /var/www/html/lost+found /var/www/html/var/cache/* || true"]
         volumeMounts:
         - name: config
           mountPath: /var/www/html
+      # Le gateway termine le TLS : PrestaShop doit deduire HTTPS de X-Forwarded-Proto,
+      # sinon il boucle en redirections sur le back-office.
+      - name: proxy-ssl-fix
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          mkdir -p /var/www/html/config
+          cat > /var/www/html/config/defines_custom.inc.php <<'PHP'
+          <?php
+          if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+              $_SERVER['HTTPS'] = 'on';
+          }
+          PHP
+        volumeMounts:
+        - name: config
+          mountPath: /var/www/html
+      # Le cache Symfony vit sur un emptyDir : ~20 000 fichiers qui saturaient
+      # les inodes du PVC (65 536 au total). L'emptyDir est monte root:root par
+      # defaut, on le rend inscriptible a www-data (uid/gid 33).
+      - name: cache-perms
+        image: busybox
+        command: ["sh", "-c", "chown 33:33 /cache && chmod 755 /cache"]
+        volumeMounts:
+        - name: cache
+          mountPath: /cache
       containers:
       - name: prestashop
         image: prestashop/prestashop:9.1.4
@@ -29,6 +60,8 @@ spec:
           name: http
         env:
         - name: PS_DEV_MODE
+          value: "0"
+        - name: PS_INSTALL_AUTO
           value: "1"
         - name: PS_LANGUAGE
           value: fr
@@ -57,6 +90,11 @@ spec:
         volumeMounts:
         - mountPath: /var/www/html
           name: config
+        - mountPath: /var/www/html/var/cache
+          name: cache
+      volumes:
+      - name: cache
+        emptyDir: {}
   volumeClaimTemplates:
   - apiVersion: v1
     kind: PersistentVolumeClaim
