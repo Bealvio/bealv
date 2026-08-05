@@ -18,10 +18,12 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: komga
+          # Conso mesuree < 10m au repos : la reservation a 500m bloquait
+          # l'ordonnancement. La limite reste a 1 CPU pour les scans de biblio.
           resources:
             requests:
               memory: 500Mi
-              cpu: 500m
+              cpu: 100m
             limits:
               memory: 2000Mi
               cpu: 1

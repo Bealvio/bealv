@@ -4,9 +4,11 @@ metadata:
   name: nextcloud-dragonfly
 spec:
   replicas: 1
+  # Conso mesuree < 10m : la reservation a 500m bloquait l'ordonnancement
+  # sans rien refleter. La limite reste a 600m pour absorber les pics.
   resources:
     requests:
-      cpu: 500m
+      cpu: 100m
       memory: 500Mi
     limits:
       cpu: 600m
