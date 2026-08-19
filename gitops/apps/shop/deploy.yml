@@ -53,7 +53,7 @@ spec:
           mountPath: /cache
       containers:
       - name: prestashop
-        image: prestashop/prestashop:9.1.4
+        image: prestashop/prestashop:9.1.5
         imagePullPolicy: Always
         ports:
         - containerPort: 80
