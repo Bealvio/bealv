@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: zitadel
-      version: 11.0.0-beta.4
+      version: 11.0.0-beta.7
       sourceRef:
         kind: HelmRepository
         name: zitadel
