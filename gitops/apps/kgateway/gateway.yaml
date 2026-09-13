@@ -5,7 +5,7 @@ metadata:
   namespace: kgateway-system
   annotations:
     cert-manager.io/cluster-issuer: bealvio
-    external-dns.alpha.kubernetes.io/target: bealv.io
+    external-dns.kubernetes.io/target: bealv.io
     kgateway.dev/per-connection-buffer-limit: '128Mi'
 spec:
   gatewayClassName: kgateway
@@ -60,7 +60,7 @@ kind: HTTPRoute
 metadata:
   name: https-redirect
   annotations:
-    external-dns.alpha.kubernetes.io/controller: ignore
+    external-dns.kubernetes.io/controller: ignore
 spec:
   parentRefs:
     - name: https

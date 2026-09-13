@@ -4,7 +4,7 @@ metadata:
   name: zot
   annotations:
     cert-manager.io/cluster-issuer: bealvio
-    external-dns.alpha.kubernetes.io/target: bealv.io
+    external-dns.kubernetes.io/target: bealv.io
   labels:
     probe: enabled
 spec:
@@ -15,8 +15,8 @@ spec:
     - 'zot.bealv.io'
   rules:
     - timeouts:
-        request: "0s"
-        backendRequest: "0s"
+        request: '0s'
+        backendRequest: '0s'
       matches:
         - path:
             type: PathPrefix
