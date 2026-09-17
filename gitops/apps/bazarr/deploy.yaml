@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: bazarr
-          image: ghcr.io/linuxserver/bazarr:1.6.1-development
+          image: ghcr.io/linuxserver/bazarr:1.6.2-development
           resources:
             requests:
               memory: 800Mi
