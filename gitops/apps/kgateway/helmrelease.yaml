@@ -16,5 +16,3 @@ spec:
         kind: HelmRepository
         name: kgateway
         namespace: kgateway-system
-  values:
-# Add custom values here if needed
