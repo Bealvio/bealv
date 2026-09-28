@@ -25,7 +25,7 @@ spec:
           args:
             - envoy
             - shutdown-manager
-          image: ghcr.io/projectcontour/contour:v1.33.1
+          image: ghcr.io/projectcontour/contour:v1.33.7
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -46,7 +46,7 @@ spec:
             - --log-level info
           command:
             - envoy
-          image: docker.io/envoyproxy/envoy:distroless-v1.35.8
+          image: docker.io/envoyproxy/envoy:distroless-v1.38.4
           imagePullPolicy: IfNotPresent
           name: envoy
           env:
@@ -70,7 +70,6 @@ spec:
               name: https
               protocol: TCP
             - containerPort: 8002
-              hostPort: 8002
               name: metrics
               protocol: TCP
           readinessProbe:
@@ -107,7 +106,7 @@ spec:
             - --envoy-key-file=/certs/tls.key
           command:
             - contour
-          image: ghcr.io/projectcontour/contour:v1.33.1
+          image: ghcr.io/projectcontour/contour:v1.33.7
           imagePullPolicy: IfNotPresent
           name: envoy-initconfig
           volumeMounts:
