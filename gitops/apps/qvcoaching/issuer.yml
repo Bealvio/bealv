@@ -13,5 +13,5 @@ spec:
             parentRefs:
               - name: qvcoaching-listener
                 namespace: qvcoaching
-                kind: XListenerSet
-                group: gateway.networking.x-k8s.io
+                kind: ListenerSet
+                group: gateway.networking.k8s.io
