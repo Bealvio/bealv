@@ -106,6 +106,19 @@
       "url": "https://github.com/kubevirt/monitoring/archive/234f65f076465b7f96edd23a028fd943000a3493.tar.gz",
       "hash": "sha256-x7EAGx0Ha2tAQ/vZXx00gm80QAFv85IUn2ZzChRa8gk="
     },
+    "nixbook": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "didactiklabs",
+        "repo": "nixbook"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d3606016aa13a9f388a235734538064bc941c6ac",
+      "url": "https://github.com/didactiklabs/nixbook/archive/d3606016aa13a9f388a235734538064bc941c6ac.tar.gz",
+      "hash": "sha256-2e65rJL3d50oi6OLAicMC2Ou06NokO1DI2Umg0WL20g="
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-24.11",

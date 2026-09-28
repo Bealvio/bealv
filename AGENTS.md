@@ -4,7 +4,7 @@ Guide for AI agents (and humans) working in this repo. **Keep this file up to da
 
 ## What this repo is
 
-GitOps source of truth for the **`bealv` workload cluster** ("Main Cluster"), reconciled by **FluxCD**. It only contains *workloads* (self-hosted apps and the app-level infra they need). The cluster itself, Flux, and most system add-ons are created and pushed from the management cluster repo **[Bealvio/flux-mgmt](https://github.com/Bealvio/flux-mgmt)**:
+GitOps source of truth for the **`bealv` workload cluster** ("Main Cluster"), reconciled by **FluxCD**. It only contains _workloads_ (self-hosted apps and the app-level infra they need). The cluster itself, Flux, and most system add-ons are created and pushed from the management cluster repo **[Bealvio/flux-mgmt](https://github.com/Bealvio/flux-mgmt)**:
 
 - Cluster API (Proxmox + Kamaji) creates the cluster; Sveltos ClusterProfiles install flux-operator/FluxInstance, Cilium, cert-manager, the internal contour ingress, external-snapshotter, proxmox-csi, trust-manager, monitoring CRDs/stack, external-secrets, etc. on it.
 - Sveltos creates on this cluster: `GitRepository/infra` → this repo (`main`, only `/gitops`), `GitRepository/mgmt` → flux-mgmt (`/gitops`), and `Kustomization/apps` → `./gitops/kustomizations` (interval 2m, prune).
@@ -22,7 +22,7 @@ nix/                          # derivations fetching upstream manifests (cnpg, d
 npins/                        # pinned upstream sources (format v8, npins >= 0.5) driving the generated upstream/ dirs
 scripts/renovate-post-upgrade.sh  # pin -> build script mapping, run by Renovate after a pin bump
 renovate.json5                # Renovate config (all dependency updates)
-shell.nix                     # nix-shell with kustomize + build scripts
+devenv.nix / devenv.yaml     # dev shell (devenv) + build scripts; devenv.lock pins its inputs
 ```
 
 ### Adding a workload
@@ -39,12 +39,17 @@ shell.nix                     # nix-shell with kustomize + build scripts
 
 ## Environment & tooling
 
-- `nix-shell` (`shell.nix`) provides `kustomize` and: `buildDragonFly`, `buildCnpg <version>`, `buildIngressContour` (→ `apps/ingress-controller-external/upstream`), `buildGatewayAPI`. (flux-mgmt uses devenv; this repo still uses `shell.nix` — propose migrating to `devenv.nix` rather than installing tools globally.)
+- Use **devenv**: `devenv shell -- <cmd>`, or `direnv` (`.envrc` runs `use devenv`).
+  - The shell provides `kustomize`, `npins`, `yq`, `treefmt` (from the nixbook devenv module, pinned in npins) and the generators `buildDragonFly`, `buildCnpg <version>`, `buildIngressContour` (→ `apps/ingress-controller-external/upstream`) and `buildGatewayAPI`.
+  - `NIX_PATH` is set to the npins `nixpkgs` pin, so `nix/*.nix` builds are reproducible.
+  - Entering the shell installs pre-commit hooks (treefmt = prettier/nixfmt/shfmt/gofumpt, shellcheck, mdsh), and treefmt may reformat files. Run `devenv shell treefmt` before committing.
+- If `devenv shell` fails with ``The option `dotenv.resolved' was accessed but has no value defined``, the devenv CLI is newer than `devenv.lock`: run `devenv update` and commit the lock.
 - One-off tools: `nix run nixpkgs#fluxcd -- …`, `nix shell nixpkgs#yq-go -c yq …`.
 
 ## Update automation (Renovate)
 
 All dependency updates come from **self-hosted Renovate**:
+
 - **Workflow:** `.github/workflows/renovate.yaml` runs every 4h, on manual dispatch, and on pushes that change the config.
 - **Identity:** the `update-chan` GitHub App (secrets `UPCLI_APP_ID`/`UPCLI_SECRET_ID`).
 - **Config:** `renovate.json5`.
@@ -52,21 +57,22 @@ All dependency updates come from **self-hosted Renovate**:
 
 What is covered:
 
-| Source | Manager |
-|---|---|
-| Container images in manifests under `gitops/` | `kubernetes` |
-| HelmRelease charts (HelmRepository / OCI) and images in HelmRelease `spec.values` | `flux` |
-| `npins/sources.json` release pins: cloudnative-pg, contour, dragonfly-operator, gateway-api | custom regex → `postUpgradeTasks` |
-| CloudNativePG `imageName` (postgres majors disabled) | custom regex |
-| Values with a `# renovate: datasource=<ds> depName=<name>` comment on the line above: Grafana CR version, immich server tag, the Renovate version itself | custom regex |
-| pz-control Go module (weekly, `go mod tidy`) and its Dockerfile | `gomod` / `dockerfile` |
-| Workflow actions (weekly, grouped) | `github-actions` |
+| Source                                                                                                                                                   | Manager                           |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| Container images in manifests under `gitops/`                                                                                                            | `kubernetes`                      |
+| HelmRelease charts (HelmRepository / OCI) and images in HelmRelease `spec.values`                                                                        | `flux`                            |
+| `npins/sources.json` release pins: cloudnative-pg, contour, dragonfly-operator, gateway-api                                                              | custom regex → `postUpgradeTasks` |
+| CloudNativePG `imageName` (postgres majors disabled)                                                                                                     | custom regex                      |
+| Values with a `# renovate: datasource=<ds> depName=<name>` comment on the line above: Grafana CR version, immich server tag, the Renovate version itself | custom regex                      |
+| pz-control Go module (weekly, `go mod tidy`) and its Dockerfile                                                                                          | `gomod` / `dockerfile`            |
+| Workflow actions (weekly, grouped)                                                                                                                       | `github-actions`                  |
 
-**npins flow:** Renovate bumps `version`, then runs `nix-shell --run './scripts/renovate-post-upgrade.sh <pin> <version>'`. The script runs `npins update --partial <pin>` and the matching `build*` generator from `shell.nix`, so the PR contains the whole regenerated `upstream/` bundle (images, CRDs, RBAC). When adding a pin or generator, add its case to that script.
+**npins flow:** Renovate bumps `version`, then runs `devenv shell -- ./scripts/renovate-post-upgrade.sh <pin> <version>`. The script runs `npins update --partial <pin>` the matching `build*` generator from `devenv.nix` and `treefmt`, so the PR contains the whole regenerated `upstream/` bundle (images, CRDs, RBAC). When adding a pin or generator, add its case to that script.
 
-**Generated `upstream/` dirs** (cnpg, dragonfly, gateway-api, ingress-controller-external) are in `ignorePaths`. `crossplane/upstream` is hand-written and *is* managed.
+**Generated `upstream/` dirs** (cnpg, dragonfly, gateway-api, ingress-controller-external) are in `ignorePaths`. `crossplane/upstream` is hand-written and _is_ managed.
 
 **Deliberately excluded:**
+
 - the unused `kube-prometheus`/`grafana-operator`/`kubevirt-monitoring` pins, since monitoring comes from flux-mgmt;
 - VectorChord (`immich/cnpg.yaml`), because immich dictates the supported version;
 - floating tags (`latest`, `stable`, `main`).
@@ -76,6 +82,7 @@ What is covered:
 **To make Renovate track a new value it can't detect,** add a `# renovate:` comment above it.
 
 Other details:
+
 - Commits and PR titles look like `chore(deps): update <dep> to <version>`. Updates must be at least 2 days old (except `zot.bealv.io/*`). No automerge; no CI checks, so review is manual.
 - GitHub only allows **rebase merges** (`gh pr merge --rebase`).
 - ⚠️ Never let a chart `version:` become a `sha256-…` string. updatecli's digest mode once pinned the immich chart to a cosign signature tag, which is not a chart, and broke the HelmRelease.

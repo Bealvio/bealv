@@ -80,7 +80,7 @@
       addLabels: ["npins"],
       postUpgradeTasks: {
         commands: [
-          "nix-shell --run './scripts/renovate-post-upgrade.sh {{{depName}}} {{{newValue}}}'",
+          "devenv shell -- ./scripts/renovate-post-upgrade.sh {{{depName}}} {{{newValue}}}",
         ],
         fileFilters: ["**/*"],
         executionMode: "update",
@@ -89,7 +89,11 @@
     {
       description: "Unused pins (monitoring is deployed from Bealvio/flux-mgmt)",
       matchFileNames: ["npins/sources.json"],
-      matchDepNames: ["grafana-operator", "kube-prometheus", "kubevirt-monitoring"],
+      matchDepNames: [
+        "grafana-operator",
+        "kube-prometheus",
+        "kubevirt-monitoring",
+      ],
       enabled: false,
     },
     {
