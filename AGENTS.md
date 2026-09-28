@@ -19,8 +19,9 @@ gitops/
   apps/*/upstream/            # GENERATED upstream bundles — don't hand-edit (see below)
   docs/superpowers/plans/     # implementation plans written by agents
 nix/                          # derivations fetching upstream manifests (cnpg, dragonfly, gateway-api, contour, kube-prometheus)
-npins/                        # pinned sources (nixpkgs, …)
-updatecli/                    # update automation (updatecli.d/*.yaml + values.yaml)
+npins/                        # pinned upstream sources (format v8, npins >= 0.5) driving the generated upstream/ dirs
+scripts/renovate-post-upgrade.sh  # pin -> build script mapping, run by Renovate after a pin bump
+renovate.json5                # Renovate config (all dependency updates)
 shell.nix                     # nix-shell with kustomize + build scripts
 ```
 
@@ -41,14 +42,43 @@ shell.nix                     # nix-shell with kustomize + build scripts
 - `nix-shell` (`shell.nix`) provides `kustomize` and: `buildDragonFly`, `buildCnpg <version>`, `buildIngressContour` (→ `apps/ingress-controller-external/upstream`), `buildGatewayAPI`. (flux-mgmt uses devenv; this repo still uses `shell.nix` — propose migrating to `devenv.nix` rather than installing tools globally.)
 - One-off tools: `nix run nixpkgs#fluxcd -- …`, `nix shell nixpkgs#yq-go -c yq …`.
 
-## Update automation (bots)
+## Update automation (Renovate)
 
-- **updatecli** (`.github/workflows/updatecli-ci.yaml`, every 2h) with configs in `updatecli/updatecli.d/`:
-  - `kubernetes-discovery.yaml`: container image bumps in `gitops/apps/` (ignores monitoring/contour upstream dirs) → PRs `deps: bump container image "<img>" to <ver>`.
-  - `flux-discovery.yaml`: HelmRelease chart bumps → `deps: update Helm chart to <ver>` (title doesn't name the chart — check the diff).
-  - Dedicated manifests: zitadel, grafana, immich (image tag in HelmRelease values), kgateway (both `helmrelease-crds.yaml` and `helmrelease.yaml` together), cnpg, dragonfly, gateway-api, ingress-contour.
-- PR author: `update-chan` GitHub App. No CI checks run on PRs; review is manual.
+All dependency updates come from **self-hosted Renovate**:
+- **Workflow:** `.github/workflows/renovate.yaml` runs every 4h, on manual dispatch, and on pushes that change the config.
+- **Identity:** the `update-chan` GitHub App (secrets `UPCLI_APP_ID`/`UPCLI_SECRET_ID`).
+- **Config:** `renovate.json5`.
+- **Overview:** the **Dependency Dashboard** issue lists every pending or approval-gated update. Tick a checkbox there to force one.
+
+What is covered:
+
+| Source | Manager |
+|---|---|
+| Container images in manifests under `gitops/` | `kubernetes` |
+| HelmRelease charts (HelmRepository / OCI) and images in HelmRelease `spec.values` | `flux` |
+| `npins/sources.json` release pins: cloudnative-pg, contour, dragonfly-operator, gateway-api | custom regex → `postUpgradeTasks` |
+| CloudNativePG `imageName` (postgres majors disabled) | custom regex |
+| Values with a `# renovate: datasource=<ds> depName=<name>` comment on the line above: Grafana CR version, immich server tag, the Renovate version itself | custom regex |
+| pz-control Go module (weekly, `go mod tidy`) and its Dockerfile | `gomod` / `dockerfile` |
+| Workflow actions (weekly, grouped) | `github-actions` |
+
+**npins flow:** Renovate bumps `version`, then runs `nix-shell --run './scripts/renovate-post-upgrade.sh <pin> <version>'`. The script runs `npins update --partial <pin>` and the matching `build*` generator from `shell.nix`, so the PR contains the whole regenerated `upstream/` bundle (images, CRDs, RBAC). When adding a pin or generator, add its case to that script.
+
+**Generated `upstream/` dirs** (cnpg, dragonfly, gateway-api, ingress-controller-external) are in `ignorePaths`. `crossplane/upstream` is hand-written and *is* managed.
+
+**Deliberately excluded:**
+- the unused `kube-prometheus`/`grafana-operator`/`kubevirt-monitoring` pins, since monitoring comes from flux-mgmt;
+- VectorChord (`immich/cnpg.yaml`), because immich dictates the supported version;
+- floating tags (`latest`, `stable`, `main`).
+
+**Grouping:** kgateway CRDs + controller charts share one PR, as do the ARC charts. Identical charts (oauth2-proxy ×7, nfs-provisioner ×2) share a PR automatically.
+
+**To make Renovate track a new value it can't detect,** add a `# renovate:` comment above it.
+
+Other details:
+- Commits and PR titles look like `chore(deps): update <dep> to <version>`. Updates must be at least 2 days old (except `zot.bealv.io/*`). No automerge; no CI checks, so review is manual.
 - GitHub only allows **rebase merges** (`gh pr merge --rebase`).
+- ⚠️ Never let a chart `version:` become a `sha256-…` string. updatecli's digest mode once pinned the immich chart to a cosign signature tag, which is not a chart, and broke the HelmRelease.
 
 ## Reviewing / merging dependency PRs
 
