@@ -15,6 +15,14 @@
   automerge: false,
   // Let fresh releases settle before proposing them.
   minimumReleaseAge: "2 days",
+  // The update-chan app has no "Commit statuses" permission: don't publish
+  // renovate/* status checks (a 403 there makes Renovate abort the run).
+  statusCheckNames: {
+    artifactError: null,
+    configValidation: null,
+    mergeConfidence: null,
+    minimumReleaseAge: null,
+  },
   // Only the managers this repo actually uses.
   // (flux also covers images in HelmRelease `spec.values`)
   enabledManagers: [
