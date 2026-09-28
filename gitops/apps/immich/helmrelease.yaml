@@ -33,6 +33,7 @@ spec:
                     key: password
                     name: immich-secrets
             image:
+              # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
               tag: v3.2.2
     immich:
       metrics:

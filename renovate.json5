@@ -1,0 +1,146 @@
+{
+  // Renovate runs self-hosted from .github/workflows/renovate.yaml (GitHub App "update-chan").
+  // Dependency Dashboard: the "Renovate Dashboard" issue of this repo.
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    ":semanticCommitScope(deps)",
+    ":disableRateLimiting",
+  ],
+  labels: ["dependencies"],
+  // No automerge: every update is reviewed (and Flux deploys main right away).
+  automerge: false,
+  // Let fresh releases settle before proposing them.
+  minimumReleaseAge: "2 days",
+  // Only the managers this repo actually uses.
+  // (flux also covers images in HelmRelease `spec.values`)
+  enabledManagers: [
+    "kubernetes",
+    "flux",
+    "gomod",
+    "dockerfile",
+    "github-actions",
+    "custom.regex",
+  ],
+  // Generated bundles are never bumped image-by-image: they are regenerated as a
+  // whole from npins/sources.json (see scripts/renovate-post-upgrade.sh).
+  // (crossplane/upstream is hand-written and stays managed.)
+  ignorePaths: [
+    "gitops/apps/cnpg/upstream/**",
+    "gitops/apps/dragonfly/upstream/**",
+    "gitops/apps/gateway-api/upstream/**",
+    "gitops/apps/ingress-controller-external/upstream/**",
+  ],
+  kubernetes: {
+    managerFilePatterns: ["/^gitops/.+\\.ya?ml$/"],
+  },
+  flux: {
+    managerFilePatterns: ["/^gitops/.+\\.ya?ml$/"],
+  },
+  postUpdateOptions: ["gomodTidy"],
+  customManagers: [
+    {
+      customType: "regex",
+      description: "npins release pins (GitRelease) — version bump, then scripts/renovate-post-upgrade.sh regenerates",
+      managerFilePatterns: ["/^npins/sources\\.json$/"],
+      matchStrings: [
+        '"(?<depName>[^"]+)": \\{\\s*"type": "GitRelease",\\s*"repository": \\{\\s*"type": "GitHub",\\s*"owner": "(?<owner>[^"]+)",\\s*"repo": "(?<repo>[^"]+)"\\s*\\},[^}]*?"version": "(?<currentValue>[^"]+)"',
+      ],
+      packageNameTemplate: "{{{owner}}}/{{{repo}}}",
+      datasourceTemplate: "github-releases",
+    },
+    {
+      customType: "regex",
+      description: "Any value preceded by a `# renovate: datasource=… depName=…` comment",
+      managerFilePatterns: [
+        "/^gitops/.+\\.ya?ml$/",
+        "/^\\.github/workflows/.+\\.ya?ml$/",
+      ],
+      matchStrings: [
+        "#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(?:\\s+registryUrl=(?<registryUrl>\\S+))?(?:\\s+versioning=(?<versioning>\\S+))?\\s*\\n\\s*[\\w.-]+:\\s*[\"']?(?:\\S*?/releases/download/)?(?<currentValue>[^\\s\"'/]+)",
+      ],
+    },
+    {
+      customType: "regex",
+      description: "CloudNativePG Cluster `imageName`",
+      managerFilePatterns: ["/^gitops/.+\\.ya?ml$/"],
+      matchStrings: [
+        "imageName:\\s*[\"']?(?<depName>[^:\\s\"']+):(?<currentValue>[^\\s\"'@]+)",
+      ],
+      datasourceTemplate: "docker",
+    },
+  ],
+  packageRules: [
+    {
+      description: "npins pins: refresh the pin and regenerate the upstream bundle in the same PR",
+      matchFileNames: ["npins/sources.json"],
+      addLabels: ["npins"],
+      postUpgradeTasks: {
+        commands: [
+          "nix-shell --run './scripts/renovate-post-upgrade.sh {{{depName}}} {{{newValue}}}'",
+        ],
+        fileFilters: ["**/*"],
+        executionMode: "update",
+      },
+    },
+    {
+      description: "Unused pins (monitoring is deployed from Bealvio/flux-mgmt)",
+      matchFileNames: ["npins/sources.json"],
+      matchDepNames: ["grafana-operator", "kube-prometheus", "kubevirt-monitoring"],
+      enabled: false,
+    },
+    {
+      description: "HelmRelease values are handled by the flux manager",
+      matchManagers: ["kubernetes"],
+      matchFileNames: ["**/*helm*.{yaml,yml}"],
+      enabled: false,
+    },
+    {
+      description: "PostgreSQL major upgrades need a CNPG major-upgrade procedure",
+      matchPackageNames: ["ghcr.io/cloudnative-pg/postgresql"],
+      matchUpdateTypes: ["major"],
+      enabled: false,
+    },
+    {
+      description: "immich dictates the supported VectorChord version: bump it by hand with immich upgrades",
+      matchPackageNames: ["ghcr.io/tensorchord/cloudnative-vectorchord"],
+      enabled: false,
+    },
+    {
+      description: "kgateway CRDs and controller charts move together",
+      matchDatasources: ["helm", "docker"],
+      matchPackageNames: ["/kgateway/"],
+      groupName: "kgateway",
+    },
+    {
+      description: "actions-runner-controller charts move together",
+      matchPackageNames: ["/gha-runner-scale-set/"],
+      groupName: "actions-runner-controller",
+    },
+    {
+      description: "Our own images: no release age wait",
+      matchPackageNames: ["zot.bealv.io/**"],
+      minimumReleaseAge: null,
+    },
+    {
+      description: "Go module of pz-control: one weekly PR",
+      matchManagers: ["gomod"],
+      groupName: "pz-control go modules",
+      schedule: ["before 6am on monday"],
+    },
+    {
+      description: "Renovate itself releases several times a day",
+      matchDepNames: ["renovate"],
+      schedule: ["before 6am on monday"],
+      minimumReleaseAge: null,
+    },
+    {
+      matchManagers: ["github-actions"],
+      groupName: "github actions",
+      schedule: ["before 6am on monday"],
+    },
+  ],
+}
