@@ -87,6 +87,17 @@ Other details:
 - GitHub only allows **rebase merges** (`gh pr merge --rebase`).
 - ⚠️ Never let a chart `version:` become a `sha256-…` string. updatecli's digest mode once pinned the immich chart to a cosign signature tag, which is not a chart, and broke the HelmRelease.
 
+### Renovate gotchas
+
+- **Missing app permissions:**
+  - The `update-chan` app has no _Commit statuses_ permission. A 403 when Renovate sets a `renovate/*` status makes it abort the whole run as "Repository has changed during renovation", so `statusCheckNames` are disabled in `renovate.json5`. Re-enable them if the permission is granted.
+  - Without _Dependabot alerts: read_, the dashboard shows "Cannot access vulnerability alerts" (harmless).
+  - Without _Workflows: write_, Renovate cannot push GitHub Actions updates.
+- **Branches left by a crashed run** show up on the dashboard as "PR Edited (Blocked)". If such a `renovate/*` branch has no PR, delete it and Renovate recreates it cleanly.
+- **Don't push to `main` while a Renovate run is in progress** (Actions tab): the run aborts and picks up again on the next schedule.
+- **Debug runs:** trigger the workflow with `logLevel=debug`. Long lines get truncated in the web log view; download the full log with `gh api repos/<owner>/<repo>/actions/runs/<id>/logs > logs.zip`.
+- **devenv and git worktrees:** `devenv shell` inside a git worktree points the shared pre-commit hook at that worktree. After removing the worktree, commits fail with "config file not found": re-enter `devenv shell` in the main checkout.
+
 ## Reviewing / merging dependency PRs
 
 1. Check the actual diff (usually a one-line tag change) and read upstream release notes for minor/major bumps — look for config key/env var renames, DB migrations (zitadel, immich, komga, vaultwarden run schema migrations on start — non-reversible), and CRD changes for charts (crossplane, kgateway).
