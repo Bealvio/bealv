@@ -16,6 +16,7 @@ cloudnative-pg) buildCnpg "$version" ;;
 contour) buildIngressContour ;;
 dragonfly-operator) buildDragonFly ;;
 gateway-api) buildGatewayAPI ;;
+nixbook) ;; # devenv module, nothing to generate
 *)
   echo "renovate-post-upgrade: no build step known for pin '$pin'" >&2
   exit 1
