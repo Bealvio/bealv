@@ -25,9 +25,11 @@ type fakeKube struct {
 func (f *fakeKube) PodStatus(ctx context.Context) (PodStatus, error) {
 	return f.status, f.statusErr
 }
+
 func (f *fakeKube) PodLogs(ctx context.Context, tail int64) (string, error) {
 	return f.logs, f.logsErr
 }
+
 func (f *fakeKube) RestartDeployment(ctx context.Context) error {
 	atomic.AddInt32(&f.restartHits, 1)
 	return f.restartErr

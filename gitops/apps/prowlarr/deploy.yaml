@@ -34,15 +34,15 @@ spec:
               containerPort: 9696
           env:
             - name: AUTHENTICATION_METHOD
-              value: 'External'
+              value: "External"
             - name: PUID
-              value: '1000'
+              value: "1000"
             - name: PGID
-              value: '1000'
+              value: "1000"
             - name: TZ
-              value: 'Europe/Paris'
+              value: "Europe/Paris"
             - name: UMASK
-              value: '022'
+              value: "022"
             - name: API_KEY
               valueFrom:
                 secretKeyRef:

@@ -6,7 +6,7 @@ metadata:
     app: mortis
 spec:
   ports:
-  - port: 5231
-    targetPort: 5231
+    - port: 5231
+      targetPort: 5231
   selector:
     app: mortis

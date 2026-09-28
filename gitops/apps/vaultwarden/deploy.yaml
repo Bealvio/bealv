@@ -24,46 +24,46 @@ spec:
               containerPort: 80
           env:
             - name: DOMAIN
-              value: 'https://pass.bealv.io'
+              value: "https://pass.bealv.io"
             - name: ADMIN_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: vaultwarden-secrets
                   key: admin_token
             - name: SIGNUPS_ALLOWED
-              value: 'false'
+              value: "false"
             - name: INVITATIONS_ALLOWED
-              value: 'false'
+              value: "false"
             - name: SHOW_PASSWORD_HINT
-              value: 'false'
+              value: "false"
             - name: WEBSOCKET_ENABLED
-              value: 'true'
+              value: "true"
             - name: LOG_LEVEL
-              value: 'info'
+              value: "info"
             - name: SSO_ENABLED
-              value: 'true'
+              value: "true"
             - name: SSO_SCOPES
-              value: 'openid email email_verified profile offline_access groups'
+              value: "openid email email_verified profile offline_access groups"
             - name: SSO_PKCE
-              value: 'false'
+              value: "false"
             - name: SSO_DEBUG_TOKENS
-              value: 'true'
+              value: "true"
             - name: SSO_AUDIENCE_TRUSTED
-              value: '^.*$'
+              value: "^.*$"
             - name: SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION
-              value: 'true'
+              value: "true"
             - name: SSO_ONLY
-              value: 'false'
+              value: "false"
             - name: SSO_ORGANIZATIONS_TOKEN_PATH
-              value: '/groups'
+              value: "/groups"
             - name: SSO_ORGANIZATIONS_ALL_COLLECTIONS
-              value: 'true'
+              value: "true"
             - name: SSO_ORGANIZATIONS_INVITE
-              value: 'true'
+              value: "true"
             - name: SSO_ORGANIZATIONS_ID_MAPPING
-              value: 'public-admin:Bealv;'
+              value: "public-admin:Bealv;"
             - name: ORGANIZATION_INVITE_AUTO_ACCEPT
-              value: 'true'
+              value: "true"
             - name: SSO_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -75,9 +75,9 @@ spec:
                   name: vaultwarden-oidc
                   key: attribute.client_secret
             - name: SSO_AUTHORITY
-              value: 'https://zitadel.bealv.io'
+              value: "https://zitadel.bealv.io"
             - name: SSO_ORGANIZATIONS_REVOCATION
-              value: 'true'
+              value: "true"
             - name: SMTP_HOST
               valueFrom:
                 secretKeyRef:

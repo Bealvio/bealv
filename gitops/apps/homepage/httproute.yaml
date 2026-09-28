@@ -15,12 +15,12 @@ spec:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'home.bealv.io'
+    - "home.bealv.io"
   rules:
     - matches:
         - path:
             type: PathPrefix
-            value: '/'
+            value: "/"
       backendRefs:
         - name: homepage
           port: 3000

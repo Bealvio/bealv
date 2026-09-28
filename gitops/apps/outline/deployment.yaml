@@ -27,11 +27,11 @@ spec:
                   name: outline-secrets
                   key: DATABASE_URL
             - name: REDIS_URL
-              value: 'redis://outline-dragonfly:6379'
+              value: "redis://outline-dragonfly:6379"
             - name: URL
               value: https://doc.bealv.io
             - name: PORT
-              value: '3000'
+              value: "3000"
             - name: SMTP_SERVICE
               value: Gmail
             - name: SMTP_USERNAME

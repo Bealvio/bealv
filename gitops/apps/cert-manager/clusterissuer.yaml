@@ -21,7 +21,7 @@ kind: ExternalSecret
 metadata:
   name: cert-manager-cloudflare
 spec:
-  refreshInterval: '1h'
+  refreshInterval: "1h"
   secretStoreRef:
     name: vault-backend
     kind: ClusterSecretStore

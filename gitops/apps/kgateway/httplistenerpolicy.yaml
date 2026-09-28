@@ -9,11 +9,11 @@ spec:
       name: https
   upgradeConfig:
     enabledUpgrades:
-      - 'websocket'
+      - "websocket"
   accessLog:
-  - fileSink:
-      path: /dev/stdout
-      jsonFormat:
+    - fileSink:
+        path: /dev/stdout
+        jsonFormat:
           start_time: "%START_TIME%"
           method: "%REQ(X-ENVOY-ORIGINAL-METHOD?:METHOD)%"
           path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"

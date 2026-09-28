@@ -8,10 +8,10 @@ spec:
     privateKeySecretRef:
       name: qvcoaching-account-key
     solvers:
-    - http01:
-        gatewayHTTPRoute:
-          parentRefs:
-            - name: qvcoaching-listener
-              namespace: qvcoaching
-              kind: XListenerSet
-              group: gateway.networking.x-k8s.io
+      - http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: qvcoaching-listener
+                namespace: qvcoaching
+                kind: XListenerSet
+                group: gateway.networking.x-k8s.io

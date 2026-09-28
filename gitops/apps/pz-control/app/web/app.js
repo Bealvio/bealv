@@ -7,9 +7,12 @@ async function refreshStatus() {
     const s = await r.json();
     const badge = $("status-badge");
     badge.textContent = s.phase + (s.ready ? " · ready" : "");
-    badge.className = "badge " + (s.ready ? "ok" : (s.phase === "Running" ? "warn" : "bad"));
+    badge.className =
+      "badge " + (s.ready ? "ok" : s.phase === "Running" ? "warn" : "bad");
     $("pod-name").textContent = s.name || "—";
-    $("started-at").textContent = s.started_at ? new Date(s.started_at).toLocaleString() : "—";
+    $("started-at").textContent = s.started_at
+      ? new Date(s.started_at).toLocaleString()
+      : "—";
     $("restarts").textContent = s.restarts ?? "—";
   } catch (e) {
     $("status-badge").textContent = "error";
@@ -29,7 +32,12 @@ async function refreshLogs() {
 }
 
 async function doRestart() {
-  if (!confirm("Redémarrer le serveur ? Tous les joueurs connectés seront déconnectés.")) return;
+  if (
+    !confirm(
+      "Redémarrer le serveur ? Tous les joueurs connectés seront déconnectés.",
+    )
+  )
+    return;
   const btn = $("restart-btn");
   const msg = $("restart-msg");
   btn.disabled = true;
@@ -49,7 +57,9 @@ async function doRestart() {
     msg.textContent = "Erreur réseau: " + e;
     msg.className = "error";
   } finally {
-    setTimeout(() => { btn.disabled = false; }, 5000);
+    setTimeout(() => {
+      btn.disabled = false;
+    }, 5000);
   }
 }
 

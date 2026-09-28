@@ -14,50 +14,50 @@ spec:
       labels: *default
     spec:
       containers:
-      - name: mariadb
-        image: ghcr.io/linuxserver/mariadb:11.8.8
-        ports:
         - name: mariadb
-          containerPort: 3306
-        env:
-        - name: PUID
-          value: "1000"
-        - name: PGID
-          value: "1000"
-        - name: TZ
-          value: "Europe/Paris"
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: prestashop-mysql-secrets
-              key: root-password
-        - name: MYSQL_LOG_CONSOLE
-          value: "true"
-        - name: MYSQL_USER
-          value: prestashop
-        - name: MYSQL_DATABASE
-          value: prestashop
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: prestashop-mysql-secrets
-              key: prestashop-password
-        volumeMounts:
-        - name: prestashop-mariadb
-          mountPath: /config
-        # MariaDB 11.4 ne demarre pas sous 256Mi (OOMKill pendant l'init InnoDB).
-        # Conso mesuree au repos : ~330Mi.
-        resources:
-          limits:
-            memory: 768Mi
-          requests:
-            memory: 256Mi
+          image: ghcr.io/linuxserver/mariadb:11.8.8
+          ports:
+            - name: mariadb
+              containerPort: 3306
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Paris"
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: prestashop-mysql-secrets
+                  key: root-password
+            - name: MYSQL_LOG_CONSOLE
+              value: "true"
+            - name: MYSQL_USER
+              value: prestashop
+            - name: MYSQL_DATABASE
+              value: prestashop
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: prestashop-mysql-secrets
+                  key: prestashop-password
+          volumeMounts:
+            - name: prestashop-mariadb
+              mountPath: /config
+          # MariaDB 11.4 ne demarre pas sous 256Mi (OOMKill pendant l'init InnoDB).
+          # Conso mesuree au repos : ~330Mi.
+          resources:
+            limits:
+              memory: 768Mi
+            requests:
+              memory: 256Mi
   volumeClaimTemplates:
-  - metadata:
-      name: prestashop-mariadb
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      storageClassName: "disk"
-      resources:
-        requests:
-          storage: 2Gi
+    - metadata:
+        name: prestashop-mariadb
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "disk"
+        resources:
+          requests:
+            storage: 2Gi

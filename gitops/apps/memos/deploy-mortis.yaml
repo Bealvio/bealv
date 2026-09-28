@@ -16,10 +16,10 @@ spec:
         app: mortis
     spec:
       containers:
-      - name: mortis
-        image: ghcr.io/mudkipme/mortis:0.31.0
-        ports:
-        - containerPort: 5231
-        command:
-          - "/app/mortis"
-          - "-grpc-addr=memos:5230"
+        - name: mortis
+          image: ghcr.io/mudkipme/mortis:0.31.0
+          ports:
+            - containerPort: 5231
+          command:
+            - "/app/mortis"
+            - "-grpc-addr=memos:5230"

@@ -18,4 +18,4 @@ spec:
     deploymentStrategy: RollingUpdate
     image:
       repository: xpkg.upbound.io/crossplane/crossplane
-      tag: ''
+      tag: ""

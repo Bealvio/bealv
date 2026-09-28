@@ -33,25 +33,25 @@ spec:
               containerPort: 25600
           env:
             - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_ISSUERURI
-              value: 'https://zitadel.bealv.io'
+              value: "https://zitadel.bealv.io"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_AUTHORIZATIONURI
-              value: 'https://zitadel.bealv.io/oauth/v2/authorize'
+              value: "https://zitadel.bealv.io/oauth/v2/authorize"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_TOKENURI
-              value: 'https://zitadel.bealv.io/oauth/v2/token'
+              value: "https://zitadel.bealv.io/oauth/v2/token"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_JWKSETURI
-              value: 'https://zitadel.bealv.io/oauth/v2/keys'
+              value: "https://zitadel.bealv.io/oauth/v2/keys"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_USERINFOURI
-              value: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+              value: "https://zitadel.bealv.io/oidc/v1/userinfo"
             - name: KOMGA_LIBRARIES_SCAN_CRON
-              value: '0 0 * * * ?'
+              value: "0 0 * * * ?"
             - name: KOMGA_REMEMBERME_KEY
-              value: 'random'
+              value: "random"
             - name: KOMGA_FILE_HASHING
-              value: 'false'
+              value: "false"
             - name: KOMGA_OAUTH2_ACCOUNT_CREATION
-              value: 'true'
+              value: "true"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_PROVIDER
-              value: 'zitadel'
+              value: "zitadel"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTID
               valueFrom:
                 secretKeyRef:
@@ -63,15 +63,15 @@ spec:
                   name: komga-oidc
                   key: attribute.client_secret
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_CLIENTNAME
-              value: 'zitadel'
+              value: "zitadel"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_SCOPE
-              value: 'openid,email,profile,groups,email_verified'
+              value: "openid,email,profile,groups,email_verified"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_AUTHORIZATIONGRANTTYPE
-              value: 'authorization_code'
+              value: "authorization_code"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_ZITADEL_REDIRECTURI
-              value: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+              value: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_ZITADEL_USERNAMEATTRIBUTE
-              value: 'sub'
+              value: "sub"
           volumeMounts:
             - name: config
               mountPath: /config

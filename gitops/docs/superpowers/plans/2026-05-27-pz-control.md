@@ -52,6 +52,7 @@ gitops/
 ```
 
 **File responsibilities:**
+
 - `cooldown.go`: pure logic, no I/O — easy to unit-test.
 - `auth.go`: password compare (constant-time), HMAC-SHA256 token issue/validate, `http.Handler` middleware. No external deps.
 - `kube.go`: defines `KubeClient` interface (`PodStatus`, `PodLogs`, `RestartDeployment`) and a real impl backed by `client-go`. The interface is what `handlers.go` depends on, so tests can substitute a fake.
@@ -63,6 +64,7 @@ gitops/
 ## Task 1: Scaffold app folder and Go module
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/app/go.mod`
 - Create: `gitops/apps/pz-control/app/main.go` (placeholder)
 
@@ -102,6 +104,7 @@ git commit -m "feat(pz-control): scaffold Go module"
 **Why:** Prevent friends from spamming the restart button and thrashing the pod. Pure logic — easy to test first.
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/app/cooldown_test.go`
 - Create: `gitops/apps/pz-control/app/cooldown.go`
 
@@ -229,6 +232,7 @@ git commit -m "feat(pz-control): add restart cooldown logic"
 **Why:** Shared dedicated password + signed session cookie. Constant-time comparison and HMAC signature so tampering / brute-force is harder.
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/app/auth_test.go`
 - Create: `gitops/apps/pz-control/app/auth.go`
 
@@ -431,11 +435,13 @@ git commit -m "feat(pz-control): add password auth + HMAC session cookies"
 **Why:** Defines the boundary between business logic and the cluster. `handlers.go` depends only on the `KubeClient` interface, so tests can use a fake.
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/app/kube.go`
 
 - [ ] **Step 1: Add client-go dependency**
 
 Run:
+
 ```bash
 cd gitops/apps/pz-control/app
 go get k8s.io/client-go@v0.30.3
@@ -593,6 +599,7 @@ git commit -m "feat(pz-control): add Kubernetes client wrapper"
 **Why:** This is where auth, cooldown, and the Kube client come together. We test against a fake `KubeClient` so no cluster is needed.
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/app/handlers_test.go`
 - Create: `gitops/apps/pz-control/app/handlers.go`
 
@@ -917,14 +924,22 @@ Create `gitops/apps/pz-control/app/web/index.html`:
 
 ```html
 <!doctype html>
-<html><body>stub</body></html>
+<html>
+  <body>
+    stub
+  </body>
+</html>
 ```
 
 Create `gitops/apps/pz-control/app/web/login.html`:
 
 ```html
 <!doctype html>
-<html><body>stub login</body></html>
+<html>
+  <body>
+    stub login
+  </body>
+</html>
 ```
 
 - [ ] **Step 5: Run tests**
@@ -949,6 +964,7 @@ git commit -m "feat(pz-control): add HTTP handlers with auth + cooldown"
 **Why:** Replace the stub HTML with the actual page friends will see. Single-page UI: status badge, scrollable logs, refresh button, restart button with confirm dialog.
 
 **Files:**
+
 - Modify: `gitops/apps/pz-control/app/web/index.html`
 - Modify: `gitops/apps/pz-control/app/web/login.html`
 - Create: `gitops/apps/pz-control/app/web/style.css`
@@ -959,35 +975,38 @@ git commit -m "feat(pz-control): add HTTP handlers with auth + cooldown"
 ```html
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Project Zomboid — Control</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <header>
-    <h1>GLYNV-HARD</h1>
-    <span id="status-badge" class="badge unknown">…</span>
-  </header>
+  <head>
+    <meta charset="utf-8" />
+    <title>Project Zomboid — Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>GLYNV-HARD</h1>
+      <span id="status-badge" class="badge unknown">…</span>
+    </header>
 
-  <section id="info">
-    <dl>
-      <dt>Pod</dt><dd id="pod-name">—</dd>
-      <dt>Démarré</dt><dd id="started-at">—</dd>
-      <dt>Restarts</dt><dd id="restarts">—</dd>
-    </dl>
-    <button id="restart-btn">Redémarrer le serveur</button>
-    <p id="restart-msg"></p>
-  </section>
+    <section id="info">
+      <dl>
+        <dt>Pod</dt>
+        <dd id="pod-name">—</dd>
+        <dt>Démarré</dt>
+        <dd id="started-at">—</dd>
+        <dt>Restarts</dt>
+        <dd id="restarts">—</dd>
+      </dl>
+      <button id="restart-btn">Redémarrer le serveur</button>
+      <p id="restart-msg"></p>
+    </section>
 
-  <section id="logs">
-    <h2>Logs (500 dernières lignes)</h2>
-    <pre id="logs-pre">chargement…</pre>
-  </section>
+    <section id="logs">
+      <h2>Logs (500 dernières lignes)</h2>
+      <pre id="logs-pre">chargement…</pre>
+    </section>
 
-  <script src="/static/app.js"></script>
-</body>
+    <script src="/static/app.js"></script>
+  </body>
 </html>
 ```
 
@@ -996,26 +1015,35 @@ git commit -m "feat(pz-control): add HTTP handlers with auth + cooldown"
 ```html
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>PZ Control — login</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body class="login">
-  <form method="post" action="/login">
-    <h1>Project Zomboid Control</h1>
-    {{ if .Error }}<p class="error">Mot de passe incorrect.</p>{{ end }}
-    <input type="password" name="password" placeholder="mot de passe" autofocus>
-    <button type="submit">Entrer</button>
-  </form>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>PZ Control — login</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body class="login">
+    <form method="post" action="/login">
+      <h1>Project Zomboid Control</h1>
+      {{ if .Error }}
+      <p class="error">Mot de passe incorrect.</p>
+      {{ end }}
+      <input
+        type="password"
+        name="password"
+        placeholder="mot de passe"
+        autofocus
+      />
+      <button type="submit">Entrer</button>
+    </form>
+  </body>
 </html>
 ```
 
 - [ ] **Step 3: Write `web/style.css`**
 
 ```css
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: system-ui, sans-serif;
   background: #1d1d1d;
@@ -1025,28 +1053,63 @@ body {
   max-width: 900px;
   margin-inline: auto;
 }
-header { display: flex; align-items: center; gap: 1rem; }
-h1 { margin: 0; font-size: 1.4rem; }
-.badge { padding: .2rem .6rem; border-radius: 999px; font-size: .85rem; font-weight: bold; }
-.badge.ok { background: #2d6a3a; color: #fff; }
-.badge.warn { background: #8a6d1f; color: #fff; }
-.badge.bad { background: #8a2929; color: #fff; }
-.badge.unknown { background: #555; color: #ccc; }
+header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+.badge.ok {
+  background: #2d6a3a;
+  color: #fff;
+}
+.badge.warn {
+  background: #8a6d1f;
+  color: #fff;
+}
+.badge.bad {
+  background: #8a2929;
+  color: #fff;
+}
+.badge.unknown {
+  background: #555;
+  color: #ccc;
+}
 
-dl { display: grid; grid-template-columns: max-content 1fr; gap: .3rem 1rem; }
-dt { color: #888; }
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.3rem 1rem;
+}
+dt {
+  color: #888;
+}
 
 button {
   background: #b03030;
   color: white;
   border: 0;
-  padding: .6rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
 }
-button:hover { background: #c44040; }
-button:disabled { background: #555; cursor: not-allowed; }
+button:hover {
+  background: #c44040;
+}
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
 
 #logs-pre {
   background: #000;
@@ -1055,12 +1118,16 @@ button:disabled { background: #555; cursor: not-allowed; }
   border-radius: 6px;
   max-height: 50vh;
   overflow: auto;
-  font-size: .8rem;
+  font-size: 0.8rem;
   line-height: 1.3;
 }
 
-#restart-msg.error { color: #ff8080; }
-#restart-msg.ok { color: #80ff80; }
+#restart-msg.error {
+  color: #ff8080;
+}
+#restart-msg.ok {
+  color: #80ff80;
+}
 
 body.login {
   display: flex;
@@ -1068,9 +1135,23 @@ body.login {
   justify-content: center;
   min-height: 100vh;
 }
-body.login form { display: flex; flex-direction: column; gap: 1rem; max-width: 300px; }
-body.login input { padding: .6rem; border-radius: 6px; border: 1px solid #444; background: #222; color: #eee; }
-body.login .error { color: #ff8080; margin: 0; }
+body.login form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 300px;
+}
+body.login input {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #222;
+  color: #eee;
+}
+body.login .error {
+  color: #ff8080;
+  margin: 0;
+}
 ```
 
 - [ ] **Step 4: Write `web/app.js`**
@@ -1085,9 +1166,12 @@ async function refreshStatus() {
     const s = await r.json();
     const badge = $("status-badge");
     badge.textContent = s.phase + (s.ready ? " · ready" : "");
-    badge.className = "badge " + (s.ready ? "ok" : (s.phase === "Running" ? "warn" : "bad"));
+    badge.className =
+      "badge " + (s.ready ? "ok" : s.phase === "Running" ? "warn" : "bad");
     $("pod-name").textContent = s.name || "—";
-    $("started-at").textContent = s.started_at ? new Date(s.started_at).toLocaleString() : "—";
+    $("started-at").textContent = s.started_at
+      ? new Date(s.started_at).toLocaleString()
+      : "—";
     $("restarts").textContent = s.restarts ?? "—";
   } catch (e) {
     $("status-badge").textContent = "error";
@@ -1107,7 +1191,12 @@ async function refreshLogs() {
 }
 
 async function doRestart() {
-  if (!confirm("Redémarrer le serveur ? Tous les joueurs connectés seront déconnectés.")) return;
+  if (
+    !confirm(
+      "Redémarrer le serveur ? Tous les joueurs connectés seront déconnectés.",
+    )
+  )
+    return;
   const btn = $("restart-btn");
   const msg = $("restart-msg");
   btn.disabled = true;
@@ -1127,7 +1216,9 @@ async function doRestart() {
     msg.textContent = "Erreur réseau: " + e;
     msg.className = "error";
   } finally {
-    setTimeout(() => { btn.disabled = false; }, 5000);
+    setTimeout(() => {
+      btn.disabled = false;
+    }, 5000);
   }
 }
 
@@ -1157,6 +1248,7 @@ git commit -m "feat(pz-control): add UI (status, logs, restart)"
 **Why:** Wire env → Auth → Kube → Server → ListenAndServe. Fail fast on missing config.
 
 **Files:**
+
 - Modify: `gitops/apps/pz-control/app/main.go`
 
 - [ ] **Step 1: Replace `main.go`**
@@ -1241,6 +1333,7 @@ git commit -m "feat(pz-control): wire main entrypoint"
 **Why:** Multi-stage build: a Go builder produces a static binary, then we copy into a `distroless/static` image (tiny, no shell, no package manager).
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/app/Dockerfile`
 - Create: `gitops/apps/pz-control/app/.dockerignore`
 
@@ -1275,6 +1368,7 @@ Dockerfile
 - [ ] **Step 3: Build the image locally**
 
 Run:
+
 ```bash
 cd gitops/apps/pz-control/app
 docker buildx build --platform linux/amd64 -t zot.bealv.io/public/pz-control:v0.1.0 --load .
@@ -1285,6 +1379,7 @@ Expected: image built; `docker images | grep pz-control` shows the tag.
 - [ ] **Step 4: Smoke-test the binary inside the image**
 
 Run:
+
 ```bash
 docker run --rm -e PZCTL_PASSWORD=test -e PZCTL_SIGNING_KEY=$(openssl rand -hex 32) zot.bealv.io/public/pz-control:v0.1.0
 ```
@@ -1310,6 +1405,7 @@ git commit -m "feat(pz-control): add Dockerfile"
 **Why:** Deployment, Service, RBAC, External Secret, HTTPRoute, Kustomize. All in the existing `project-zomboid` namespace.
 
 **Files:**
+
 - Create: `gitops/apps/pz-control/rbac.yaml`
 - Create: `gitops/apps/pz-control/external-secret.yml`
 - Create: `gitops/apps/pz-control/deployment.yaml`
@@ -1361,6 +1457,7 @@ subjects:
 - [ ] **Step 2: Provision the Vault secret out-of-band**
 
 Before applying, populate Vault at `secrets-bealv/pz-control/auth` with:
+
 - `password`: chosen shared password for friends
 - `signing-key`: `openssl rand -hex 32`
 
@@ -1375,7 +1472,7 @@ metadata:
   name: pz-control-secrets
   namespace: project-zomboid
 spec:
-  refreshInterval: '1h'
+  refreshInterval: "1h"
   secretStoreRef:
     name: vault-backend
     kind: ClusterSecretStore
@@ -1439,7 +1536,7 @@ spec:
             periodSeconds: 30
           resources:
             requests: { cpu: "10m", memory: "32Mi" }
-            limits:   { memory: "128Mi" }
+            limits: { memory: "128Mi" }
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -1547,6 +1644,7 @@ git commit -m "feat(pz-control): add k8s manifests"
 **Why:** The other apps are reconciled by Flux via a `Kustomization` in `gitops/kustomizations/`. Without this entry, the manifests just sit in git.
 
 **Files:**
+
 - Create: `gitops/kustomizations/pz-control.yaml`
 
 - [ ] **Step 1: Write the Flux Kustomization**
@@ -1582,6 +1680,7 @@ git commit -m "feat(pz-control): register Flux Kustomization"
 - [ ] **Step 1: Push the branch and let Flux reconcile**
 
 Run:
+
 ```bash
 git push origin <branch-name>
 ```
@@ -1595,6 +1694,7 @@ flux reconcile kustomization pz-control --with-source --kubeconfig ~/.kube/kubec
 - [ ] **Step 2: Verify the pod is running**
 
 Run:
+
 ```bash
 kubectl --kubeconfig ~/.kube/kubeconfigs/prod-k8s.yml -n project-zomboid get pod -l app=pz-control
 ```
@@ -1604,6 +1704,7 @@ Expected: 1 pod `Running`, ready 1/1. If `CreateContainerConfigError`, the Exter
 - [ ] **Step 3: Verify the HTTPRoute is accepted**
 
 Run:
+
 ```bash
 kubectl --kubeconfig ~/.kube/kubeconfigs/prod-k8s.yml -n project-zomboid describe httproute pz-control
 ```

@@ -9,7 +9,7 @@ spec:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'memos.bealv.io'
+    - "memos.bealv.io"
   rules:
     - matches:
         - path:

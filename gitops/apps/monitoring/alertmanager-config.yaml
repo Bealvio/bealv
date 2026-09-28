@@ -5,57 +5,57 @@ metadata:
 spec:
   inhibitRules:
     - sourceMatch:
-        - matchType: '='
-          name: 'severity'
-          value: 'critical'
+        - matchType: "="
+          name: "severity"
+          value: "critical"
       targetMatch:
-        - matchType: '=~'
-          name: 'severity'
-          value: 'warning|info|none'
+        - matchType: "=~"
+          name: "severity"
+          value: "warning|info|none"
       equal:
         - namespace
         - alertname
         - name
     - sourceMatch:
-        - matchType: '='
-          name: 'severity'
-          value: 'warning'
+        - matchType: "="
+          name: "severity"
+          value: "warning"
       targetMatch:
-        - matchType: '=~'
-          name: 'severity'
-          value: 'info|none'
+        - matchType: "=~"
+          name: "severity"
+          value: "info|none"
       equal:
         - namespace
         - alertname
         - name
     - sourceMatch:
-        - matchType: '='
-          name: 'alertname'
-          value: 'InfoInhibitor'
+        - matchType: "="
+          name: "alertname"
+          value: "InfoInhibitor"
       targetMatch:
-        - matchType: '='
-          name: 'severity'
-          value: 'info'
+        - matchType: "="
+          name: "severity"
+          value: "info"
       equal:
         - namespace
     - sourceMatch:
-        - matchType: '='
-          name: 'alertname'
-          value: 'CPUThrottlingHigh'
+        - matchType: "="
+          name: "alertname"
+          value: "CPUThrottlingHigh"
       targetMatch:
-        - matchType: '=~'
-          name: 'alertname'
-          value: '.*'
+        - matchType: "=~"
+          name: "alertname"
+          value: ".*"
       equal:
         - namespace
     - sourceMatch:
-        - matchType: '='
-          name: 'namespace'
-          value: 'monitoring'
+        - matchType: "="
+          name: "namespace"
+          value: "monitoring"
       targetMatch:
-        - matchType: '=~'
-          name: 'alertname'
-          value: '.*'
+        - matchType: "=~"
+          name: "alertname"
+          value: ".*"
       equal:
         - namespace
   route:
@@ -69,12 +69,12 @@ spec:
       - cluster
     routes:
       - matchers:
-          - matchType: '=~'
-            name: 'alertname'
-            value: 'CPUThrottlingHigh|KubeSchedulerDown|KubeControllerManagerDown|InfoInhibitor|Watchdog|KubeCPUOvercommit|KubeMemoryOvercommit|CDIDefaultStorageClassDegraded|KubeVirtNoAvailableNodesToRunVMs|LowKVMNodesCount|KubeVirtDeprecatedAPIRequested'
-        receiver: 'null'
+          - matchType: "=~"
+            name: "alertname"
+            value: "CPUThrottlingHigh|KubeSchedulerDown|KubeControllerManagerDown|InfoInhibitor|Watchdog|KubeCPUOvercommit|KubeMemoryOvercommit|CDIDefaultStorageClassDegraded|KubeVirtNoAvailableNodesToRunVMs|LowKVMNodesCount|KubeVirtDeprecatedAPIRequested"
+        receiver: "null"
   receivers:
-    - name: 'null'
+    - name: "null"
     - name: discord
       discordConfigs:
         - sendResolved: true

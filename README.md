@@ -27,7 +27,7 @@ metadata:
     probe: enabled
 spec:
   rules:
-    - host: 'test.bealv.lan'
+    - host: "test.bealv.lan"
       http:
         paths:
           - path: /
@@ -39,7 +39,7 @@ spec:
                   number: 9001
   tls:
     - hosts:
-        - 'test.bealv.lan'
+        - "test.bealv.lan"
       secretName: test-tls
 ```
 
@@ -57,7 +57,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: 'test.bealv.io'
+    - host: "test.bealv.io"
       http:
         paths:
           - path: /
@@ -69,6 +69,6 @@ spec:
                   number: 9001
   tls:
     - hosts:
-        - 'test.bealv.io'
+        - "test.bealv.io"
       secretName: test-tls
 ```

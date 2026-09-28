@@ -22,10 +22,10 @@ spec:
           main:
             env:
               DB_VECTOR_EXTENSION: vectorchord
-              REDIS_HOSTNAME: 'immich-dragonfly'
-              DB_HOSTNAME: 'immich-postgres-rw'
-              DB_USERNAME: 'immich'
-              DB_DATABASE_NAME: 'immich'
+              REDIS_HOSTNAME: "immich-dragonfly"
+              DB_HOSTNAME: "immich-postgres-rw"
+              DB_USERNAME: "immich"
+              DB_DATABASE_NAME: "immich"
               IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
               DB_PASSWORD:
                 valueFrom:

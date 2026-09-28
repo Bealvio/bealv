@@ -17,5 +17,5 @@ spec:
     url: https://alertmanager.bealv-mgmt.lan
   instanceSelector:
     matchLabels:
-      alertmanager-default: 'true'
+      alertmanager-default: "true"
   resyncPeriod: 1m

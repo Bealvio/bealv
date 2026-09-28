@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: config
   labels:
-    backup: 'true'
+    backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce

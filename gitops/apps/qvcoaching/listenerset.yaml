@@ -7,14 +7,14 @@ spec:
     - protocol: HTTP
       port: 80
       name: http-qvcoaching
-      hostname: 'qvcoaching.fr'
+      hostname: "qvcoaching.fr"
       allowedRoutes:
         namespaces:
           from: All
     - protocol: HTTPS
       port: 443
       name: https-qvcoaching
-      hostname: 'qvcoaching.fr'
+      hostname: "qvcoaching.fr"
       allowedRoutes:
         namespaces:
           from: All

@@ -24,7 +24,7 @@ spec:
               name: http
           env:
             - name: ACTUAL_OPENID_DISCOVERY_URL
-              value: 'https://zitadel.bealv.io/.well-known/openid-configuration'
+              value: "https://zitadel.bealv.io/.well-known/openid-configuration"
             - name: ACTUAL_OPENID_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -36,13 +36,13 @@ spec:
                   name: actualbudget-oidc
                   key: attribute.client_secret
             - name: ACTUAL_OPENID_SERVER_HOSTNAME
-              value: 'https://budget.bealv.io'
+              value: "https://budget.bealv.io"
             - name: ACTUAL_OPENID_ENFORCE
-              value: 'true'
+              value: "true"
             - name: ACTUAL_TOKEN_EXPIRATION
-              value: 'openid-provider'
+              value: "openid-provider"
             - name: ACTUAL_USER_CREATION_MODE
-              value: 'login'
+              value: "login"
           volumeMounts:
             - name: data
               mountPath: /data

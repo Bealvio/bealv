@@ -12,11 +12,11 @@ spec:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'zot.bealv.io'
+    - "zot.bealv.io"
   rules:
     - timeouts:
-        request: '0s'
-        backendRequest: '0s'
+        request: "0s"
+        backendRequest: "0s"
       matches:
         - path:
             type: PathPrefix

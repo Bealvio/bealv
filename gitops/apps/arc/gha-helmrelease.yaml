@@ -13,9 +13,9 @@ spec:
         name: arc
       interval: 12h
   values:
-    runnerScaleSetName: 'bealv-runners'
-    githubConfigUrl: 'https://github.com/Bealvio'
-    githubConfigSecret: 'github-action-chan'
+    runnerScaleSetName: "bealv-runners"
+    githubConfigUrl: "https://github.com/Bealvio"
+    githubConfigSecret: "github-action-chan"
     minRunners: 0
     maxRunners: 2
     template:
@@ -27,14 +27,14 @@ spec:
             image: zot.bealv.io/public/action-runner-nix:drcmpa33951hib3b6yy0hzwg7lz70dbj
             resources:
               limits:
-                cpu: '3'
-                memory: '2Gi'
+                cpu: "3"
+                memory: "2Gi"
               requests:
-                cpu: '500m'
-                memory: '1Gi'
+                cpu: "500m"
+                memory: "1Gi"
             env:
               - name: NIX_PATH # default nixpkgs
-                value: 'nixpkgs=https://releases.nixos.org/nixos/24.11/nixos-24.11.715401.20755fa05115/nixexprs.tar.xz'
+                value: "nixpkgs=https://releases.nixos.org/nixos/24.11/nixos-24.11.715401.20755fa05115/nixexprs.tar.xz"
               - name: APP_ID
                 valueFrom:
                   secretKeyRef:
@@ -56,25 +56,25 @@ spec:
                     name: github-update-chan
                     key: registry_password
             volumeMounts:
-              - mountPath: '/home/runner/.github-runner/_work/_temp/_github_home'
+              - mountPath: "/home/runner/.github-runner/_work/_temp/_github_home"
                 name: home
-              - mountPath: '/home/runner/.github-runner/_work/_temp/_github_workflow'
+              - mountPath: "/home/runner/.github-runner/_work/_temp/_github_workflow"
                 name: workflows
-              - mountPath: '/home/runner/.github-runner/_work/_temp/_runner_file_commands'
+              - mountPath: "/home/runner/.github-runner/_work/_temp/_runner_file_commands"
                 name: commands
-              - mountPath: '/home/runner/.github-runner/_work/bealv/bealv'
+              - mountPath: "/home/runner/.github-runner/_work/bealv/bealv"
                 name: bealv
-              - mountPath: '/home/runner/.github-runner/_work/flux-mgmt/flux-mgmt'
+              - mountPath: "/home/runner/.github-runner/_work/flux-mgmt/flux-mgmt"
                 name: flux-mgmt
-              - mountPath: '/home/runner/.github-runner/_work/flux-mgmt/action-runner-nix'
+              - mountPath: "/home/runner/.github-runner/_work/flux-mgmt/action-runner-nix"
                 name: action-runner-nix
         volumes:
           - name: home
             ephemeral:
               volumeClaimTemplate:
                 spec:
-                  accessModes: ['ReadWriteOnce']
-                  storageClassName: 'disk-hddb'
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "disk-hddb"
                   resources:
                     requests:
                       storage: 50Gi
@@ -82,8 +82,8 @@ spec:
             ephemeral:
               volumeClaimTemplate:
                 spec:
-                  accessModes: ['ReadWriteOnce']
-                  storageClassName: 'disk-hddb'
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "disk-hddb"
                   resources:
                     requests:
                       storage: 50Gi
@@ -91,8 +91,8 @@ spec:
             ephemeral:
               volumeClaimTemplate:
                 spec:
-                  accessModes: ['ReadWriteOnce']
-                  storageClassName: 'disk-hddb'
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "disk-hddb"
                   resources:
                     requests:
                       storage: 50Gi
@@ -100,8 +100,8 @@ spec:
             ephemeral:
               volumeClaimTemplate:
                 spec:
-                  accessModes: ['ReadWriteOnce']
-                  storageClassName: 'disk-hddb'
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "disk-hddb"
                   resources:
                     requests:
                       storage: 50Gi
@@ -109,8 +109,8 @@ spec:
             ephemeral:
               volumeClaimTemplate:
                 spec:
-                  accessModes: ['ReadWriteOnce']
-                  storageClassName: 'disk-hddb'
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "disk-hddb"
                   resources:
                     requests:
                       storage: 50Gi
@@ -118,8 +118,8 @@ spec:
             ephemeral:
               volumeClaimTemplate:
                 spec:
-                  accessModes: ['ReadWriteOnce']
-                  storageClassName: 'disk-hddb'
+                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: "disk-hddb"
                   resources:
                     requests:
                       storage: 50Gi
