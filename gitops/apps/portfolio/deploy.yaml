@@ -22,8 +22,8 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
-          command: ['/portfolio']
-          args: ['serve', '--config', '/config.yaml']
+          command: ["/portfolio"]
+          args: ["serve", "--config", "/config.yaml"]
           env:
             - name: GITHUB_TOKEN
               valueFrom:

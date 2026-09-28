@@ -5,19 +5,19 @@ metadata:
   labels:
     probe: enabled
   annotations:
-    gethomepage.dev/enabled: 'true'
+    gethomepage.dev/enabled: "true"
     gethomepage.dev/description: Files and Sharing Server
     gethomepage.dev/group: Cloud
     gethomepage.dev/icon: nextcloud.png
     gethomepage.dev/name: Nimbus
-    gethomepage.dev/widget.type: 'nextcloud'
-    gethomepage.dev/widget.url: 'https://nimbus.bealv.io'
+    gethomepage.dev/widget.type: "nextcloud"
+    gethomepage.dev/widget.url: "https://nimbus.bealv.io"
 spec:
   parentRefs:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'nimbus.bealv.io'
+    - "nimbus.bealv.io"
   rules:
     - matches:
         - path:

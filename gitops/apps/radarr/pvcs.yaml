@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: media
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media'
+    nfs.io/storage-path: "/prod-k8s/media"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: config
   labels:
-    backup: 'true'
+    backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce

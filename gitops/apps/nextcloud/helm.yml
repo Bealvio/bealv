@@ -20,7 +20,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: '9.2.0'
+      version: "9.2.0"
       sourceRef:
         kind: HelmRepository
         name: nextcloud
@@ -48,15 +48,15 @@ spec:
       enabled: true
     ingress:
       enabled: false
-      className: 'external'
+      className: "external"
       annotations:
-        gethomepage.dev/enabled: 'true'
+        gethomepage.dev/enabled: "true"
         gethomepage.dev/description: Files and Sharing Server
         gethomepage.dev/group: Cloud
         gethomepage.dev/icon: nextcloud.png
         gethomepage.dev/name: Nimbus
-        gethomepage.dev/widget.type: 'nextcloud'
-        gethomepage.dev/widget.url: 'https://nimbus.bealv.io'
+        gethomepage.dev/widget.type: "nextcloud"
+        gethomepage.dev/widget.url: "https://nimbus.bealv.io"
         nginx.ingress.kubernetes.io/proxy-body-size: 4G
         nginx.ingress.kubernetes.io/rewrite-target: /
         cert-manager.io/cluster-issuer: bealvio
@@ -134,11 +134,11 @@ spec:
       #   readOnlyRootFilesystem: true
       extraEnv:
         - name: TRUSTED_PROXIES
-          value: '10.0.1.204 10.0.1.205 192.168.1.200 192.168.1.201'
+          value: "10.0.1.204 10.0.1.205 192.168.1.200 192.168.1.201"
         - name: OC_MAINTENANCE_WINDOW_START
-          value: '1'
+          value: "1"
         - name: OVERWRITEPROTOCOL
-          value: 'https'
+          value: "https"
         - name: NC_default_locale
           value: fr_FR
         - name: NC_default_language
@@ -176,13 +176,13 @@ spec:
       enabled: false
     externalRedis:
       enabled: true
-      host: 'nextcloud-dragonfly'
-      port: '6379'
-      password: ''
+      host: "nextcloud-dragonfly"
+      port: "6379"
+      password: ""
     persistence:
       enabled: true
       annotations:
-      storageClass: 'disk'
+      storageClass: "disk"
       accessMode: ReadWriteOnce
       size: 2Gi
       nextcloudData:
@@ -190,7 +190,7 @@ spec:
         subPath:
         annotations:
           nfs.io/storage-path: /prod-k8s/nextcloud
-        storageClass: 'hddb'
+        storageClass: "hddb"
         accessMode: ReadWriteOnce
         size: 1Gi
     livenessProbe:
@@ -218,10 +218,10 @@ spec:
       successThreshold: 1
     serviceMonitor:
       enabled: true
-      namespace: ''
-      jobLabel: ''
+      namespace: ""
+      jobLabel: ""
       interval: 30s
-      scrapeTimeout: ''
+      scrapeTimeout: ""
       labels: {}
     rbac:
       enabled: true

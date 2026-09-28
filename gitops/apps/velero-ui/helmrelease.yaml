@@ -26,13 +26,13 @@ spec:
           cpu: 1000m
           memory: 1024Mi
         latestJobsCount: 1
-      logLevel: 'info'
+      logLevel: "info"
       general:
         secretPassPhrase:
           useSecret: true
-          key: 'pass_phrase'
-          existingSecret: 'velero-ui-secrets'
-        veleroNamespace: 'velero'
+          key: "pass_phrase"
+          existingSecret: "velero-ui-secrets"
+        veleroNamespace: "velero"
     rbac:
       create: true
       clusterAdministrator: false
@@ -63,7 +63,7 @@ spec:
       limits: {}
     env:
       - name: BASIC_AUTH_ENABLED
-        value: 'true'
+        value: "true"
       - name: BASIC_AUTH_USERNAME
         valueFrom:
           secretKeyRef:
@@ -75,17 +75,17 @@ spec:
             name: velero-ui-secrets
             key: password
       - name: OAUTH_AUTH_ENABLED
-        value: 'true'
+        value: "true"
       - name: OAUTH_NAME
-        value: 'Zitadel'
+        value: "Zitadel"
       - name: OAUTH_REDIRECT_URI
-        value: 'https://velero.bealv.lan/login'
+        value: "https://velero.bealv.lan/login"
       - name: OAUTH_AUTHORIZATION_URL
-        value: 'https://zitadel.bealv.io/oauth/v2/authorize'
+        value: "https://zitadel.bealv.io/oauth/v2/authorize"
       - name: OAUTH_USER_INFO_URL
-        value: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+        value: "https://zitadel.bealv.io/oidc/v1/userinfo"
       - name: OAUTH_TOKEN_URL
-        value: 'https://zitadel.bealv.io/oauth/v2/token'
+        value: "https://zitadel.bealv.io/oauth/v2/token"
       - name: OAUTH_CLIENT_ID
         valueFrom:
           secretKeyRef:

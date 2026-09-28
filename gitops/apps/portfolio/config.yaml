@@ -22,6 +22,6 @@ connect_links:
     type: docker
 
 refresh_config:
-  projects_interval: '10m'
-  activity_interval: '5m'
-  cache_ttl: '5m'
+  projects_interval: "10m"
+  activity_interval: "5m"
+  cache_ttl: "5m"

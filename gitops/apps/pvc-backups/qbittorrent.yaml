@@ -14,7 +14,7 @@ spec:
       - pods
     labelSelector:
       matchLabels:
-        backup: 'true'
+        backup: "true"
     snapshotMoveData: false
     ttl: 160h00s
     resourcePolicy:

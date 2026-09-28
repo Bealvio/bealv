@@ -30,7 +30,7 @@ spec:
                   - cp /config-file/* /config/ && sed -i "s|__KOMF_DISCORD_WEBHOOKS__|$KOMF_DISCORD_WEBHOOKS|g" /config/application.yml
           env:
             - name: KOMF_KOMGA_BASE_URI
-              value: 'http://komga.komga:8080'
+              value: "http://komga.komga:8080"
             - name: KOMF_KOMGA_USER
               valueFrom:
                 secretKeyRef:
@@ -47,7 +47,7 @@ spec:
                   name: komf-secrets
                   key: KOMF_DISCORD_WEBHOOKS
             - name: KOMF_LOG_LEVEL
-              value: 'debug'
+              value: "debug"
           volumeMounts:
             - name: config
               mountPath: /config

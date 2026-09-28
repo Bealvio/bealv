@@ -9,5 +9,5 @@ spec:
       kind: Gateway
       namespace: kgateway-system
   to:
-    - group: ''
+    - group: ""
       kind: Secrets

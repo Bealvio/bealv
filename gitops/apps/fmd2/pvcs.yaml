@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: data
   labels:
-    backup: 'true'
+    backup: "true"
 spec:
   storageClassName: disk
   accessModes:
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: userdata
   labels:
-    backup: 'true'
+    backup: "true"
 spec:
   storageClassName: disk
   accessModes:
@@ -31,7 +31,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wine
   labels:
-    backup: 'true'
+    backup: "true"
 spec:
   storageClassName: disk
   accessModes:
@@ -45,7 +45,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: downloads
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media'
+    nfs.io/storage-path: "/prod-k8s/media"
 spec:
   accessModes:
     - ReadWriteOnce

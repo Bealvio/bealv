@@ -25,7 +25,7 @@ spec:
             - containerPort: 80
           env:
           volumeMounts:
-            - mountPath: '/home/nonroot'
+            - mountPath: "/home/nonroot"
               name: data
       volumes:
         - name: data

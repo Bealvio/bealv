@@ -8,7 +8,7 @@ metadata:
     probe: enabled
 spec:
   rules:
-    - host: 'grafana.bealv.lan'
+    - host: "grafana.bealv.lan"
       http:
         paths:
           - path: /
@@ -20,5 +20,5 @@ spec:
                   number: 3000
   tls:
     - hosts:
-        - 'grafana.bealv.lan'
+        - "grafana.bealv.lan"
       secretName: grafana-tls

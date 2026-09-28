@@ -9,7 +9,7 @@ spec:
     - name: https
       namespace: kgateway-system
   hostnames:
-    - 'zitadel.bealv.io'
+    - "zitadel.bealv.io"
   rules:
     - matches:
         - path:

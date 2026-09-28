@@ -6,10 +6,10 @@ metadata:
   namespace: projectcontour
 spec:
   ports:
-  - port: 8001
-    name: xds
-    protocol: TCP
-    targetPort: 8001
+    - port: 8001
+      name: xds
+      protocol: TCP
+      targetPort: 8001
   selector:
     app: contour
   type: ClusterIP

@@ -49,7 +49,7 @@ kind: ExternalSecret
 metadata:
   name: external-dns-cloudflare
 spec:
-  refreshInterval: '1h'
+  refreshInterval: "1h"
   secretStoreRef:
     name: vault-backend
     kind: ClusterSecretStore

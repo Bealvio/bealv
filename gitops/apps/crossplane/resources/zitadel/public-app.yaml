@@ -19,7 +19,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -54,7 +54,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -88,7 +88,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -125,7 +125,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -159,11 +159,11 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
-      - 'https://money.bealv.io/oidc/callback'
+      - "https://money.bealv.io/oidc/callback"
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
@@ -193,11 +193,11 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
-      - 'https://zot.bealv.io/zot/auth/callback/oidc'
+      - "https://zot.bealv.io/zot/auth/callback/oidc"
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
@@ -227,7 +227,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -261,7 +261,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -296,7 +296,7 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
@@ -330,11 +330,11 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
-      - 'https://doc.bealv.io/auth/oidc.callback'
+      - "https://doc.bealv.io/auth/oidc.callback"
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
@@ -364,11 +364,11 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
-      - 'https://trek.bealv.io/api/auth/oidc/callback'
+      - "https://trek.bealv.io/api/auth/oidc/callback"
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
@@ -398,11 +398,11 @@ spec:
     orgIdRef:
       name: bealv
     postLogoutRedirectUris:
-      - '*'
+      - "*"
     projectIdRef:
       name: public
     redirectUris:
-      - 'https://budget.bealv.io/openid/callback'
+      - "https://budget.bealv.io/openid/callback"
     responseTypes:
       - OIDC_RESPONSE_TYPE_CODE
     skipNativeAppSuccessPage: false
@@ -410,4 +410,3 @@ spec:
   writeConnectionSecretToRef:
     name: actualbudget-oidc
     namespace: actualbudget
-

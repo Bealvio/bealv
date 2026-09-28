@@ -32,7 +32,7 @@ spec:
               exec:
                 command:
                   - /bin/sh
-                  - '-c'
+                  - "-c"
                   - |
                     cat << EOF > /config/database.json
                     {
@@ -55,11 +55,11 @@ spec:
               containerPort: 3579
           env:
             - name: PUID
-              value: '1000'
+              value: "1000"
             - name: PGID
-              value: '1000'
+              value: "1000"
             - name: UMASK
-              value: '022'
+              value: "022"
             - name: DB_USER
               valueFrom:
                 secretKeyRef:

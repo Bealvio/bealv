@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: config
 spec:
-  accessModes: ['ReadWriteOnce']
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
       storage: 250Mi
@@ -13,10 +13,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: mangas
   annotations:
-    nfs.io/storage-path: '/prod-k8s/media/mangas'
+    nfs.io/storage-path: "/prod-k8s/media/mangas"
 spec:
-  accessModes: ['ReadWriteOnce']
-  storageClassName: 'hdda'
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: "hdda"
   resources:
     requests:
       storage: 1000Gi

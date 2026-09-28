@@ -27,7 +27,7 @@ spec:
             Webhook:
               Enabled: false
       secretConfig: null
-      masterkeySecretName: 'zitadel-secrets'
+      masterkeySecretName: "zitadel-secrets"
       selfSignedCert:
         enabled: false
     replicaCount: 3
@@ -44,15 +44,15 @@ spec:
       - name: ZITADEL_FIRSTINSTANCE_ORG_NAME # we create the main org via Crossplane
         value: Zitadel
       - name: ZITADEL_TLS_ENABLED
-        value: 'false'
+        value: "false"
       - name: ZITADEL_EXTERNALDOMAIN
-        value: 'zitadel.bealv.io'
+        value: "zitadel.bealv.io"
       - name: ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED
-        value: 'false'
+        value: "false"
       - name: ZITADEL_DEFAULTINSTANCE_ORG_HUMAN_EMAIL_VERIFIED
-        value: 'false'
+        value: "false"
       - name: ZITADEL_DEFAULTINSTANCE_LOGINPOLICY_ALLOWREGISTER
-        value: 'false'
+        value: "false"
       - name: ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME
         valueFrom:
           secretKeyRef:
@@ -80,7 +80,7 @@ spec:
       - name: ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE
         value: disable
       - name: ZITADEL_DATABASE_POSTGRES_PORT
-        value: '5432'
+        value: "5432"
       - name: ZITADEL_DATABASE_POSTGRES_DATABASE
         valueFrom:
           secretKeyRef:

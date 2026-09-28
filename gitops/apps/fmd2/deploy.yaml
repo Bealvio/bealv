@@ -37,7 +37,7 @@ spec:
               containerPort: 8191
           env:
             - name: LOG_LEVEL
-              value: 'info'
+              value: "info"
       volumes:
         - name: data
           persistentVolumeClaim:

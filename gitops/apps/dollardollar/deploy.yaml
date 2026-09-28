@@ -29,17 +29,17 @@ spec:
                   name: dollardollar-secrets
                   key: SQLALCHEMY_DATABASE_URI
             - name: DEVELOPMENT_MODE
-              value: 'False'
+              value: "False"
             - name: DISABLE_SIGNUPS
-              value: 'True'
+              value: "True"
             - name: DEBUG
-              value: 'False'
+              value: "False"
             - name: LOG_LEVEL
-              value: 'INFO'
+              value: "INFO"
             - name: LOCAL_LOGIN_DISABLE
-              value: 'True'
+              value: "True"
             - name: OIDC_ENABLED
-              value: 'True'
+              value: "True"
             - name: OIDC_CLIENT_ID
               valueFrom:
                 secretKeyRef:
@@ -51,21 +51,21 @@ spec:
                   name: dollardollar-oidc
                   key: attribute.client_secret
             - name: OIDC_ISSUER
-              value: 'zitadel.bealv.io'
+              value: "zitadel.bealv.io"
             - name: OIDC_DISCOVERY_URL
-              value: 'https://zitadel.bealv.io'
+              value: "https://zitadel.bealv.io"
             - name: OIDC_AUTH_URI
-              value: 'https://zitadel.bealv.io/oauth/v2/authorize'
+              value: "https://zitadel.bealv.io/oauth/v2/authorize"
             - name: OIDC_TOKEN_URI
-              value: 'https://zitadel.bealv.io/oauth/v2/token'
+              value: "https://zitadel.bealv.io/oauth/v2/token"
             - name: OIDC_USERINFO_URI
-              value: 'https://zitadel.bealv.io/oidc/v1/userinfo'
+              value: "https://zitadel.bealv.io/oidc/v1/userinfo"
             - name: OIDC_LOGOUT_URI
-              value: 'https://zitadel.bealv.io/oidc/v1/end_session'
+              value: "https://zitadel.bealv.io/oidc/v1/end_session"
             - name: APP_URL
-              value: 'https://money.bealv.io'
+              value: "https://money.bealv.io"
             - name: FLASK_dollardollar
-              value: 'dollardollar.py'
+              value: "dollardollar.py"
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
@@ -82,7 +82,7 @@ spec:
                   name: smtp-secrets
                   key: port
             - name: MAIL_USE_TLS
-              value: 'true'
+              value: "true"
             - name: MAIL_USERNAME
               valueFrom:
                 secretKeyRef:
