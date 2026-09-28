@@ -43,10 +43,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.3.1",
-      "revision": "a34d224e0fdff706d869ae850216214015dd763a",
-      "url": "https://api.github.com/repos/dragonflydb/dragonfly-operator/tarball/v1.3.1",
-      "hash": "sha256-ZxYtVWESnS+iYdgtLJwZ0cDATmTHQkZurh8VfS/n73g="
+      "version": "v1.6.1",
+      "revision": "b28637d78d828f80a3b3fd76acaa2dd6e3c28603",
+      "url": "https://api.github.com/repos/dragonflydb/dragonfly-operator/tarball/refs/tags/v1.6.1",
+      "hash": "sha256-Eb3ooF64SUkjwIdD/fd8EtnANz8KIg+JKuLItKgLvdk="
     },
     "gateway-api": {
       "type": "GitRelease",
