@@ -54,6 +54,16 @@
     },
     {
       customType: "regex",
+      description: "npins branch pins (Git) — revision bump, then scripts/renovate-post-upgrade.sh",
+      managerFilePatterns: ["/^npins/sources\\.json$/"],
+      matchStrings: [
+        '"(?<depName>[^"]+)": \\{\\s*"type": "Git",\\s*"repository": \\{\\s*"type": "GitHub",\\s*"owner": "(?<owner>[^"]+)",\\s*"repo": "(?<repo>[^"]+)"\\s*\\},\\s*"branch": "(?<currentValue>[^"]+)",[^}]*?"revision": "(?<currentDigest>[a-f0-9]{40})"',
+      ],
+      packageNameTemplate: "https://github.com/{{{owner}}}/{{{repo}}}",
+      datasourceTemplate: "git-refs",
+    },
+    {
+      customType: "regex",
       description: "Any value preceded by a `# renovate: datasource=… depName=…` comment",
       managerFilePatterns: [
         "/^gitops/.+\\.ya?ml$/",
@@ -85,6 +95,12 @@
         fileFilters: ["**/*"],
         executionMode: "update",
       },
+    },
+    {
+      description: "Branch-tracking pins move every commit: batch them weekly",
+      matchFileNames: ["npins/sources.json"],
+      matchDatasources: ["git-refs"],
+      schedule: ["before 6am on monday"],
     },
     {
       description: "Unused pins (monitoring is deployed from Bealvio/flux-mgmt)",
