@@ -14,6 +14,11 @@ spec:
       root_url: https://grafana.bealv.lan
     log:
       mode: "console"
+    # Grafana 13 "auto-updates" its bundled datasource plugins at startup, fails
+    # on the read-only root fs and leaves them unregistered (empty Prometheus
+    # panels). Keep the versions shipped in the image.
+    plugins:
+      preinstall_auto_update: "false"
     auth:
       disable_login_form: "true"
     security:

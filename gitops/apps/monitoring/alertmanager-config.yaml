@@ -61,12 +61,15 @@ spec:
   route:
     repeatInterval: 12h
     receiver: discord
+    # One message per alertname/cluster/namespace: grouping by object name sent
+    # one webhook call per Flux Kustomization and hit Discord's rate limit (429,
+    # notifications dropped).
+    groupWait: 1m
+    groupInterval: 5m
     groupBy:
       - alertname
-      - namespace
-      - exported_namespace
-      - name
       - cluster
+      - namespace
     routes:
       - matchers:
           - matchType: "=~"
