@@ -1,0 +1,3 @@
+resources:
+  - app-data.yaml
+  - databases.yaml

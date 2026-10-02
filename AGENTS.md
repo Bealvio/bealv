@@ -110,6 +110,15 @@ Other details:
 - Keep app manifests plain + kustomize; HelmReleases for charted apps (with a `helmrepo.yaml` next to them).
 - Don't hand-edit `upstream/` dirs; patch them with kustomize patches alongside (e.g. `ingress-controller-external/*-patch.yaml`).
 
+## Backups
+
+`gitops/apps/pvc-backups` (Kustomization `pvc-backups`): Velero Schedules on this cluster, kopia file-level backups to bucket `velero-bealv` on minio-clusters (mgmt, ~98Gi), kept 7 days.
+
+- `app-data` (02:00 UTC): app volumes of the listed namespaces. Add a namespace there when you add a stateful app. The hdda/hddb NFS media shares are skipped by the `velero-volume-policies` ConfigMap; a PVC with an empty StorageClass would NOT be skipped.
+- `databases` (02:30 UTC): every CloudNativePG cluster. A pre-hook writes `pg_dumpall` to `/var/lib/postgresql/data/velero-pg_dumpall.sql` before the copy; restore from that dump with `psql -f`, not from the copied PGDATA. Add new CNPG namespaces here.
+- Not backed up: immich photos (`immich-data`, ~430Gi, too big for the bucket), Nextcloud user files and media (NFS shares), zot, Prometheus.
+- Restore: `velero restore create --from-backup <backup> --include-namespaces <ns>`.
+
 ## Suspended Kustomizations
 
 Some Kustomizations get suspended by hand on the live cluster (`flux suspend`); that isn't in git. As of 2026-10-02: `arc`, `prowlarr`, `radarr`, `sonarr`, `spegel`. Resuming applies the current `main`, and with `prune: true` Flux deletes anything in the old inventory that the new build no longer has. Before `flux resume`, diff `kubectl -n flux-system get kustomization <name> -o jsonpath='{.status.inventory.entries[*].id}'` against the object IDs of `kustomize build <path>` (`<ns>_<name>_<group>_<kind>`); resume only if nothing would disappear.

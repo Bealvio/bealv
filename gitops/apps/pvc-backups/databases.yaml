@@ -1,0 +1,55 @@
+# Daily backup of every CloudNativePG cluster. A file copy of a running
+# PGDATA is not consistent, so a pre-hook first writes a logical dump
+# (pg_dumpall) into the data volume; restore from velero-pg_dumpall.sql
+# (psql -f), not from the copied PGDATA. onError Continue: a cluster that is
+# down only loses its own dump, not the whole backup.
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: databases
+  namespace: velero
+spec:
+  schedule: "30 2 * * *"
+  template:
+    ttl: 168h0m0s
+    snapshotVolumes: false
+    defaultVolumesToFsBackup: true
+    includedNamespaces:
+      - dollardollar
+      - immich
+      - memos
+      - nextcloud
+      - ombi
+      - outline
+      - zitadel
+    includedResources:
+      - persistentvolumeclaims
+      - persistentvolumes
+      - pods
+    labelSelector:
+      matchExpressions:
+        - key: cnpg.io/cluster
+          operator: Exists
+    resourcePolicy:
+      kind: ConfigMap
+      name: velero-volume-policies
+    hooks:
+      resources:
+        - name: pg-dumpall
+          labelSelector:
+            matchExpressions:
+              - key: cnpg.io/cluster
+                operator: Exists
+          pre:
+            - exec:
+                container: postgres
+                command:
+                  - /bin/bash
+                  - -c
+                  - >-
+                    pg_dumpall -h /controller/run -U postgres
+                    > /var/lib/postgresql/data/velero-pg_dumpall.sql.tmp
+                    && mv /var/lib/postgresql/data/velero-pg_dumpall.sql.tmp
+                    /var/lib/postgresql/data/velero-pg_dumpall.sql
+                onError: Continue
+                timeout: 10m

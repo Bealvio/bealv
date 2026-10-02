@@ -1,0 +1,48 @@
+# Daily file-level (kopia) backup of app volumes to the velero-bealv bucket
+# (minio-clusters on mgmt, ~98Gi). Skipped by the velero-volume-policies
+# ConfigMap: the hdda/hddb NFS media shares. Not in scope: immich photos
+# (~430Gi, too big for this bucket), zot (rebuildable), monitoring.
+# CloudNativePG instances are excluded here: see databases.yaml.
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: app-data
+  namespace: velero
+spec:
+  schedule: "0 2 * * *"
+  template:
+    ttl: 168h0m0s
+    snapshotVolumes: false
+    defaultVolumesToFsBackup: true
+    includedNamespaces:
+      - actualbudget
+      - bazarr
+      - fmd2
+      - golinks
+      - hhf
+      - jellyfin
+      - komf
+      - komga
+      - nextcloud
+      - outline
+      - palworld
+      - plex
+      - prowlarr
+      - qbittorrent
+      - radarr
+      - requestrr
+      - shop
+      - sonarr
+      - trek
+      - vaultwarden
+    includedResources:
+      - persistentvolumeclaims
+      - persistentvolumes
+      - pods
+    labelSelector:
+      matchExpressions:
+        - key: cnpg.io/cluster
+          operator: DoesNotExist
+    resourcePolicy:
+      kind: ConfigMap
+      name: velero-volume-policies
