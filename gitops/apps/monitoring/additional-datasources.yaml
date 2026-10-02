@@ -19,3 +19,28 @@ spec:
     matchLabels:
       alertmanager-default: "true"
   resyncPeriod: 10m
+---
+# Mimir on mgmt (Bealvio/flux-mgmt gitops/apps/mimir): bealv + mgmt metrics,
+# 15 days. Pick it in a dashboard's `datasource` dropdown, then the `cluster`.
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: mimir
+  namespace: monitoring
+spec:
+  allowCrossNamespaceImport: false
+  datasource:
+    access: proxy
+    isDefault: false
+    jsonData:
+      prometheusType: Mimir
+      timeInterval: 30s
+      tlsSkipVerify: true
+    name: mimir
+    uid: mimir
+    type: prometheus
+    url: https://mimir.bealv-mgmt.lan/prometheus
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  resyncPeriod: 10m
