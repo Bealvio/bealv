@@ -4,7 +4,7 @@ metadata:
   name: golinks
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 10m
   path: ./gitops/apps/golinks
   prune: true
   sourceRef:

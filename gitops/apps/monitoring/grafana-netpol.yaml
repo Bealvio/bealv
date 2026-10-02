@@ -9,7 +9,7 @@ spec:
   ingress:
     - ports:
         - port: 3000
-      protocol: TCP
+          protocol: TCP
     - from:
         - podSelector:
             matchLabels:

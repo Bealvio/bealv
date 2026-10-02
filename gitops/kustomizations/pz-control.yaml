@@ -4,7 +4,7 @@ metadata:
   name: pz-control
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 10m
   path: ./gitops/apps/pz-control
   prune: true
   sourceRef:

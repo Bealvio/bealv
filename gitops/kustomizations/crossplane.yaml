@@ -4,7 +4,7 @@ metadata:
   name: crossplane-setup
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 30m
   path: ./gitops/apps/crossplane/upstream
   prune: true
   sourceRef:
@@ -17,7 +17,7 @@ metadata:
   name: crossplane-providers
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/crossplane/providers
   prune: true
   sourceRef:
@@ -30,7 +30,7 @@ metadata:
   name: crossplane
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/crossplane
   prune: true
   sourceRef:
@@ -43,7 +43,7 @@ metadata:
   name: crossplane-resources
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/crossplane/resources
   prune: true
   sourceRef:

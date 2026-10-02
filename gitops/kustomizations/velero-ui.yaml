@@ -4,7 +4,7 @@ metadata:
   name: velero-ui
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/velero-ui
   prune: true
   sourceRef:
@@ -17,7 +17,7 @@ metadata:
   name: velero-ui-secrets
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/velero-ui/secrets
   prune: true
   sourceRef:

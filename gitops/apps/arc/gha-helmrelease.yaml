@@ -56,65 +56,12 @@ spec:
                     name: github-update-chan
                     key: registry_password
             volumeMounts:
-              - mountPath: "/home/runner/.github-runner/_work/_temp/_github_home"
-                name: home
-              - mountPath: "/home/runner/.github-runner/_work/_temp/_github_workflow"
-                name: workflows
-              - mountPath: "/home/runner/.github-runner/_work/_temp/_runner_file_commands"
-                name: commands
-              - mountPath: "/home/runner/.github-runner/_work/bealv/bealv"
-                name: bealv
-              - mountPath: "/home/runner/.github-runner/_work/flux-mgmt/flux-mgmt"
-                name: flux-mgmt
-              - mountPath: "/home/runner/.github-runner/_work/flux-mgmt/action-runner-nix"
-                name: action-runner-nix
+              # One work volume instead of one PVC per sub-directory: every job
+              # used to wait for six 50Gi Proxmox disks to be created/attached.
+              - mountPath: "/home/runner/.github-runner/_work"
+                name: work
         volumes:
-          - name: home
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "disk-hddb"
-                  resources:
-                    requests:
-                      storage: 50Gi
-          - name: workflows
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "disk-hddb"
-                  resources:
-                    requests:
-                      storage: 50Gi
-          - name: commands
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "disk-hddb"
-                  resources:
-                    requests:
-                      storage: 50Gi
-          - name: bealv
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "disk-hddb"
-                  resources:
-                    requests:
-                      storage: 50Gi
-          - name: flux-mgmt
-            ephemeral:
-              volumeClaimTemplate:
-                spec:
-                  accessModes: ["ReadWriteOnce"]
-                  storageClassName: "disk-hddb"
-                  resources:
-                    requests:
-                      storage: 50Gi
-          - name: action-runner-nix
+          - name: work
             ephemeral:
               volumeClaimTemplate:
                 spec:

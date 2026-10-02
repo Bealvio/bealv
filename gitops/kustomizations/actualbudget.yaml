@@ -4,7 +4,7 @@ metadata:
   name: actualbudget
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/actualbudget
   prune: true
   sourceRef:

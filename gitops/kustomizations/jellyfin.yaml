@@ -4,7 +4,7 @@ metadata:
   name: jellyfin
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/jellyfin
   prune: true
   sourceRef:

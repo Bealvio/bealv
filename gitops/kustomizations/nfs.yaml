@@ -4,7 +4,7 @@ metadata:
   name: nfs
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/nfs-provisioner
   prune: true
   sourceRef:

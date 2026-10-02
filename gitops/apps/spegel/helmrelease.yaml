@@ -3,11 +3,12 @@ kind: HelmRelease
 metadata:
   name: spegel
 spec:
-  interval: 1m
+  interval: 30m
   chart:
     spec:
       chart: spegel
-      interval: 5m
+      version: 0.7.4
+      interval: 1h
       sourceRef:
         kind: HelmRepository
         name: spegel

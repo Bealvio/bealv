@@ -10,7 +10,7 @@ spec:
     isDefault: false
     jsonData:
       implementation: prometheus
-      timeInterval: 5s
+      timeInterval: 30s
       tlsSkipVerify: true
     name: alertmanager-mgmt
     type: alertmanager
@@ -18,4 +18,4 @@ spec:
   instanceSelector:
     matchLabels:
       alertmanager-default: "true"
-  resyncPeriod: 1m
+  resyncPeriod: 10m

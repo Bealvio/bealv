@@ -7,14 +7,14 @@ Guide for AI agents (and humans) working in this repo. **Keep this file up to da
 GitOps source of truth for the **`bealv` workload cluster** ("Main Cluster"), reconciled by **FluxCD**. It only contains _workloads_ (self-hosted apps and the app-level infra they need). The cluster itself, Flux, and most system add-ons are created and pushed from the management cluster repo **[Bealvio/flux-mgmt](https://github.com/Bealvio/flux-mgmt)**:
 
 - Cluster API (Proxmox + Kamaji) creates the cluster; Sveltos ClusterProfiles install flux-operator/FluxInstance, Cilium, cert-manager, the internal contour ingress, external-snapshotter, proxmox-csi, trust-manager, monitoring CRDs/stack, external-secrets, etc. on it.
-- Sveltos creates on this cluster: `GitRepository/infra` → this repo (`main`, only `/gitops`), `GitRepository/mgmt` → flux-mgmt (`/gitops`), and `Kustomization/apps` → `./gitops/kustomizations` (interval 2m, prune).
+- Sveltos creates on this cluster: `GitRepository/infra` → this repo (`main`, only `/gitops`), `GitRepository/mgmt` → flux-mgmt (`/gitops`), and `Kustomization/apps` → `./gitops/kustomizations` (interval 10m, prune).
 - ⇒ Changes to cert-manager, contour ingress, snapshotter, flux-operator or monitoring **upstream manifests happen in flux-mgmt**, not here, and also roll to this cluster.
 
 ## Layout
 
 ```
 gitops/
-  kustomizations/<app>.yaml   # one Flux Kustomization per app -> ./gitops/apps/<app> (sourceRef GitRepository/infra, interval 1m)
+  kustomizations/<app>.yaml   # one Flux Kustomization per app -> ./gitops/apps/<app> (sourceRef GitRepository/infra, interval 10m; 30m for CRD/upstream bundles)
   apps/<app>/                 # plain manifests + kustomization.yaml (namespace set there), HelmReleases, ExternalSecrets…
   apps/*/upstream/            # GENERATED upstream bundles — don't hand-edit (see below)
   docs/superpowers/plans/     # implementation plans written by agents
@@ -102,13 +102,17 @@ Other details:
 
 1. Check the actual diff (usually a one-line tag change) and read upstream release notes for minor/major bumps — look for config key/env var renames, DB migrations (zitadel, immich, komga, vaultwarden run schema migrations on start — non-reversible), and CRD changes for charts (crossplane, kgateway).
 2. `-development` tags (e.g. linuxserver bazarr) are intentionally tracked.
-3. After merge Flux applies within ~1–2 min (GitRepository 1m, app Kustomizations 1m). Force with `flux reconcile source git infra -n flux-system` then `flux reconcile kustomization <app> -n flux-system`. API server: `10.250.0.13:6443` (kube context `bealv/kubernetes-admin@bealv-4c2fn`), only reachable from the LAN/VPN.
+3. After merge Flux applies within ~1–2 min (GitRepository 1m; a new revision triggers the Kustomizations at once, their 10m/30m intervals only pace drift correction). Force with `flux reconcile source git infra -n flux-system` then `flux reconcile kustomization <app> -n flux-system`. API server: `10.250.0.13:6443` (kube context `bealv/kubernetes-admin@bealv-4c2fn`), only reachable from the LAN/VPN.
 
 ## Conventions
 
 - Commit messages: `chore: …`, `feat ✨: …`, `fix: …`, `refactor 🎨 (scope): …`.
 - Keep app manifests plain + kustomize; HelmReleases for charted apps (with a `helmrepo.yaml` next to them).
 - Don't hand-edit `upstream/` dirs; patch them with kustomize patches alongside (e.g. `ingress-controller-external/*-patch.yaml`).
+
+## Suspended Kustomizations
+
+Some Kustomizations get suspended by hand on the live cluster (`flux suspend`); that isn't in git. As of 2026-10-02: `arc`, `prowlarr`, `radarr`, `sonarr`, `spegel`. Resuming applies the current `main`, and with `prune: true` Flux deletes anything in the old inventory that the new build no longer has. Before `flux resume`, diff `kubectl -n flux-system get kustomization <name> -o jsonpath='{.status.inventory.entries[*].id}'` against the object IDs of `kustomize build <path>` (`<ns>_<name>_<group>_<kind>`); resume only if nothing would disappear.
 
 ## Keep this file current
 

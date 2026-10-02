@@ -4,7 +4,7 @@ metadata:
   name: monitoring-general
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/monitoring
   prune: true
   sourceRef:
