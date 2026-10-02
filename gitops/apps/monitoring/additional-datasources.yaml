@@ -21,7 +21,8 @@ spec:
   resyncPeriod: 10m
 ---
 # Mimir on mgmt (Bealvio/flux-mgmt gitops/apps/mimir): bealv + mgmt metrics,
-# 15 days. Pick it in a dashboard's `datasource` dropdown, then the `cluster`.
+# 15 days. Default datasource: dashboards open on it and the `cluster`
+# variable picks the cluster. The local Prometheus stays in the dropdown.
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
@@ -31,7 +32,7 @@ spec:
   allowCrossNamespaceImport: false
   datasource:
     access: proxy
-    isDefault: false
+    isDefault: true
     jsonData:
       prometheusType: Mimir
       timeInterval: 30s
