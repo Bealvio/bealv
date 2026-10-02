@@ -4,7 +4,7 @@ metadata:
   name: fmd2
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/fmd2
   prune: true
   sourceRef:

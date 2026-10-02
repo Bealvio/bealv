@@ -4,7 +4,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/cert-manager
   prune: false
   sourceRef:

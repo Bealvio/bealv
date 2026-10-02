@@ -4,7 +4,7 @@ metadata:
   name: prowlarr
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   path: ./gitops/apps/prowlarr
   prune: true
   sourceRef:

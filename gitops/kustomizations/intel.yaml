@@ -9,7 +9,7 @@ metadata:
   name: intel-device-plugins-gpu
   namespace: intel-device-plugins-gpu
 spec:
-  interval: 5m
+  interval: 1h
   url: https://github.com/intel/intel-device-plugins-for-kubernetes
   ref:
     branch: release-0.34
