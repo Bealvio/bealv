@@ -1,0 +1,20 @@
+# The upstream manifest caps the operator at 100m CPU. With 7 clusters it sat
+# at ~90m, throttled, and took 10+ minutes to act on a node maintenance window
+# during a worker rollout. Request unchanged; the limit allows bursts.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnpg-controller-manager
+  namespace: cnpg-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: manager
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi

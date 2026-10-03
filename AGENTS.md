@@ -109,6 +109,7 @@ Other details:
 - Commit messages: `chore: …`, `feat ✨: …`, `fix: …`, `refactor 🎨 (scope): …`.
 - Keep app manifests plain + kustomize; HelmReleases for charted apps (with a `helmrepo.yaml` next to them).
 - Don't hand-edit `upstream/` dirs; patch them with kustomize patches alongside (e.g. `ingress-controller-external/*-patch.yaml`).
+- CNPG operator resources: `apps/cnpg/controller-resources-patch.yaml` raises upstream's 100m CPU limit (it was throttled and slow to honour `nodeMaintenanceWindow` during node drains).
 
 ## Backups
 
