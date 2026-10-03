@@ -1,2 +1,4 @@
 resources:
   - upstream/
+patches:
+  - path: controller-resources-patch.yaml
