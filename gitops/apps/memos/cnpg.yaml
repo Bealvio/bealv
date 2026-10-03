@@ -4,6 +4,9 @@ metadata:
   name: memos-postgres
 spec:
   instances: 1
+  # Single instance on a 2-node cluster: a PDB only blocks node drains
+  # (downtime during rollouts is accepted).
+  enablePDB: false
   storage:
     storageClass: disk-hddb
     size: 50Gi

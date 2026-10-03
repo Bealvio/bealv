@@ -4,6 +4,9 @@ metadata:
   name: zitadel-postgres
 spec:
   instances: 1
+  # Single instance on a 2-node cluster: a PDB only blocks node drains
+  # (downtime during rollouts is accepted).
+  enablePDB: false
   enableSuperuserAccess: true
   superuserSecret:
     name: zitadel-secrets
