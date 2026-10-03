@@ -4,6 +4,8 @@ metadata:
   name: plex
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: priority-classes
   interval: 10m
   path: ./gitops/apps/plex
   prune: true

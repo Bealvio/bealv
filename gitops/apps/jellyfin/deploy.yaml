@@ -18,6 +18,8 @@ spec:
       annotations:
         backup.velero.io/backup-volumes: config
     spec:
+      # Needs the iGPU: may preempt ordinary pods on the GPU worker.
+      priorityClassName: gpu-workload
       securityContext:
         fsGroup: 1000
       terminationGracePeriodSeconds: 10

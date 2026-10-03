@@ -47,6 +47,9 @@ spec:
       controllers:
         main:
           strategy: Recreate
+          # Needs the iGPU: may preempt ordinary pods on the GPU worker.
+          pod:
+            priorityClassName: gpu-workload
           # No serviceAccount override: use the chart's auto-created "immich-server" SA.
           # (Pinning name: immich referenced a non-existent SA and blocked pod creation.)
           containers:

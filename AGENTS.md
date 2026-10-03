@@ -32,6 +32,10 @@ devenv.nix / devenv.yaml     # dev shell (devenv) + build scripts; devenv.lock p
 3. Secrets: `ExternalSecret` → `ClusterSecretStore/vault-backend` (Vault paths under `secrets-bealv/…`). Never commit plaintext secrets.
 4. Validate: `kustomize build gitops/apps/<name>`.
 
+### GPU workloads
+
+The iGPU (`gpu.intel.com/i915`, Intel GVT-g vGPU) is only on the alt/GPU worker (flux-mgmt ClusterClass `default-worker-alt`). Pods requesting it (immich-server, jellyfin, plex) set `priorityClassName: gpu-workload` (`apps/priority-classes`, value 1000) so they can preempt ordinary pods filling that node, and their Kustomizations `dependsOn: priority-classes` (a pod naming a missing PriorityClass is rejected).
+
 ### Exposing services
 
 - **Public (`*.bealv.io`)** — preferred, current pattern: an `HTTPRoute` with `parentRefs: [{name: https, namespace: kgateway-system}]` (kgateway `Gateway/https`, TLS via cert-manager issuer `bealvio`, DNS via external-dns/Cloudflare). There is also a contour `external` Gateway/ingress class fronted by `cloudflared` in `apps/ingress-controller-external`.
