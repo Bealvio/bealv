@@ -6,6 +6,9 @@ metadata:
     kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   instances: 1
+  # Single instance on a 2-node cluster: a PDB only blocks node drains
+  # (downtime during rollouts is accepted).
+  enablePDB: false
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
   bootstrap:
     initdb:
