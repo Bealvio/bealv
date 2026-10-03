@@ -4,6 +4,8 @@ metadata:
   name: jellyfin
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: priority-classes
   interval: 10m
   path: ./gitops/apps/jellyfin
   prune: true

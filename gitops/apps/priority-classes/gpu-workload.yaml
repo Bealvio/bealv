@@ -1,0 +1,12 @@
+# Pods that need the iGPU (gpu.intel.com/i915) can only run on the single GPU
+# worker. When ordinary pods have filled its CPU/memory requests, this lets the
+# scheduler evict some of them (they reschedule on the other workers) instead
+# of leaving the GPU pod Pending.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: gpu-workload
+value: 1000
+globalDefault: false
+preemptionPolicy: PreemptLowerPriority
+description: Workloads that request gpu.intel.com/i915 (immich-server, jellyfin, plex).
