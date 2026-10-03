@@ -52,8 +52,10 @@ spec:
           containers:
             main:
               resources:
+                # Idle most of the time; it must fit on the single node that
+                # has the GPU. Limits still allow bursts for transcoding/import.
                 requests:
-                  cpu: 200m
+                  cpu: 100m
                   memory: 2Gi
                 limits:
                   gpu.intel.com/i915: 1
@@ -76,8 +78,9 @@ spec:
           containers:
             main:
               resources:
+                # Measured ~1m idle; jobs burst up to the limit.
                 requests:
-                  cpu: 200m
+                  cpu: 50m
                   memory: 2Gi
                 limits:
                   cpu: 6
