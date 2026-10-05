@@ -24,7 +24,7 @@ spec:
           image: ghcr.io/linuxserver/prowlarr:2.6.5-nightly
           resources:
             requests:
-              memory: 800Mi
+              memory: 256Mi
               cpu: 100m
             limits:
               memory: 800Mi
