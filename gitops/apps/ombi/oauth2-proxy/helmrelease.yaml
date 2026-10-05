@@ -49,7 +49,7 @@ spec:
         memory: 300Mi
       requests:
         cpu: 100m
-        memory: 300Mi
+        memory: 64Mi
     # Whether to use secrets instead of environment values for setting up OAUTH2_PROXY variables
     proxyVarsAsSecrets: false
     replicaCount: 1

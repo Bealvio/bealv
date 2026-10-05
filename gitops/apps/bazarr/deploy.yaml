@@ -24,7 +24,7 @@ spec:
           image: ghcr.io/linuxserver/bazarr:1.6.2-development
           resources:
             requests:
-              memory: 800Mi
+              memory: 256Mi
               cpu: 100m
             limits:
               memory: 800Mi
