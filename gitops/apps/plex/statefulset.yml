@@ -61,7 +61,7 @@ spec:
         - name: plex
           securityContext:
             privileged: true
-          image: plexinc/pms-docker:1.42.1.10060-4e8b05daf
+          image: plexinc/pms-docker:1.43.5.11029-6bf8af3f0
           imagePullPolicy: Always
           resources:
             limits:
