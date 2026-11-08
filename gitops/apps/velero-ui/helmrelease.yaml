@@ -33,6 +33,13 @@ spec:
           key: "pass_phrase"
           existingSecret: "velero-ui-secrets"
         veleroNamespace: "velero"
+      # velero-ui >= 0.11 (chart 1.0) gives federated (Zitadel) users no
+      # permissions without a policy; keep the pre-1.0 behaviour (all
+      # authenticated SSO users are admins).
+      policies:
+        enabled: true
+        value: |
+          u,*,manage,all
     rbac:
       create: true
       clusterAdministrator: false
